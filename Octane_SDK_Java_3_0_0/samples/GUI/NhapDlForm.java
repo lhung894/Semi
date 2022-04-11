@@ -4,22 +4,94 @@
  */
 package GUI;
 
+import BUS.ProductBUS;
+import BUS.TagBUS;
+import DTO.ProductDTO;
+import DTO.TagDTO;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Set;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Hyung
  */
-public class NhapDlForm extends javax.swing.JFrame
-{
+public class NhapDlForm extends javax.swing.JFrame {
+
+    DefaultTableModel tbModelTag, tbModelProduct;
+    Set<String> tags;
+    ProductBUS productBUS;
+    TagBUS tagBUS = new TagBUS();
+    int countSelected, rowTag = -2, rowProduct = -2;
 
     /**
      * Creates new form NhapDlForm
      */
-    public NhapDlForm()
-    {
+    public NhapDlForm() {
         initComponents();
-        this.pack();
-        this.setLocationRelativeTo(null);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+//        this.pack();
+//        this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+
+    public NhapDlForm(Set<String> tags) {
+        initComponents();
+        this.tags = tags;
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        this.setVisible(true);
+        initTable();
+        jBtnAdd.setEnabled(false);
+    }
+
+    public void initTable() {
+        tbModelTag.setRowCount(0);
+        tableModelTag(tbModelTag);
+        jTableTag.setRowSorter(null);
+        jTableTag.setAutoCreateRowSorter(true);
+        jTableTag.setModel(tbModelTag);
+        jTableTag.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //
+        tbModelProduct.setRowCount(0);
+        tableModelProduct(tbModelProduct);
+        jTableProduct.setRowSorter(null);
+        jTableProduct.setAutoCreateRowSorter(true);
+        jTableProduct.setModel(tbModelProduct);
+        jTableProduct.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    public void tableModelTag(DefaultTableModel model) {
+        for (String tag : tags) {
+            System.out.println("tag: " + tag);
+            Vector row = new Vector();
+            row.add(tag);
+            model.addRow(row);
+        }
+    }
+
+    public void tableModelProduct(DefaultTableModel model) {
+        productBUS = new ProductBUS();
+        for (ProductDTO product : productBUS.getList()) {
+            Vector row = new Vector();
+            row.add(product.getProductId());
+            row.add(product.getProductName());
+            row.add(product.getProductDetail());
+            model.addRow(row);
+        }
+    }
+
+    public void removeRowTag() {
+        tbModelTag.removeRow(rowTag);
     }
 
     /**
@@ -29,70 +101,281 @@ public class NhapDlForm extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableTag = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableProduct = new javax.swing.JTable();
+        jBtnAdd = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
+        jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("GÁN TAG CHO SẢN PHẨM");
+        jLabel1.setToolTipText("");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("DANH SÁCH TAG");
+
+        Vector tableCol=new Vector();
+        tableCol.add("Tag ID");
+
+        tbModelTag = new DefaultTableModel (tableCol,0){
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex){
+                return false;
+            }
+        };
+        jTableTag.setModel (tbModelTag);
+        jTableTag.setShowGrid(true);
+        jTableTag.setFocusable(false);
+        jTableTag.setIntercellSpacing(new Dimension(0,0));
+        jTableTag.setRowHeight(25);
+        jTableTag.getTableHeader().setOpaque(false);
+        jTableTag.setFillsViewportHeight(true);
+        //        jTableTag.getTableHeader().setBackground(new Color(145,209,242));
+        //        jTableTag.getTableHeader().setForeground(new Color(51, 51, 51));
+        jTableTag.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
+        //        jTableTag.setSelectionBackground(new Color(76,121,255));
+        jTableTag.setAutoCreateRowSorter(true);
+        jTableTag.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableTag.setGridColor(new java.awt.Color(83, 86, 88));
+        jTableTag.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableTagMouseClicked(evt);
+            }
+        });
+        jTableTag.getColumn (tableCol.elementAt (0)).setPreferredWidth (200);
+        jTableTag.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
+        jScrollPane1.setViewportView(jTableTag);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setText("DANH SÁCH SẢN PHẨM");
+
+        Vector tableColProduct = new Vector();
+        tableColProduct.add("Product ID");
+        tableColProduct.add("Product Name");
+        tableColProduct.add("Detail");
+
+        tbModelProduct = new DefaultTableModel (tableColProduct,0){
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex){
+                return false;
+            }
+        };
+        jTableProduct.setModel (tbModelProduct);
+        jTableProduct.setShowGrid(true);
+        jTableProduct.setFocusable(false);
+        jTableProduct.setIntercellSpacing(new Dimension(0,0));
+        jTableProduct.setRowHeight(25);
+        jTableProduct.getTableHeader().setOpaque(false);
+        jTableProduct.setFillsViewportHeight(true);
+        //        jTableTag.getTableHeader().setBackground(new Color(145,209,242));
+        //        jTableTag.getTableHeader().setForeground(new Color(51, 51, 51));
+        jTableProduct.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
+        //        jTableTag.setSelectionBackground(new Color(76,121,255));
+        jTableProduct.setAutoCreateRowSorter(true);
+        jTableProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableProduct.setGridColor(new java.awt.Color(83, 86, 88));
+        jTableProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableProductMouseClicked(evt);
+            }
+        });
+        jTableProduct.getColumn (tableColProduct.elementAt (0)).setPreferredWidth (100);
+        jTableProduct.getColumn (tableColProduct.elementAt (1)).setPreferredWidth (200);
+        jTableProduct.getColumn (tableColProduct.elementAt (2)).setPreferredWidth (300);
+        jTableProduct.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
+        jScrollPane2.setViewportView(jTableProduct);
+
+        jBtnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jBtnAdd.setText("THÊM");
+        jBtnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnAddActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(270, 270, 270))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jBtnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(320, 320, 320))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26)
+                .addComponent(jBtnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addGap(24, 24, 24))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, 799, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTableTagMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTagMouseClicked
+        // TODO add your handling code here:
+        int row = jTableTag.getSelectedRow();
+        System.out.println("row: " + row);
+        if (row == rowTag) {
+            jTableTag.clearSelection();
+            jBtnAdd.setEnabled(false);
+            countSelected--;
+            rowTag = -2;
+            System.out.println("count: " + countSelected);
+            return;
+        }
+        if (row != -1) {
+            if (countSelected < 2) {
+                countSelected++;
+            }
+            rowTag = row;
+            System.out.println("click: " + jTableTag.getValueAt(rowTag, 0));
+        }
+        if (countSelected == 2) {
+            jBtnAdd.setEnabled(true);
+        }
+        System.out.println("count: " + countSelected);
+    }//GEN-LAST:event_jTableTagMouseClicked
+
+    private void jTableProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductMouseClicked
+        // TODO add your handling code here:
+        int row = jTableProduct.getSelectedRow();
+        System.out.println("row: " + row);
+        if (row == rowProduct) {
+            jTableProduct.clearSelection();
+            jBtnAdd.setEnabled(false);
+            countSelected--;
+            rowProduct = -2;
+            System.out.println("count: " + countSelected);
+            return;
+        }
+        if (row != -1) {
+            if (countSelected < 2) {
+                countSelected++;
+            }
+            rowProduct = row;
+            System.out.println("click: " + jTableProduct.getValueAt(rowProduct, 0));
+        }
+        if (countSelected == 2) {
+            jBtnAdd.setEnabled(true);
+        }
+        System.out.println("count: " + countSelected);
+    }//GEN-LAST:event_jTableProductMouseClicked
+
+    private void jBtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddActionPerformed
+        // TODO add your handling code here:
+        TagDTO tagDTO = new TagDTO((String) jTableTag.getValueAt(rowTag, 0),
+                (String) jTableProduct.getValueAt(rowProduct, 0),
+                "", null, "", null);
+        System.out.println("tagDTO: " + tagDTO);
+        if (tagBUS.insertTag(tagDTO)) {
+            removeRowTag();
+            JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thành công!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thất bại!");
+        }
+        jTableTag.clearSelection();
+        jTableProduct.clearSelection();
+        rowProduct = -2;
+        rowTag = -2;
+        countSelected = 0;
+    }//GEN-LAST:event_jBtnAddActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex)
-        {
+        } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(NhapDlForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(NhapDlForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(NhapDlForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(NhapDlForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
                 new NhapDlForm().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnAdd;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableProduct;
+    private javax.swing.JTable jTableTag;
     // End of variables declaration//GEN-END:variables
 }

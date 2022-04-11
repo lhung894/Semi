@@ -127,33 +127,18 @@ class MyTagReportListener implements TagReportListener
 
     public static void main(String[] args)
     {
-        List<Integer> tagsIntegers = new ArrayList<Integer>();
-        tagsIntegers.add(1);
-        tagsIntegers.add(1);
-        tagsIntegers.add(1);
-        tagsIntegers.add(1);
-        tagsIntegers.add(2);
-        tagsIntegers.add(2);
-        tagsIntegers.add(3);
-        tagsIntegers.add(4);
-        tagsIntegers.add(1);
-        tagsIntegers.add(5);
-        tagsIntegers.add(6);
-        tagsIntegers.add(3);
-        tagsIntegers.add(7);
-        Set<Integer> temp = new HashSet<Integer>(tagsIntegers);
-
-        for (Integer t : temp)
-        {
-//            if (!flag)
-//            {
-//                System.out.print(" EPC: " + t.getEpc().toString());
-//                flag = true;
-//
-//            }
-            System.out.println("t là " + t);
-        }
-        NhapDlForm test = new NhapDlForm();
-        System.out.println("dsdsdsd");
+        List<String> tagsString = new ArrayList<String>();
+        tagsString.add("abc");
+        tagsString.add("abc");
+        tagsString.add("def");
+        tagsString.add("abc");
+        tagsString.add("def");
+        tagsString.add("mno");
+        tagsString.add("klj");
+        tagsString.add("mno");
+        tagsString.add("abc");
+        Set<String> temp = new HashSet<String>(tagsString);
+        NhapDlForm test = new NhapDlForm(temp);
+        System.out.println("ok");
     }
 }
