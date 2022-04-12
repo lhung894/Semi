@@ -38,7 +38,7 @@ public class Utils
     public void initOrderDetailId(ArrayList<OrderDetailDTO> orderDetailDTOs)
     {
         maDLCuoi = new LastIdDAO();
-        String temp = maDLCuoi.getOrderId();
+        String temp = maDLCuoi.getOrderDetailId();
         int ma = Integer.parseInt(temp);
         String init = "ORDETAIL_";
         for (OrderDetailDTO ord : orderDetailDTOs) {
@@ -52,7 +52,7 @@ public class Utils
     public String initDateNow()
     {
         final Date currentTime = new Date();
-        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss");
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         System.out.println("GMT time: " + sdf.format(currentTime));
         String date = sdf.format(currentTime).toString();

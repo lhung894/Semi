@@ -21,11 +21,20 @@ public class ProductBUS {
     }
     
     public boolean updateProduct (ProductDTO productDTO) {
-        if (productDAO.updateProduct(productDTO)) {
+        if (productDAO.updateProductQuantity(productDTO)) {
             System.out.println("Update product success BUS");
             return true;
         }
         System.out.println("Update product fail BUS");
+        return false;
+    }
+    
+    public boolean updateProducts (ArrayList<ProductDTO> productDTOs) {
+        if (productDAO.updateProductsQuantity(productDTOs)) {
+            System.out.println("Update products success BUS");
+            return true;
+        }
+        System.out.println("Update products fail BUS");
         return false;
     }
 }

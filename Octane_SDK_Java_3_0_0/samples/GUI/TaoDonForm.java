@@ -342,20 +342,33 @@ public class TaoDonForm extends javax.swing.JFrame {
         if (orderBUS.insertOrder(order)) {
             ArrayList<OrderDetailDTO> orDetails = new ArrayList<>();
             OrderDetailDTO orDetail;
+            ArrayList<ProductDTO> products = new ArrayList<>();
+            ProductDTO product;
             for (int i = 0; i < tbModelOrder.getRowCount(); i++) {
                 orDetail = new OrderDetailDTO();
                 orDetail.setOrderId(order.getOrderId());
                 orDetail.setProductId((String) tbModelOrder.getValueAt(i, 0));
                 orDetail.setOrderQuantity(Integer.parseInt(String.valueOf(tbModelOrder.getValueAt(i, 1))));
                 orDetails.add(orDetail);
+                for (int j = 0; j < tbModelProduct.getRowCount(); j++) {
+                    if (tbModelOrder.getValueAt(i, 0).equals(tbModelProduct.getValueAt(j, 0))) {
+                        product = new ProductDTO();
+                        product.setProductId((String) tbModelProduct.getValueAt(j, 0));
+                        product.setProductQuantity(Integer.parseInt(String.valueOf(tbModelProduct.getValueAt(j, 2))));
+                        products.add(product);
+                    }
+                }
             }
-            if (orderDetailBUS.insertOrderDetail(orDetails)) {
-                JOptionPane.showMessageDialog(this, "Success");
+            if (orderDetailBUS.insertOrderDetail(orDetails) && productBUS.updateProducts(products)) {
+                JOptionPane.showMessageDialog(this, "Tạo đơn xuất thành công!");
+                tbModelOrder.setRowCount(0);
+                clear();
+                return;
             }
             System.out.println("Order: " + order);
             System.out.println("OrderDetail: " + orDetails);
         }
-        clear();
+        JOptionPane.showMessageDialog(this, "Tạo đơn thất bại!");
     }//GEN-LAST:event_jBtnCreateActionPerformed
 
     private void jBtnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDelActionPerformed

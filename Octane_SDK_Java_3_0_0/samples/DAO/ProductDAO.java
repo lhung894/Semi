@@ -45,12 +45,31 @@ public class ProductDAO {
         return productDTOs;
     }
     
-    public boolean updateProduct(ProductDTO productDTO) {
+    public boolean updateProductQuantity(ProductDTO productDTO) {
         conn = new Connect();
         conn.getConnection();
-        String sql = "UPDATE Product SET "
-                + "product_quantity='" + productDTO.getProductQuantity() + "' "
-                + "WHERE product_id='" + productDTO.getProductId() + "';";
+        String sql = "UPDATE Product SET"
+                + " product_quantity=" + productDTO.getProductQuantity()
+                + " WHERE product_id='" + productDTO.getProductId() + "';";
+        if (conn.executeUpdate(sql)) {
+            conn.close();
+            System.out.println("ProductDAO update success.");
+            return true;
+        }
+        conn.close();
+        System.out.println("ProductDAO update fail.");
+        return false;
+    }
+    
+    public boolean updateProductsQuantity(ArrayList<ProductDTO> productDTOs) {
+        conn = new Connect();
+        conn.getConnection();
+        String sql = ""; 
+        for (ProductDTO product : productDTOs) {
+            sql += "UPDATE Product SET"
+                + " product_quantity=" + product.getProductQuantity()
+                + " WHERE product_id='" + product.getProductId() + "';";
+        }
         if (conn.executeUpdate(sql)) {
             conn.close();
             System.out.println("ProductDAO update success.");
