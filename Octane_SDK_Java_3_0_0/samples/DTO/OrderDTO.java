@@ -12,13 +12,13 @@ import java.util.Date;
  */
 public class OrderDTO {
     private String orderId;
-    private Date orderDate;
+    private String orderDate;
     private int status;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String orderId, Date orderDate, int status) {
+    public OrderDTO(String orderId, String orderDate, int status) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.status = status;
@@ -32,11 +32,11 @@ public class OrderDTO {
         this.orderId = orderId;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 

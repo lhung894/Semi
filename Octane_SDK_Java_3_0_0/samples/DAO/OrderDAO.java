@@ -28,7 +28,7 @@ public class OrderDAO {
             while (conn.rs.next()) {
                 OrderDTO dto = new OrderDTO();
                 dto.setOrderId(conn.rs.getString(1));
-                dto.setOrderDate(conn.rs.getDate(2));
+                dto.setOrderDate(conn.rs.getString(2));
                 dto.setStatus(conn.rs.getInt(3));
                 orderDTOs.add(dto);
             }

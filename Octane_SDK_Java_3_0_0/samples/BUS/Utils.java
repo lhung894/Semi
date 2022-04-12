@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
 public class Utils
 {
 
-    public LastIdDAO maDLCuoi = new LastIdDAO();
+    public LastIdDAO maDLCuoi;
 
     public Utils()
     {
-        maDLCuoi = new LastIdDAO();
+//        maDLCuoi = new LastIdDAO();
     }
 
     ////////////////Tạo order ID
@@ -26,6 +26,7 @@ public class Utils
     {
         maDLCuoi = new LastIdDAO();
         String temp = maDLCuoi.getOrderId();
+//        System.out.println("temp order: " + temp);
         int ma = Integer.parseInt(temp);
         ma++;
         String init = "ORDER_";
@@ -44,13 +45,14 @@ public class Utils
             ma++;
             ord.setOrderDetailId(init + String.valueOf(ma));
         }
+//        System.out.println("Ult OrderDetails: " + orderDetailDTOs);
     }
 
     ////////////////Lấy ngày hiện tại
     public String initDateNow()
     {
         final Date currentTime = new Date();
-        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         System.out.println("GMT time: " + sdf.format(currentTime));
         String date = sdf.format(currentTime).toString();
@@ -266,7 +268,7 @@ class main
 
     public static void main(String[] args) throws ParseException
     {
-        Utils ut = new Utils();
+        Utils ult = new Utils();
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 //        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
 //        Date tgBD = simpleDateFormat.parse("12/17/2021");
@@ -288,16 +290,18 @@ class main
 //        int year = Integer.parseInt(ngString.substring(0, 4));
 //        int namsinh = hientai - year;
 //        System.out.println(namsinh);
-        String aString = "056200008901";
-        String bString = "^(0\\d{11})$";
-        boolean flag4 = Pattern.matches(bString, aString);
-        if (!flag4)
-        {
-            System.out.println("Email không hợp lệ!\n");
-
-        } else
-        {
-            System.out.println("hop le");
-        }
+//        String aString = "056200008901";
+//        String bString = "^(0\\d{11})$";
+//        boolean flag4 = Pattern.matches(bString, aString);
+//        if (!flag4)
+//        {
+//            System.out.println("Email không hợp lệ!\n");
+//
+//        } else
+//        {
+//            System.out.println("hop le");
+//        }
+        
+        System.out.println("now: " + ult.initDateNow());
     }
 }

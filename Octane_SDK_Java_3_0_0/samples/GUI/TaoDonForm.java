@@ -4,15 +4,21 @@
  */
 package GUI;
 
+import BUS.OrderBUS;
+import BUS.OrderDetailBUS;
 import BUS.ProductBUS;
 import BUS.TagBUS;
+import BUS.Utils;
+import DTO.OrderDTO;
 import DTO.OrderDetailDTO;
 import DTO.ProductDTO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -29,6 +35,9 @@ public class TaoDonForm extends javax.swing.JFrame {
 //    Set<String> tags;
     ProductBUS productBUS;
     TagBUS tagBUS = new TagBUS();
+    OrderBUS orderBUS = new OrderBUS();
+    OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
+    Utils ult = new Utils();
     int rowOrder = -2, rowProduct = -2;
 
     /**
@@ -324,34 +333,37 @@ public class TaoDonForm extends javax.swing.JFrame {
 
     private void jBtnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCreateActionPerformed
         // TODO add your handling code here:
-//        TagDTO tagDTO = new TagDTO((String) jTableOrder.getValueAt(rowOrder, 0),
-//            (String) jTableProduct.getValueAt(rowProduct, 0),
-//            "", null, "", null);
-//        System.out.println("tagDTO: " + tagDTO);
-//        if (tagBUS.insertTag(tagDTO)) {
-//            removeRowTag();
-//            JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thành công!");
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thất bại!");
-//        }
-        ArrayList<OrderDetailDTO> orDetails = new ArrayList<>();
-        OrderDetailDTO orDetail;
-        for (int i = 0; i < tbModelOrder.getRowCount(); i++) {
-            orDetail = new OrderDetailDTO();
-//            orDetail.
+        OrderDTO order = new OrderDTO();
+        order.setOrderId(ult.initOrderId());
+        order.setOrderDate(ult.initDateNow());
+        order.setStatus(2);
+//        System.out.println("date: " + order.getOrderDate());
+//        System.out.println("Order: " + order);
+        if (orderBUS.insertOrder(order)) {
+            ArrayList<OrderDetailDTO> orDetails = new ArrayList<>();
+            OrderDetailDTO orDetail;
+            for (int i = 0; i < tbModelOrder.getRowCount(); i++) {
+                orDetail = new OrderDetailDTO();
+                orDetail.setOrderId(order.getOrderId());
+                orDetail.setProductId((String) tbModelOrder.getValueAt(i, 0));
+                orDetail.setOrderQuantity(Integer.parseInt(String.valueOf(tbModelOrder.getValueAt(i, 1))));
+                orDetails.add(orDetail);
+            }
+            if (orderDetailBUS.insertOrderDetail(orDetails)) {
+                JOptionPane.showMessageDialog(this, "Success");
+            }
+            System.out.println("Order: " + order);
+            System.out.println("OrderDetail: " + orDetails);
         }
-        jTableOrder.clearSelection();
-        jTableProduct.clearSelection();
-        rowProduct = -2;
-        rowOrder = -2;
+        clear();
     }//GEN-LAST:event_jBtnCreateActionPerformed
 
     private void jBtnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDelActionPerformed
         // TODO add your handling code here:
         for (int i = 0; i < tbModelProduct.getRowCount(); i++) {
             if (tbModelOrder.getValueAt(rowOrder, 0).equals(tbModelProduct.getValueAt(i, 0))) {
-                tbModelProduct.setValueAt(Integer.parseInt(String.valueOf(tbModelProduct.getValueAt(i, 2))) 
-                                + Integer.parseInt(String.valueOf(tbModelOrder.getValueAt(rowOrder, 1))), i, 2);
+                tbModelProduct.setValueAt(Integer.parseInt(String.valueOf(tbModelProduct.getValueAt(i, 2)))
+                        + Integer.parseInt(String.valueOf(tbModelOrder.getValueAt(rowOrder, 1))), i, 2);
 //                jBtnCreate.setEnabled(true);
                 tbModelOrder.removeRow(rowOrder);
                 jTableOrder.clearSelection();

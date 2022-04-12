@@ -19,6 +19,7 @@ public class LastIdDAO {
 
     public LastIdDAO() {
         getLastId();
+        System.out.println("LastId: " + this.toString());
     }
 
     public LastIdDAO(String productId, String orderId, String orderDetailId) {
@@ -53,8 +54,8 @@ public class LastIdDAO {
         conn = new Connect();
         conn.getConnection();
         String query = "UPDATE LastId SET"
-                + " OrderId='" + newOrderId + "'"
-                + " WHERE OrderId='" + getOrderId() + "'";
+                + " order_id='" + newOrderId + "'"
+                + " WHERE order_id='" + getOrderId() + "'";
         if (conn.executeUpdate(query)) {
             System.out.println("Update last OrderId success.");
             setOrderId(newOrderId);
@@ -70,8 +71,8 @@ public class LastIdDAO {
         conn = new Connect();
         conn.getConnection();
         String query = "UPDATE LastId SET"
-                + " OrderDetailId='" + newOrderDetailId + "'"
-                + " WHERE OrderDetailId='" + getOrderDetailId() + "'";
+                + " order_detail_id='" + newOrderDetailId + "'"
+                + " WHERE order_detail_id='" + getOrderDetailId() + "'";
         if (conn.executeUpdate(query)) {
             System.out.println("Update last OrderDetailId success.");
             setOrderDetailId(newOrderDetailId);

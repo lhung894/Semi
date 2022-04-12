@@ -55,7 +55,7 @@ public class OrderDetailDAO {
             query += "('" + orDetalDTO.getOrderDetailId() + "'"
                 + ",'" + orDetalDTO.getOrderId() + "'"
                 + ",'" + orDetalDTO.getProductId()+ "'"
-                + "," + orDetalDTO.getOrderQuantity() + "')";
+                + "," + orDetalDTO.getOrderQuantity() + ")";
             if (count < size) {
                 query += ", ";
                 count++;
@@ -63,7 +63,7 @@ public class OrderDetailDAO {
                 query += ";";
             }
         }
-        System.out.println("query: " + query);       
+//        System.out.println("query: " + query);       
         if (conn.executeUpdate(query)) {
             conn.close();
             System.out.println("OrderDetailDAO insert success.");
