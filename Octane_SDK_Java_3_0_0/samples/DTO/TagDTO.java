@@ -17,17 +17,19 @@ public class TagDTO {
     private Date tagDateIn;
     private String tagGateOut;
     private Date tagDateOut;
+    private String orderId;
 
     public TagDTO() {
     }
 
-    public TagDTO(String tagId, String productId, String tagGateIn, Date tagDateIn, String tagGateOut, Date tagDateOut) {
+    public TagDTO(String tagId, String productId, String tagGateIn, Date tagDateIn, String tagGateOut, Date tagDateOut, String orderId) {
         this.tagId = tagId;
         this.productId = productId;
         this.tagGateIn = tagGateIn;
         this.tagDateIn = tagDateIn;
         this.tagGateOut = tagGateOut;
         this.tagDateOut = tagDateOut;
+        this.orderId = orderId;
     }
 
     public String getTagId() {
@@ -78,8 +80,16 @@ public class TagDTO {
         this.tagDateOut = tagDateOut;
     }
 
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
     @Override
     public String toString() {
-        return "TagDTO{" + "tagId=" + tagId + ", productId=" + productId + ", tagGateIn=" + tagGateIn + ", tagDateIn=" + tagDateIn + ", tagGateOut=" + tagGateOut + ", tagDateOut=" + tagDateOut + "}\n";
+        return "TagDTO{" + "tagId=" + tagId + ", productId=" + productId + ", tagGateIn=" + tagGateIn + ", tagDateIn=" + tagDateIn + ", tagGateOut=" + tagGateOut + ", tagDateOut=" + tagDateOut + ", orderId=" + orderId + "}\n";
     }
 }

@@ -14,10 +14,18 @@ import java.util.ArrayList;
  */
 public class ProductBUS {
 //    ArrayList<ProductDTO> productDTOs = new ArrayList<>();
-    ProductDAO productDAO;
+    ProductDAO productDAO = new ProductDAO();;
     
     public ArrayList<ProductDTO> getList () {
-        productDAO = new ProductDAO();
         return productDAO.getList();
+    }
+    
+    public boolean updateProduct (ProductDTO productDTO) {
+        if (productDAO.updateProduct(productDTO)) {
+            System.out.println("Update product success BUS");
+            return true;
+        }
+        System.out.println("Update product fail BUS");
+        return false;
     }
 }

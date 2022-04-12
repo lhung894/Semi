@@ -29,7 +29,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="-2" attributes="0"/>
+          <Component id="jPanel1" alignment="0" min="483" pref="483" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -47,31 +47,35 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel2" min="-2" pref="163" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="210" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane2" min="-2" pref="520" max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" pref="163" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jLabel1" min="-2" pref="243" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="270" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel1" min="-2" pref="243" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="270" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jBtnAdd" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="320" max="-2" attributes="0"/>
+                      <Component id="jLabel3" min="-2" pref="163" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="520" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel4" min="-2" pref="60" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTxtQuantity" min="-2" pref="100" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jBtnToOrder" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace pref="37" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="210" max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" pref="163" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jBtnCreate" min="-2" pref="90" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jBtnDel" min="-2" pref="90" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -81,20 +85,23 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel3" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jLabel2" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jLabel3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="290" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="jLabel2" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="290" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jScrollPane1" min="-2" pref="290" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="290" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="jBtnAdd" pref="42" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jBtnCreate" alignment="3" max="32767" attributes="0"/>
+                      <Component id="jBtnDel" alignment="3" max="32767" attributes="0"/>
+                      <Component id="jBtnToOrder" alignment="3" max="32767" attributes="0"/>
+                      <Component id="jTxtQuantity" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -107,7 +114,7 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="G&#xc1;N TAG CHO S&#x1ea2;N PH&#x1ea8;M"/>
+            <Property name="text" type="java.lang.String" value="T&#x1ea0;O &#x110;&#x1a0;N XU&#x1ea4;T"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -116,7 +123,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="DANH S&#xc1;CH TAG"/>
+            <Property name="text" type="java.lang.String" value="&#x110;&#x1a0;N H&#xc0;NG XU&#x1ea4;T"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -126,7 +133,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTableTag">
+            <Component class="javax.swing.JTable" name="jTableOrder">
               <Properties>
                 <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -140,12 +147,12 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableTagMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableOrderMouseClicked"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector tableCol=new Vector();&#xa;tableCol.add(&quot;Tag ID&quot;);&#xa;&#xa;tbModelTag = new DefaultTableModel (tableCol,0){&#xa;    @Override&#xa;public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return false;&#xa;    }&#xa;};&#xa;jTableTag.setModel (tbModelTag);&#xa;jTableTag.setShowGrid(true);&#xa;        jTableTag.setFocusable(false);&#xa;//        jTableTag.setIntercellSpacing(new Dimension(0,0));     &#xa;        jTableTag.setRowHeight(25);&#xa;//        jTableTag.setRowMargin(10);&#xa;        jTableTag.getTableHeader().setOpaque(false);&#xa;        jTableTag.setFillsViewportHeight(true);&#xa;        jTableTag.getTableHeader().setBackground(new Color(220,220,220));&#xa;        jTableTag.getTableHeader().setForeground(new Color(30,30,30));&#xa;        jTableTag.getTableHeader().setFont (new Font(&quot;Dialog&quot;, Font.BOLD, 13));&#xa;        jTableTag.setSelectionBackground(new Color(0,120,215));&#xa;        jTableTag.setSelectionForeground(new Color(255,255,255));&#xa;        jTableTag.setForeground(new Color(30,30,30));"/>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableTag.getColumn (tableCol.elementAt (0)).setPreferredWidth (200);&#xa;jTableTag.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector tableCol = new Vector();&#xa;tableCol.add(&quot;Product ID&quot;);&#xa;tableCol.add(&quot;Quantity&quot;);&#xa;&#xa;tbModelOrder = new DefaultTableModel (tableCol,0){&#xa;    @Override&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return false;&#xa;    }&#xa;};&#xa;jTableOrder.setModel (tbModelOrder);&#xa;jTableOrder.setShowGrid(true);&#xa;        jTableOrder.setFocusable(false);&#xa;        jTableOrder.setIntercellSpacing(new Dimension(0,0));     &#xa;        jTableOrder.setRowHeight(25);  &#xa;        jTableOrder.getTableHeader().setOpaque(false);&#xa;        jTableOrder.setFillsViewportHeight(true);&#xa;//        jTableOrder.getTableHeader().setBackground(new Color(145,209,242));&#xa;//        jTableOrder.getTableHeader().setForeground(new Color(51, 51, 51));&#xa;        jTableOrder.getTableHeader().setFont (new Font(&quot;Dialog&quot;, Font.BOLD, 13));&#xa;//        jTableOrder.setSelectionBackground(new Color(76,121,255));"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableOrder.getColumn (tableCol.elementAt (0)).setPreferredWidth (100);&#xa;jTableOrder.getColumn (tableCol.elementAt (1)).setPreferredWidth (100);&#xa;jTableOrder.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);"/>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="PhongThiForm_jTablePhongThi"/>
               </AuxValues>
             </Component>
@@ -184,23 +191,56 @@
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector tableColProduct = new Vector();&#xa;tableColProduct.add(&quot;Product ID&quot;);&#xa;tableColProduct.add(&quot;Product Name&quot;);&#xa;tableColProduct.add(&quot;Quantity&quot;);&#xa;tableColProduct.add(&quot;Detail&quot;);&#xa;&#xa;tbModelProduct = new DefaultTableModel (tableColProduct,0){&#xa;    @Override&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return false;&#xa;    }&#xa;};&#xa;jTableProduct.setModel (tbModelProduct);&#xa;jTableProduct.setShowGrid(true);&#xa;        jTableProduct.setFocusable(false);&#xa;//        jTableProduct.setIntercellSpacing(new Dimension(0,0));     &#xa;        jTableProduct.setRowHeight(25);&#xa;//        jTableProduct.setRowMargin(20);&#xa;        jTableProduct.getTableHeader().setOpaque(false);&#xa;        jTableProduct.setFillsViewportHeight(true);&#xa;        jTableProduct.getTableHeader().setBackground(new Color(220,220,220));&#xa;        jTableProduct.getTableHeader().setForeground(new Color(30, 30, 30));&#xa;        jTableProduct.getTableHeader().setFont (new Font(&quot;Dialog&quot;, Font.BOLD, 13));&#xa;        jTableProduct.setSelectionBackground(new Color(0,120,215));&#xa;        jTableProduct.setSelectionForeground(new Color(255,255,255));&#xa;        jTableProduct.setForeground(new Color(30,30,30));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector tableColProduct = new Vector();&#xa;tableColProduct.add(&quot;Product ID&quot;);&#xa;tableColProduct.add(&quot;Product Name&quot;);&#xa;tableColProduct.add(&quot;Remaining&quot;);&#xa;tableColProduct.add(&quot;Detail&quot;);&#xa;&#xa;tbModelProduct = new DefaultTableModel (tableColProduct,0){&#xa;    @Override&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return false;&#xa;    }&#xa;};&#xa;jTableProduct.setModel (tbModelProduct);&#xa;jTableProduct.setShowGrid(true);&#xa;        jTableProduct.setFocusable(false);&#xa;        jTableProduct.setIntercellSpacing(new Dimension(0,0));     &#xa;        jTableProduct.setRowHeight(25);  &#xa;        jTableProduct.getTableHeader().setOpaque(false);&#xa;        jTableProduct.setFillsViewportHeight(true);&#xa;//        jTableOrder.getTableHeader().setBackground(new Color(145,209,242));&#xa;//        jTableOrder.getTableHeader().setForeground(new Color(51, 51, 51));&#xa;        jTableProduct.getTableHeader().setFont (new Font(&quot;Dialog&quot;, Font.BOLD, 13));&#xa;//        jTableOrder.setSelectionBackground(new Color(76,121,255));"/>
                 <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableProduct.getColumn (tableColProduct.elementAt (0)).setPreferredWidth (100);&#xa;jTableProduct.getColumn (tableColProduct.elementAt (1)).setPreferredWidth (200);&#xa;jTableProduct.getColumn (tableColProduct.elementAt (2)).setPreferredWidth (100);&#xa;jTableProduct.getColumn (tableColProduct.elementAt (3)).setPreferredWidth (300);&#xa;jTableProduct.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);"/>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="PhongThiForm_jTablePhongThi"/>
               </AuxValues>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="jBtnAdd">
+        <Component class="javax.swing.JButton" name="jBtnCreate">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="TH&#xca;M"/>
+            <Property name="text" type="java.lang.String" value="T&#x1ea0;O &#x110;&#x1a0;N"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnAddActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnCreateActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jBtnDel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="X&#xd3;A"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnDelActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jBtnToOrder">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="TH&#xca;M V&#xc0;O &#x110;&#x1a0;N"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnToOrderActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTxtQuantity">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel4">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

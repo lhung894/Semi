@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * @author User
  */
 public class ProductDAO {
-
     Connect conn;
 
     public ProductDAO() {
@@ -44,5 +43,21 @@ public class ProductDAO {
             System.out.println("ProductDAO.getList.close error.");
         }
         return productDTOs;
+    }
+    
+    public boolean updateProduct(ProductDTO productDTO) {
+        conn = new Connect();
+        conn.getConnection();
+        String sql = "UPDATE Product SET "
+                + "product_quantity='" + productDTO.getProductQuantity() + "' "
+                + "WHERE product_id='" + productDTO.getProductId() + "';";
+        if (conn.executeUpdate(sql)) {
+            conn.close();
+            System.out.println("ProductDAO update success.");
+            return true;
+        }
+        conn.close();
+        System.out.println("ProductDAO update fail.");
+        return false;
     }
 }

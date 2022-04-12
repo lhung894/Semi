@@ -28,7 +28,7 @@ public class NhapDlForm extends javax.swing.JFrame {
 
     DefaultTableModel tbModelTag, tbModelProduct;
     Set<String> tags;
-    ProductBUS productBUS;
+    ProductBUS productBUS = new ProductBUS();
     TagBUS tagBUS = new TagBUS();
     int countSelected, rowTag = -2, rowProduct = -2;
 
@@ -39,8 +39,6 @@ public class NhapDlForm extends javax.swing.JFrame {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-//        this.pack();
-//        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -85,6 +83,7 @@ public class NhapDlForm extends javax.swing.JFrame {
             Vector row = new Vector();
             row.add(product.getProductId());
             row.add(product.getProductName());
+            row.add(product.getProductQuantity());
             row.add(product.getProductDetail());
             model.addRow(row);
         }
@@ -114,6 +113,7 @@ public class NhapDlForm extends javax.swing.JFrame {
         jBtnAdd = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 245));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
@@ -138,14 +138,17 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableTag.setModel (tbModelTag);
         jTableTag.setShowGrid(true);
         jTableTag.setFocusable(false);
-        jTableTag.setIntercellSpacing(new Dimension(0,0));
+        //        jTableTag.setIntercellSpacing(new Dimension(0,0));
         jTableTag.setRowHeight(25);
+        //        jTableTag.setRowMargin(10);
         jTableTag.getTableHeader().setOpaque(false);
         jTableTag.setFillsViewportHeight(true);
-        //        jTableTag.getTableHeader().setBackground(new Color(145,209,242));
-        //        jTableTag.getTableHeader().setForeground(new Color(51, 51, 51));
+        jTableTag.getTableHeader().setBackground(new Color(220,220,220));
+        jTableTag.getTableHeader().setForeground(new Color(30,30,30));
         jTableTag.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
-        //        jTableTag.setSelectionBackground(new Color(76,121,255));
+        jTableTag.setSelectionBackground(new Color(0,120,215));
+        jTableTag.setSelectionForeground(new Color(255,255,255));
+        jTableTag.setForeground(new Color(30,30,30));
         jTableTag.setAutoCreateRowSorter(true);
         jTableTag.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableTag.setGridColor(new java.awt.Color(83, 86, 88));
@@ -164,6 +167,7 @@ public class NhapDlForm extends javax.swing.JFrame {
         Vector tableColProduct = new Vector();
         tableColProduct.add("Product ID");
         tableColProduct.add("Product Name");
+        tableColProduct.add("Quantity");
         tableColProduct.add("Detail");
 
         tbModelProduct = new DefaultTableModel (tableColProduct,0){
@@ -175,14 +179,17 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableProduct.setModel (tbModelProduct);
         jTableProduct.setShowGrid(true);
         jTableProduct.setFocusable(false);
-        jTableProduct.setIntercellSpacing(new Dimension(0,0));
+        //        jTableProduct.setIntercellSpacing(new Dimension(0,0));
         jTableProduct.setRowHeight(25);
+        //        jTableProduct.setRowMargin(20);
         jTableProduct.getTableHeader().setOpaque(false);
         jTableProduct.setFillsViewportHeight(true);
-        //        jTableTag.getTableHeader().setBackground(new Color(145,209,242));
-        //        jTableTag.getTableHeader().setForeground(new Color(51, 51, 51));
+        jTableProduct.getTableHeader().setBackground(new Color(220,220,220));
+        jTableProduct.getTableHeader().setForeground(new Color(30, 30, 30));
         jTableProduct.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
-        //        jTableTag.setSelectionBackground(new Color(76,121,255));
+        jTableProduct.setSelectionBackground(new Color(0,120,215));
+        jTableProduct.setSelectionForeground(new Color(255,255,255));
+        jTableProduct.setForeground(new Color(30,30,30));
         jTableProduct.setAutoCreateRowSorter(true);
         jTableProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableProduct.setGridColor(new java.awt.Color(83, 86, 88));
@@ -193,7 +200,8 @@ public class NhapDlForm extends javax.swing.JFrame {
         });
         jTableProduct.getColumn (tableColProduct.elementAt (0)).setPreferredWidth (100);
         jTableProduct.getColumn (tableColProduct.elementAt (1)).setPreferredWidth (200);
-        jTableProduct.getColumn (tableColProduct.elementAt (2)).setPreferredWidth (300);
+        jTableProduct.getColumn (tableColProduct.elementAt (2)).setPreferredWidth (100);
+        jTableProduct.getColumn (tableColProduct.elementAt (3)).setPreferredWidth (300);
         jTableProduct.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane2.setViewportView(jTableProduct);
 
@@ -317,11 +325,17 @@ public class NhapDlForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         TagDTO tagDTO = new TagDTO((String) jTableTag.getValueAt(rowTag, 0),
                 (String) jTableProduct.getValueAt(rowProduct, 0),
-                "", null, "", null);
+                "", null, "", null, "");
         System.out.println("tagDTO: " + tagDTO);
         if (tagBUS.insertTag(tagDTO)) {
-            removeRowTag();
-            JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thành công!");
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setProductId((String) jTableProduct.getValueAt(rowProduct, 0));
+            productDTO.setProductQuantity((Integer) jTableProduct.getValueAt(rowProduct, 2) + 1);
+            if (productBUS.updateProduct(productDTO)) {
+                jTableProduct.setValueAt((Integer) jTableProduct.getValueAt(rowProduct, 2) + 1, rowProduct, 2);
+                removeRowTag();
+                JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thành công!");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thất bại!");
         }
