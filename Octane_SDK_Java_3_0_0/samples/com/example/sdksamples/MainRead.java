@@ -28,11 +28,6 @@ public class MainRead implements TagReportListener
     boolean flag = false;
     NhapDlForm inputForm;
 
-//    @Override
-//    public void onTagReported(ImpinjReader reader, TagReport tr)
-//    {
-//        tr.getTags().forEach(tag -> System.out.println("> " + tag.getEpc()));
-//    }
     @Override
     public void onTagReported(ImpinjReader reader, TagReport tr)
     {
@@ -40,27 +35,29 @@ public class MainRead implements TagReportListener
 //        Set<String> epcSet = new HashSet<>();
         for (Tag t : tags)
         {
-//            System.out.println("dl l?y dc la" + t.getEpc().toString());
-//            epcSet.add(t.getEpc().toString());
-
             if (tagMap.put(t.getEpc().toString(), t) == null)
             {
                 System.out.println("ok??????????????????????????");
                 inputForm.initTagAuto();
-//                try
-//                {
-//                    wait(2000);
-//                } catch (InterruptedException ex)
-//                {
-//                    Logger.getLogger(MainRead.class.getName()).log(Level.SEVERE, null, ex);
-//                }
 
             }
-//            System.out.println("epc: " + t.getEpc().toString());
         }
-
-//        if ()
     }
+    
+//tag: 3500 0000 1000 0010 0000 1759
+//tag: 00B0 7A14 2C2B 2848 0800 0166
+//tag: 35E0 1700 4FF4 3406 0000 0673
+//tag: 300F 4F57 3AD0 01C0 8369 A28F
+//tag: 3008 33B2 DDD9 0140 0000 0009
+//tag: 3500 0000 1000 0010 0000 1476
+//tag: 0000 0000 0000 0000 0000 1314
+//tag: 300F 4F57 3AD0 01C0 8369 A241
+//tag: 300F 4F57 3AD0 01C0 8369 A230
+//tag: 3039 6062 83B9 5D80 0012 9F61
+//tag: 300F 4F57 3AD0 01C0 8369 A245
+//tag: 3008 33B2 DDD9 06C0 0000 0000
+//tag: 300F 4F57 3AD0 01C0 8369 A249
+//tag: 3008 33B2 DDD9 0140 0000 002D
 
     public static void main(String[] args)
     {
