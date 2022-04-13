@@ -311,7 +311,7 @@ public class NhapDlForm extends javax.swing.JFrame {
                 countSelected++;
             }
             rowProduct = row;
-            System.out.println("click: " + jTableProduct.getValueAt(rowProduct, 0));
+            System.out.println("click: " + jTableProduct.getValueAt(rowProduct, 0)); //ch?nh
         }
         if (countSelected == 2) {
             jBtnAdd.setEnabled(true);

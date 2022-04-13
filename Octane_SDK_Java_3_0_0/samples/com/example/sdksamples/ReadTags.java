@@ -58,7 +58,7 @@ public class ReadTags
 
 //            reader.setTagReportListener(new Vd());
             MainRead mread = new MainRead();
-            NhapDlForm test = new NhapDlForm();
+            NhapDlForm test = new NhapDlForm(); //cc
             mread.setInputForm(test);
             reader.setTagReportListener(mread);
             
