@@ -20,7 +20,8 @@ create table Tag (
 	tag_gate_in nvarchar(30),
 	tag_date_in datetime,
 	tag_gate_out nvarchar(30),
-	tag_date_out datetime
+	tag_date_out datetime,
+	order_id nvarchar(30)
 );
 
 create table Order_Product (
@@ -47,6 +48,15 @@ create table Slot (
 	status int
 );
 
+create table LastId (
+	product_id nvarchar(30),
+	order_id nvarchar(30),
+	order_detail_id nvarchar(30),
+	storage_id nvarchar(30),
+	slot_id nvarchar(30)
+)
+
+
 alter table Tag add constraint FK_Tag_Product
 foreign key (product_id) references Product(product_id);
 
@@ -68,6 +78,10 @@ values ('PRO_1','product 1',10,'detail product 1'),
 ('PRO_5','product 5',10,'detail product 5'),
 ('PRO_6','product 6',10,'detail product 6'),
 ('PRO_7','product 7',10,'detail product 7');
+
+insert into LastId
+values ('7','0','0','0','0');
+
 
 insert into Tag
 values ('TAG_1','PRO_2','',null,'',null);

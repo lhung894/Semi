@@ -3,6 +3,7 @@ package com.example.sdksamples;
 import GUI.NhapDlForm;
 import com.impinj.octane.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -52,12 +53,15 @@ public class ReadTags
             });
             antennas.getAntenna((short) 1).setIsMaxRxSensitivity(false);
             antennas.getAntenna((short) 1).setIsMaxTxPower(false);
-            antennas.getAntenna((short) 1).setTxPowerinDbm(30.0);
+            antennas.getAntenna((short) 1).setTxPowerinDbm(20.0);
             antennas.getAntenna((short) 1).setRxSensitivityinDbm(-70);
 
 //            reader.setTagReportListener(new Vd());
-            reader.setTagReportListener(new MyTagReportListener());
-
+            MainRead mread = new MainRead();
+            NhapDlForm test = new NhapDlForm();
+            mread.setInputForm(test);
+            reader.setTagReportListener(mread);
+            
             System.out.println("Applying Settings");
             reader.applySettings(settings);
 
@@ -95,9 +99,10 @@ public class ReadTags
 //    }
 //
 //}
-class MyTagReportListener implements TagReportListener
+class ReadTagExample implements TagReportListener
 {
 
+    public static HashMap<String, Tag> tagMap = new HashMap<>();
     boolean flag = false;
 //    @Override
 //    public void onTagReported(ImpinjReader reader, TagReport tr)
@@ -109,19 +114,12 @@ class MyTagReportListener implements TagReportListener
     public void onTagReported(ImpinjReader reader, TagReport tr)
     {
         List<Tag> tags = tr.getTags();
-        Set<String> epcSet = new HashSet<>();
+//        Set<String> epcSet = new HashSet<>();
         for (Tag t : tags)
         {
-            System.out.println("dl l?y dc la" + t.getEpc().toString());
-            epcSet.add(t.getEpc().toString());
-        }
-
-        for (String epcString : epcSet)
-        {
-            if (!flag)
-            {
-
-            }
+//            System.out.println("dl l?y dc la" + t.getEpc().toString());
+//            epcSet.add(t.getEpc().toString());
+            tagMap.put(t.getEpc().toString(), t);
         }
     }
 

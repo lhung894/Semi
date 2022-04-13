@@ -19,6 +19,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import com.example.sdksamples.MainRead;
 
 /**
  *
@@ -31,6 +32,7 @@ public class NhapDlForm extends javax.swing.JFrame {
     ProductBUS productBUS = new ProductBUS();
     TagBUS tagBUS = new TagBUS();
     int countSelected, rowTag = -2, rowProduct = -2;
+//    MainRead readTags
 
     /**
      * Creates new form NhapDlForm
@@ -40,6 +42,8 @@ public class NhapDlForm extends javax.swing.JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.setVisible(true);
+        initTableProduct();
+        initTableTag();
     }
 
     public NhapDlForm(Set<String> tags) {
@@ -48,18 +52,25 @@ public class NhapDlForm extends javax.swing.JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.setVisible(true);
-        initTable();
+        initTableProduct();
         jBtnAdd.setEnabled(false);
     }
-
-    public void initTable() {
+    
+    public void initTableTag() {
         tbModelTag.setRowCount(0);
         tableModelTag(tbModelTag);
         jTableTag.setRowSorter(null);
         jTableTag.setAutoCreateRowSorter(true);
         jTableTag.setModel(tbModelTag);
         jTableTag.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //
+    }
+
+    public void initTagAuto() {
+        tbModelTag.setRowCount(0);
+        tableModelTag(tbModelTag);
+    }
+
+    public void initTableProduct() {
         tbModelProduct.setRowCount(0);
         tableModelProduct(tbModelProduct);
         jTableProduct.setRowSorter(null);
@@ -69,7 +80,7 @@ public class NhapDlForm extends javax.swing.JFrame {
     }
 
     public void tableModelTag(DefaultTableModel model) {
-        for (String tag : tags) {
+        for (String tag : MainRead.tagMap.keySet()) {
             System.out.println("tag: " + tag);
             Vector row = new Vector();
             row.add(tag);
@@ -100,7 +111,8 @@ public class NhapDlForm extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -111,27 +123,33 @@ public class NhapDlForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableProduct = new javax.swing.JTable();
         jBtnAdd = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 245));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("GÁN TAG CHO SẢN PHẨM");
         jLabel1.setToolTipText("");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(319, 6, 243, 40));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("DANH SÁCH TAG");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 72, 163, 40));
 
         Vector tableCol=new Vector();
         tableCol.add("Tag ID");
 
-        tbModelTag = new DefaultTableModel (tableCol,0){
+        tbModelTag = new DefaultTableModel (tableCol,0)
+        {
             @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex){
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
                 return false;
             }
         };
@@ -152,17 +170,22 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableTag.setAutoCreateRowSorter(true);
         jTableTag.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableTag.setGridColor(new java.awt.Color(83, 86, 88));
-        jTableTag.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jTableTag.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jTableTagMouseClicked(evt);
             }
         });
-        jTableTag.getColumn (tableCol.elementAt (0)).setPreferredWidth (200);
+        jTableTag.getColumn (tableCol.elementAt (0)).setPreferredWidth (220);
         jTableTag.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(jTableTag);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 118, 240, 290));
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("DANH SÁCH SẢN PHẨM");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 72, 163, 40));
 
         Vector tableColProduct = new Vector();
         tableColProduct.add("Product ID");
@@ -170,9 +193,11 @@ public class NhapDlForm extends javax.swing.JFrame {
         tableColProduct.add("Quantity");
         tableColProduct.add("Detail");
 
-        tbModelProduct = new DefaultTableModel (tableColProduct,0){
+        tbModelProduct = new DefaultTableModel (tableColProduct,0)
+        {
             @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex){
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
                 return false;
             }
         };
@@ -193,8 +218,10 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableProduct.setAutoCreateRowSorter(true);
         jTableProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableProduct.setGridColor(new java.awt.Color(83, 86, 88));
-        jTableProduct.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jTableProduct.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jTableProductMouseClicked(evt);
             }
         });
@@ -205,57 +232,28 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableProduct.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane2.setViewportView(jTableProduct);
 
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 118, 520, 290));
+
         jBtnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jBtnAdd.setText("THÊM");
-        jBtnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBtnAdd.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jBtnAddActionPerformed(evt);
             }
         });
+        jPanel1.add(jBtnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(362, 434, 150, 42));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(270, 270, 270))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jBtnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(320, 320, 320))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
-                .addComponent(jBtnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
-        );
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 80, 31));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -346,6 +344,13 @@ public class NhapDlForm extends javax.swing.JFrame {
         countSelected = 0;
     }//GEN-LAST:event_jBtnAddActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+    {//GEN-HEADEREND:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        initTagAuto();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -383,6 +388,7 @@ public class NhapDlForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAdd;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

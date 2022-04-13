@@ -44,61 +44,8 @@
         </Property>
       </Properties>
 
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel2" min="-2" pref="163" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="210" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane2" min="-2" pref="520" max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" pref="163" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel1" min="-2" pref="243" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="270" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jBtnAdd" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="320" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jLabel3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="290" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="jLabel2" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="290" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="jBtnAdd" pref="42" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -110,6 +57,11 @@
             <Property name="text" type="java.lang.String" value="G&#xc1;N TAG CHO S&#x1ea2;N PH&#x1ea8;M"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="319" y="6" width="243" height="40"/>
+            </Constraint>
+          </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -118,11 +70,21 @@
             </Property>
             <Property name="text" type="java.lang.String" value="DANH S&#xc1;CH TAG"/>
           </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="20" y="72" width="163" height="40"/>
+            </Constraint>
+          </Constraints>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="20" y="118" width="240" height="290"/>
+            </Constraint>
+          </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
@@ -145,7 +107,7 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector tableCol=new Vector();&#xa;tableCol.add(&quot;Tag ID&quot;);&#xa;&#xa;tbModelTag = new DefaultTableModel (tableCol,0){&#xa;    @Override&#xa;public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return false;&#xa;    }&#xa;};&#xa;jTableTag.setModel (tbModelTag);&#xa;jTableTag.setShowGrid(true);&#xa;        jTableTag.setFocusable(false);&#xa;//        jTableTag.setIntercellSpacing(new Dimension(0,0));     &#xa;        jTableTag.setRowHeight(25);&#xa;//        jTableTag.setRowMargin(10);&#xa;        jTableTag.getTableHeader().setOpaque(false);&#xa;        jTableTag.setFillsViewportHeight(true);&#xa;        jTableTag.getTableHeader().setBackground(new Color(220,220,220));&#xa;        jTableTag.getTableHeader().setForeground(new Color(30,30,30));&#xa;        jTableTag.getTableHeader().setFont (new Font(&quot;Dialog&quot;, Font.BOLD, 13));&#xa;        jTableTag.setSelectionBackground(new Color(0,120,215));&#xa;        jTableTag.setSelectionForeground(new Color(255,255,255));&#xa;        jTableTag.setForeground(new Color(30,30,30));"/>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableTag.getColumn (tableCol.elementAt (0)).setPreferredWidth (200);&#xa;jTableTag.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableTag.getColumn (tableCol.elementAt (0)).setPreferredWidth (220);&#xa;jTableTag.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);"/>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="PhongThiForm_jTablePhongThi"/>
               </AuxValues>
             </Component>
@@ -158,11 +120,21 @@
             </Property>
             <Property name="text" type="java.lang.String" value="DANH S&#xc1;CH S&#x1ea2;N PH&#x1ea8;M"/>
           </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="306" y="72" width="163" height="40"/>
+            </Constraint>
+          </Constraints>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="306" y="118" width="520" height="290"/>
+            </Constraint>
+          </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
@@ -201,6 +173,24 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnAddActionPerformed"/>
           </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="362" y="434" width="150" height="42"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Refresh"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="180" y="80" width="80" height="31"/>
+            </Constraint>
+          </Constraints>
         </Component>
       </SubComponents>
     </Container>
