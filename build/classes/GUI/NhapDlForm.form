@@ -59,7 +59,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="319" y="6" width="243" height="40"/>
+              <AbsoluteConstraints x="280" y="10" width="243" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -72,7 +72,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="20" y="72" width="163" height="40"/>
+              <AbsoluteConstraints x="10" y="70" width="163" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -82,7 +82,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="20" y="118" width="240" height="290"/>
+              <AbsoluteConstraints x="10" y="120" width="250" height="290"/>
             </Constraint>
           </Constraints>
 
@@ -107,7 +107,7 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector tableCol=new Vector();&#xa;tableCol.add(&quot;Tag ID&quot;);&#xa;&#xa;tbModelTag = new DefaultTableModel (tableCol,0){&#xa;    @Override&#xa;public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return false;&#xa;    }&#xa;};&#xa;jTableTag.setModel (tbModelTag);&#xa;jTableTag.setShowGrid(true);&#xa;        jTableTag.setFocusable(false);&#xa;//        jTableTag.setIntercellSpacing(new Dimension(0,0));     &#xa;        jTableTag.setRowHeight(25);&#xa;//        jTableTag.setRowMargin(10);&#xa;        jTableTag.getTableHeader().setOpaque(false);&#xa;        jTableTag.setFillsViewportHeight(true);&#xa;        jTableTag.getTableHeader().setBackground(new Color(220,220,220));&#xa;        jTableTag.getTableHeader().setForeground(new Color(30,30,30));&#xa;        jTableTag.getTableHeader().setFont (new Font(&quot;Dialog&quot;, Font.BOLD, 13));&#xa;        jTableTag.setSelectionBackground(new Color(0,120,215));&#xa;        jTableTag.setSelectionForeground(new Color(255,255,255));&#xa;        jTableTag.setForeground(new Color(30,30,30));"/>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableTag.getColumn (tableCol.elementAt (0)).setPreferredWidth (220);&#xa;jTableTag.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableTag.getColumn (tableCol.elementAt (0)).setPreferredWidth (230);&#xa;jTableTag.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);"/>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="PhongThiForm_jTablePhongThi"/>
               </AuxValues>
             </Component>
@@ -122,7 +122,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="306" y="72" width="163" height="40"/>
+              <AbsoluteConstraints x="290" y="70" width="163" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -132,7 +132,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="306" y="118" width="520" height="290"/>
+              <AbsoluteConstraints x="290" y="120" width="500" height="290"/>
             </Constraint>
           </Constraints>
 
@@ -140,7 +140,6 @@
           <SubComponents>
             <Component class="javax.swing.JTable" name="jTableProduct">
               <Properties>
-                <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
@@ -175,7 +174,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="362" y="434" width="150" height="42"/>
+              <AbsoluteConstraints x="330" y="430" width="150" height="42"/>
             </Constraint>
           </Constraints>
         </Component>

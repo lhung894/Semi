@@ -31,9 +31,9 @@ public class TagDAO {
                 dto.setTagId(conn.rs.getString(1));
                 dto.setProductId(conn.rs.getString(2));
                 dto.setTagGateIn(conn.rs.getString(3));
-                dto.setTagDateIn(conn.rs.getDate(4));
+                dto.setTagDateIn(conn.rs.getString(4));
                 dto.setTagGateOut(conn.rs.getString(5));
-                dto.setTagDateOut(conn.rs.getDate(6));
+                dto.setTagDateOut(conn.rs.getString(6));
                 dto.setOrderId(conn.rs.getString(7));
                 tagDTOs.add(dto);
             }

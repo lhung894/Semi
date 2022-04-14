@@ -13,13 +13,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Set;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import com.example.sdksamples.MainRead;
 
 /**
  *
@@ -31,7 +30,10 @@ public class NhapDlForm extends javax.swing.JFrame {
     Set<String> tags;
     ProductBUS productBUS = new ProductBUS();
     TagBUS tagBUS = new TagBUS();
-    int countSelected, rowTag = -2, rowProduct = -2;
+    int rowTag = -2, rowProduct = -2;
+    boolean selectedTag = false, selectedProduct = false;
+    String idTag = "", idProduct = "";
+    public static ArrayList<TagDTO> tagDTOs = new ArrayList<>();
 //    MainRead readTags
 
     /**
@@ -41,9 +43,10 @@ public class NhapDlForm extends javax.swing.JFrame {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-        this.setVisible(true);
-        initTableProduct();
+        this.setVisible(false);
         initTableTag();
+        initTableProduct();
+        jBtnAdd.setEnabled(false);
     }
 
     public NhapDlForm(Set<String> tags) {
@@ -52,10 +55,20 @@ public class NhapDlForm extends javax.swing.JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.setVisible(true);
+        initTableTagSet();
         initTableProduct();
         jBtnAdd.setEnabled(false);
     }
-    
+
+    public void initTableTagSet() {
+        tbModelTag.setRowCount(0);
+        tableModelTagSet(tbModelTag);
+        jTableTag.setRowSorter(null);
+        jTableTag.setAutoCreateRowSorter(true);
+        jTableTag.setModel(tbModelTag);
+        jTableTag.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
     public void initTableTag() {
         tbModelTag.setRowCount(0);
         tableModelTag(tbModelTag);
@@ -73,17 +86,26 @@ public class NhapDlForm extends javax.swing.JFrame {
     public void initTableProduct() {
         tbModelProduct.setRowCount(0);
         tableModelProduct(tbModelProduct);
-        jTableProduct.setRowSorter(null);
-        jTableProduct.setAutoCreateRowSorter(true);
+//        jTableProduct.setRowSorter(null);
+//        jTableProduct.setAutoCreateRowSorter(true);
         jTableProduct.setModel(tbModelProduct);
         jTableProduct.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    public void tableModelTag(DefaultTableModel model) {
-        for (String tag : MainRead.tagMap.keySet()) {
+    public void tableModelTagSet(DefaultTableModel model) {
+        for (String tag : tags) {
             System.out.println("tag: " + tag);
             Vector row = new Vector();
             row.add(tag);
+            model.addRow(row);
+        }
+    }
+
+    public void tableModelTag(DefaultTableModel model) {
+        for (TagDTO tag : tagDTOs) {
+            System.out.println("tag: " + tag);
+            Vector row = new Vector();
+            row.add(tag.getTagId());
             model.addRow(row);
         }
     }
@@ -101,7 +123,13 @@ public class NhapDlForm extends javax.swing.JFrame {
     }
 
     public void removeRowTag() {
-        tbModelTag.removeRow(rowTag);
+        for (int i = 0; i < tbModelTag.getRowCount(); i++) {
+            if (idTag.equals(tbModelTag.getValueAt(i, 0))) {
+                System.out.println("remove");
+                tbModelTag.removeRow(i);
+                break;
+            }
+        }
     }
 
     /**
@@ -111,8 +139,7 @@ public class NhapDlForm extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -136,20 +163,18 @@ public class NhapDlForm extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("GÁN TAG CHO SẢN PHẨM");
         jLabel1.setToolTipText("");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(319, 6, 243, 40));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 243, 40));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("DANH SÁCH TAG");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 72, 163, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 163, 40));
 
         Vector tableCol=new Vector();
         tableCol.add("Tag ID");
 
-        tbModelTag = new DefaultTableModel (tableCol,0)
-        {
+        tbModelTag = new DefaultTableModel (tableCol,0){
             @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex)
-            {
+            public boolean isCellEditable(int rowIndex, int columnIndex){
                 return false;
             }
         };
@@ -170,22 +195,20 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableTag.setAutoCreateRowSorter(true);
         jTableTag.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableTag.setGridColor(new java.awt.Color(83, 86, 88));
-        jTableTag.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jTableTag.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableTagMouseClicked(evt);
             }
         });
-        jTableTag.getColumn (tableCol.elementAt (0)).setPreferredWidth (220);
+        jTableTag.getColumn (tableCol.elementAt (0)).setPreferredWidth (230);
         jTableTag.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(jTableTag);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 118, 240, 290));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 250, 290));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("DANH SÁCH SẢN PHẨM");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 72, 163, 40));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 163, 40));
 
         Vector tableColProduct = new Vector();
         tableColProduct.add("Product ID");
@@ -193,11 +216,9 @@ public class NhapDlForm extends javax.swing.JFrame {
         tableColProduct.add("Quantity");
         tableColProduct.add("Detail");
 
-        tbModelProduct = new DefaultTableModel (tableColProduct,0)
-        {
+        tbModelProduct = new DefaultTableModel (tableColProduct,0){
             @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex)
-            {
+            public boolean isCellEditable(int rowIndex, int columnIndex){
                 return false;
             }
         };
@@ -215,13 +236,10 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableProduct.setSelectionBackground(new Color(0,120,215));
         jTableProduct.setSelectionForeground(new Color(255,255,255));
         jTableProduct.setForeground(new Color(30,30,30));
-        jTableProduct.setAutoCreateRowSorter(true);
         jTableProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableProduct.setGridColor(new java.awt.Color(83, 86, 88));
-        jTableProduct.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jTableProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableProductMouseClicked(evt);
             }
         });
@@ -232,24 +250,20 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableProduct.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane2.setViewportView(jTableProduct);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 118, 520, 290));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 500, 290));
 
         jBtnAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jBtnAdd.setText("THÊM");
-        jBtnAdd.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnAddActionPerformed(evt);
             }
         });
-        jPanel1.add(jBtnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(362, 434, 150, 42));
+        jPanel1.add(jBtnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 150, 42));
 
         jButton1.setText("Refresh");
-        jButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
@@ -275,23 +289,23 @@ public class NhapDlForm extends javax.swing.JFrame {
         System.out.println("row: " + row);
         if (row == rowTag) {
             jTableTag.clearSelection();
+            selectedTag = false;
+            idTag = "";
             jBtnAdd.setEnabled(false);
-            countSelected--;
             rowTag = -2;
-            System.out.println("count: " + countSelected);
             return;
         }
         if (row != -1) {
-            if (countSelected < 2) {
-                countSelected++;
-            }
+            selectedTag = true;
             rowTag = row;
-            System.out.println("click: " + jTableTag.getValueAt(rowTag, 0));
+            idTag = (String) jTableTag.getValueAt(rowTag, 0);
+            System.out.println("id: " + idTag);
+            System.out.println("click table: " + jTableTag.getValueAt(rowTag, 0));
+            System.out.println("tbmodel: " + tbModelTag.getValueAt(rowTag, 0));
         }
-        if (countSelected == 2) {
+        if (selectedTag && selectedProduct && idTag != "" && idProduct != "") {
             jBtnAdd.setEnabled(true);
         }
-        System.out.println("count: " + countSelected);
     }//GEN-LAST:event_jTableTagMouseClicked
 
     private void jTableProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductMouseClicked
@@ -300,54 +314,59 @@ public class NhapDlForm extends javax.swing.JFrame {
         System.out.println("row: " + row);
         if (row == rowProduct) {
             jTableProduct.clearSelection();
+            selectedProduct = false;
+            idProduct = "";
             jBtnAdd.setEnabled(false);
-            countSelected--;
             rowProduct = -2;
-            System.out.println("count: " + countSelected);
             return;
         }
         if (row != -1) {
-            if (countSelected < 2) {
-                countSelected++;
-            }
+            selectedProduct = true;
             rowProduct = row;
+            idProduct = (String) jTableProduct.getValueAt(rowProduct, 0);
             System.out.println("click: " + jTableProduct.getValueAt(rowProduct, 0)); //ch?nh
         }
-        if (countSelected == 2) {
+        if (selectedTag && selectedProduct && idTag != "" && idProduct != "") {
             jBtnAdd.setEnabled(true);
         }
-        System.out.println("count: " + countSelected);
     }//GEN-LAST:event_jTableProductMouseClicked
 
     private void jBtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddActionPerformed
         // TODO add your handling code here:
-        TagDTO tagDTO = new TagDTO((String) jTableTag.getValueAt(rowTag, 0),
-                (String) jTableProduct.getValueAt(rowProduct, 0),
-                "", null, "", null, "");
+        TagDTO tagDTO = new TagDTO(idTag, idProduct, "", null, "", null, "");
+        for (TagDTO t : tagDTOs) {
+            if (t.getTagId().equals(idTag)) {
+                tagDTO.setTagGateIn(t.getTagGateIn());
+                tagDTO.setTagDateIn(t.getTagDateIn());
+                break;
+            }
+        }
         System.out.println("tagDTO: " + tagDTO);
         if (tagBUS.insertTag(tagDTO)) {
             ProductDTO productDTO = new ProductDTO();
-            productDTO.setProductId((String) jTableProduct.getValueAt(rowProduct, 0));
-            productDTO.setProductQuantity((Integer) jTableProduct.getValueAt(rowProduct, 2) + 1);
+            productDTO.setProductId((String) tbModelProduct.getValueAt(rowProduct, 0));
+            productDTO.setProductQuantity((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1);
             if (productBUS.updateProduct(productDTO)) {
-                jTableProduct.setValueAt((Integer) jTableProduct.getValueAt(rowProduct, 2) + 1, rowProduct, 2);
+                jTableProduct.setValueAt((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1, rowProduct, 2);
                 removeRowTag();
                 JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thành công!");
+                jTableTag.clearSelection();
+                jTableProduct.clearSelection();
+                rowProduct = -2;
+                rowTag = -2;
+                selectedTag = false;
+                selectedProduct = false;
+                jBtnAdd.setEnabled(false);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thất bại!");
         }
-        jTableTag.clearSelection();
-        jTableProduct.clearSelection();
-        rowProduct = -2;
-        rowTag = -2;
-        countSelected = 0;
     }//GEN-LAST:event_jBtnAddActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
         initTagAuto();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -384,6 +403,14 @@ public class NhapDlForm extends javax.swing.JFrame {
                 new NhapDlForm().setVisible(true);
             }
         });
+    }
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    public void setjPanel1(JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

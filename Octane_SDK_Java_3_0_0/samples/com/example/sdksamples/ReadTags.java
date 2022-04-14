@@ -1,5 +1,6 @@
 package com.example.sdksamples;
 
+import GUI.Dashboard;
 import GUI.NhapDlForm;
 import com.impinj.octane.*;
 import java.util.ArrayList;
@@ -58,8 +59,10 @@ public class ReadTags
 
 //            reader.setTagReportListener(new Vd());
             MainRead mread = new MainRead();
-            NhapDlForm test = new NhapDlForm(); //cc
-            mread.setInputForm(test);
+//            NhapDlForm test = new NhapDlForm();
+            Dashboard d = new Dashboard();
+            mread.setInputForm(d.getInputTag());
+            mread.setOutputForm(d.getListOrder());
             reader.setTagReportListener(mread);
             
             System.out.println("Applying Settings");

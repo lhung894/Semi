@@ -22,7 +22,7 @@ public class OrderDetailDAO {
         ArrayList<OrderDetailDTO> orderDetailDTOs = new ArrayList<OrderDetailDTO>();
         conn = new Connect();
         conn.getConnection();
-        String query = "select * from OrderDetail";
+        String query = "select * from Order_Detail";
         try {
             conn.executeQuery(query);
             while (conn.rs.next()) {

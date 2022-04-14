@@ -14,15 +14,15 @@ public class TagDTO {
     private String tagId;
     private String productId;
     private String tagGateIn;
-    private Date tagDateIn;
+    private String tagDateIn;
     private String tagGateOut;
-    private Date tagDateOut;
+    private String tagDateOut;
     private String orderId;
 
     public TagDTO() {
     }
 
-    public TagDTO(String tagId, String productId, String tagGateIn, Date tagDateIn, String tagGateOut, Date tagDateOut, String orderId) {
+    public TagDTO(String tagId, String productId, String tagGateIn, String tagDateIn, String tagGateOut, String tagDateOut, String orderId) {
         this.tagId = tagId;
         this.productId = productId;
         this.tagGateIn = tagGateIn;
@@ -56,11 +56,11 @@ public class TagDTO {
         this.tagGateIn = tagGateIn;
     }
 
-    public Date getTagDateIn() {
+    public String getTagDateIn() {
         return tagDateIn;
     }
 
-    public void setTagDateIn(Date tagDateIn) {
+    public void setTagDateIn(String tagDateIn) {
         this.tagDateIn = tagDateIn;
     }
 
@@ -72,11 +72,11 @@ public class TagDTO {
         this.tagGateOut = tagGateOut;
     }
 
-    public Date getTagDateOut() {
+    public String getTagDateOut() {
         return tagDateOut;
     }
 
-    public void setTagDateOut(Date tagDateOut) {
+    public void setTagDateOut(String tagDateOut) {
         this.tagDateOut = tagDateOut;
     }
 
