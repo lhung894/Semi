@@ -71,13 +71,13 @@ alter table Slot add constraint FK_Slot_Product
 foreign key (product_id) references Product(product_id);
 
 insert into Product
-values ('PRO_1','product 1',10,'detail product 1'),
-('PRO_2','product 2',10,'detail product 2'),
-('PRO_3','product 3',10,'detail product 3'),
-('PRO_4','product 4',10,'detail product 4'),
-('PRO_5','product 5',10,'detail product 5'),
-('PRO_6','product 6',10,'detail product 6'),
-('PRO_7','product 7',10,'detail product 7');
+values ('PRO_1','product 1',0,'detail product 1'),
+('PRO_2','product 2',0,'detail product 2'),
+('PRO_3','product 3',0,'detail product 3'),
+('PRO_4','product 4',0,'detail product 4'),
+('PRO_5','product 5',0,'detail product 5'),
+('PRO_6','product 6',0,'detail product 6'),
+('PRO_7','product 7',0,'detail product 7');
 
 insert into LastId
 values ('7','0','0','0','0');
