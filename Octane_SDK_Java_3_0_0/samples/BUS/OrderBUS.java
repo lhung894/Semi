@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author User
  */
 public class OrderBUS {
+
     OrderDAO orderDAO = new OrderDAO();
     Utils ult = new Utils();
     LastIdDAO lastIdDAO = new LastIdDAO();
@@ -28,8 +29,19 @@ public class OrderBUS {
             String temp[] = orderDTO.getOrderId().split("_");
             System.out.println("temp[1] Order: " + temp[1]);
             lastIdDAO.updateOrderId(temp[1]);
+            System.out.println("insert order success BUS");
             return true;
         }
+        System.out.println("insert order fail BUS");
+        return false;
+    }
+
+    public boolean updateOrderCompleted(String orderId) {
+        if (orderDAO.updateOrderCompleted(orderId)) {
+            System.out.println("update order completed success BUS");
+            return true;
+        }
+        System.out.println("update order completed fail BUS");
         return false;
     }
 }

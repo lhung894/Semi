@@ -39,10 +39,12 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
     Utils ult = new Utils();
     int rowOrder = -2, rowDetail = -2;
+    boolean isScanning = false;
     String orderId = "";
     public static ArrayList<TagDTO> tagDTOs = new ArrayList<>();
     public static HashMap<String, Integer> detailScan = new HashMap<>();
-    ArrayList<OrderDetailDTO> details = new ArrayList<>();
+    ArrayList<OrderDetailDTO> details;
+    ArrayList<ProductDTO> products;
 
     /**
      * Creates new form DanhSachXuatForm
@@ -69,6 +71,10 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     }
 
     public void initTableOrder() {
+//        orderDetailBUS = new OrderDetailBUS();
+        details = orderDetailBUS.getList();
+//        productBUS = new ProductBUS();
+        products = productBUS.getList();
         tbModelOrder.setRowCount(0);
         tableModelOrder(tbModelOrder);
         jTableOrder.setRowSorter(null);
@@ -81,22 +87,25 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     }
 
     public void tableModelDetail(DefaultTableModel model) {
-        orderDetailBUS = new OrderDetailBUS();
         Vector row;
-        for (OrderDetailDTO detail : orderDetailBUS.getList()) {
+        for (OrderDetailDTO detail : details) {
             if (detail.getOrderId().equals(orderId)) {
                 row = new Vector();
-                row.add("");
+                if (tbModelOrder.getValueAt(rowOrder, 2).equals("Hoàn tất")) {
+                    row.add("ok");
+                } else {
+                    row.add("");
+                }
                 row.add(detail.getOrderDetailId());
                 row.add(detail.getProductId());
-                for (ProductDTO product : productBUS.getList()) {
+                for (ProductDTO product : products) {
                     if (product.getProductId().equals(detail.getProductId())) {
                         row.add(product.getProductName());
                     }
                 }
                 row.add(detail.getOrderQuantity());
                 model.addRow(row);
-                details.add(new OrderDetailDTO(detail.getOrderDetailId(), orderId, detail.getProductId(), detail.getOrderQuantity()));
+//                details.add(new OrderDetailDTO(detail.getOrderDetailId(), orderId, detail.getProductId(), detail.getOrderQuantity()));
             }
         }
     }
@@ -280,8 +289,11 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 
     private void jTableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrderMouseClicked
         // TODO add your handling code here:
+        if (isScanning) {
+            jTableOrder.setRowSelectionAllowed(false);
+            return;
+        }
         int row = jTableOrder.getSelectedRow();
-        //        System.out.println("row: " + row);
         if (row == rowOrder) {
             jTableOrder.clearSelection();
             jBtnQuet.setEnabled(false);
@@ -293,8 +305,13 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         if (row != -1) {
             rowOrder = row;
             orderId = (String) jTableOrder.getValueAt(row, 0);
-            details.clear();
             initTableDetail();
+            if (tbModelOrder.getValueAt(rowOrder, 2).equals("Hoàn tất")) {
+                jBtnHuy.setEnabled(false);
+                jBtnQuet.setEnabled(false);
+                jBtnXuat.setEnabled(false);
+                return;
+            }
             jBtnQuet.setEnabled(true);
         }
     }//GEN-LAST:event_jTableOrderMouseClicked
@@ -302,16 +319,13 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     private void jTableDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDetailMouseClicked
         // TODO add your handling code here:
         int row = jTableDetail.getSelectedRow();
-        //        System.out.println("row: " + row);
         if (row == rowDetail) {
             jTableDetail.clearSelection();
-            //            jBtnToOrder.setEnabled(false);
             rowDetail = -2;
             return;
         }
         if (row != -1) {
             rowDetail = row;
-            //            jBtnToOrder.setEnabled(true);
         }
     }//GEN-LAST:event_jTableDetailMouseClicked
 
@@ -320,7 +334,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         String error = "";
         int count = 0;
         for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
-            if (detailScan.containsKey(tbModelDetail.getValueAt(i, 2)) && detailScan.containsValue(tbModelDetail.getValueAt(i, 4))) {
+            if (tbModelDetail.getValueAt(i, 0).equals("ok")) {
                 count++;
             } else {
                 error += "Sản phẩm " + tbModelDetail.getValueAt(i, 2) + " chưa hoàn tất\n";
@@ -331,15 +345,24 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             return;
         }
         if (count == tbModelDetail.getRowCount()) {
+//            if (orderBUS.updateOrderCompleted(orderId)) { // cập nhật đơn
+//                
+//                if (tagBUS.updateTagsOut(tagDTOs)) { // cập nhật date và gate out cho tag
+//                    
+//                }
+//            }
+            tbModelOrder.setValueAt("Hoàn tất", rowOrder, 2);
             JOptionPane.showMessageDialog(this, "Xuất đơn thành công!");
             jBtnHuy.setEnabled(false);
             jBtnQuet.setEnabled(false);
             jBtnXuat.setEnabled(false);
+            isScanning = false;
         }
     }//GEN-LAST:event_jBtnXuatActionPerformed
 
     private void jBtnQuetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnQuetActionPerformed
         // TODO add your handling code here:
+        isScanning = true;
         MainRead.flag = 2;
         MainRead.tagMap.clear();
         MainRead.tagDTOsMR = tagBUS.getList();
@@ -352,6 +375,9 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 
     private void jBtnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnHuyActionPerformed
         // TODO add your handling code here:
+        tbModelDetail.setRowCount(0);
+        jTableOrder.setRowSelectionAllowed(true);
+        isScanning = false;
         MainRead.flag = 0;
         MainRead.tagMap.clear();
         detailScan.clear();

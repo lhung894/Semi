@@ -71,19 +71,34 @@ public class TagDAO {
         return false;
     }
 
-    public boolean updateTag(TagDTO tagDTO, boolean check) {
+    public boolean updateTagsIn(TagDTO tagDTO, boolean check) {
         conn = new Connect();
         conn.getConnection();
-        String sql = "UPDATE Tag SET";
-        // true = nhập
-        if (check) {
-            sql += ", tag_gate_in='" + tagDTO.getTagGateIn() + "'"
-                    + ", " + "tag_date_in='" + tagDTO.getTagDateOut();
-        } else {
-            sql += ", tag_gate_out='" + tagDTO.getTagGateIn() + "'"
-                    + ", " + "tag_date_out='" + tagDTO.getTagDateOut();
+        String sql = "UPDATE Tag SET"
+                + " tag_gate_in='" + tagDTO.getTagGateIn() + "'"
+                + ", " + "tag_date_in='" + tagDTO.getTagDateIn() + "'"
+                + " WHERE tag_id='" + tagDTO.getTagId() + "';";
+        if (conn.executeUpdate(sql)) {
+            conn.close();
+            System.out.println("TagDAO update success.");
+            return true;
         }
-        sql += " WHERE tag_id='" + tagDTO.getTagId() + "';";
+        conn.close();
+        System.out.println("TagDAO update fail.");
+        return false;
+    }
+
+    public boolean updateTagsOut(ArrayList<TagDTO> tagDTOs) {
+        conn = new Connect();
+        conn.getConnection();
+        String sql = "";
+        for (TagDTO tag : tagDTOs) {
+            sql += "UPDATE Tag SET"
+                    + " tag_gate_out='" + tag.getTagGateOut()+ "'"
+                    + ", " + "tag_date_out='" + tag.getTagDateOut() + "'"
+                    + ", " + "order_id='" + tag.getOrderId() + "'"
+                    + " WHERE tag_id='" + tag.getTagId() + "';";
+        }
         if (conn.executeUpdate(sql)) {
             conn.close();
             System.out.println("TagDAO update success.");

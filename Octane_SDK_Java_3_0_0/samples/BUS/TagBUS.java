@@ -13,20 +13,28 @@ import java.util.ArrayList;
  * @author User
  */
 public class TagBUS {
-    TagDAO tagDAO;
-    
-    public ArrayList<TagDTO> getList () {
-        tagDAO = new TagDAO();
+
+    TagDAO tagDAO = new TagDAO();
+
+    public ArrayList<TagDTO> getList() {
         return tagDAO.getList();
     }
-    
-    public boolean insertTag (TagDTO tagDTO) {
-        tagDAO = new TagDAO();
+
+    public boolean insertTag(TagDTO tagDTO) {
         if (tagDAO.insertTag(tagDTO)) {
             System.out.println("insert success TagBUS");
             return true;
         }
         System.out.println("insert fail TagBUS");
+        return false;
+    }
+
+    public boolean updateTagsOut(ArrayList<TagDTO> tagDTOs) {
+        if (tagDAO.updateTagsOut(tagDTOs)) {
+            System.out.println("update success TagBUS");
+            return true;
+        }
+        System.out.println("update fail TagBUS");
         return false;
     }
 }
