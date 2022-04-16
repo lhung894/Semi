@@ -43,11 +43,13 @@ public class MainRead implements TagReportListener {
                 if (tagMap.put(t.getEpc().toString(), t) == null) {
                     tagDTO = new TagDTO();
                     tagDTO.setTagId(t.getEpc().toString());
-                    if (reader.getName() != null) {
-                        tagDTO.setTagGateIn(reader.getName());
-                    } else {
-                        tagDTO.setTagGateIn(reader.getAddress());
-                    }
+//                    if (reader.getName() != null) {
+//                        tagDTO.setTagGateIn(reader.getName());
+//                    } else {
+//                        tagDTO.setTagGateIn(reader.getAddress());
+//                    }
+                    tagDTO.setTagGateIn(String.valueOf(t.getAntennaPortNumber()));
+//                    System.out.println("name: " + tagDTO.getTagGateIn());
                     tagDTO.setTagDateIn(ult.initDateNow());
                     inputForm.tagDTOs.add(tagDTO);
                     System.out.println("ok??????????????????????????");
@@ -60,11 +62,12 @@ public class MainRead implements TagReportListener {
                 if (tagMap.put(t.getEpc().toString(), t) == null) {
                     tagDTO = new TagDTO();
                     tagDTO.setTagId(t.getEpc().toString());
-                    if (reader.getName() != null) {
-                        tagDTO.setTagGateOut(reader.getName());
-                    } else {
-                        tagDTO.setTagGateOut(reader.getAddress());
-                    }
+//                    if (reader.getName() != null) {
+//                        tagDTO.setTagGateOut(reader.getName());
+//                    } else {
+//                        tagDTO.setTagGateOut(reader.getAddress());
+//                    }
+                    tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
                     tagDTO.setTagDateOut(ult.initDateNow());
                     for (TagDTO dto : tagDTOsMR) {
                         if (dto.getTagId().equals(tagDTO.getTagId())) {
@@ -73,6 +76,12 @@ public class MainRead implements TagReportListener {
                         }
                     }
                     outputForm.tagDTOs.add(tagDTO);
+                    if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
+                        outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) + 1);
+                    } else {
+                        outputForm.detailScan.put(tagDTO.getProductId(), 1);
+                    }
+                    outputForm.checkScan(tagDTO.getProductId());
                     System.out.println("ok??????????????????????????");
 //                    outputForm.initTagAuto();
                 }
@@ -147,7 +156,7 @@ public class MainRead implements TagReportListener {
         } else {
             outputForm.detailScan.put(test.getProductId(), 1);
         }
-        outputForm.checkScan();
+        outputForm.checkScan(test.getProductId());
         test = new TagDTO();
         test.setTagId("def");
         for (TagDTO dto : tagDTOsMR) {
@@ -162,7 +171,7 @@ public class MainRead implements TagReportListener {
         } else {
             outputForm.detailScan.put(test.getProductId(), 1);
         }
-        outputForm.checkScan();
+        outputForm.checkScan(test.getProductId());
     }
 
     public static HashMap<String, Tag> getTagMap() {

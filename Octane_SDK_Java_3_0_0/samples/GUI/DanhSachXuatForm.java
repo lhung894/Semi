@@ -45,6 +45,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     public static HashMap<String, Integer> detailScan = new HashMap<>();
     ArrayList<OrderDetailDTO> details;
     ArrayList<ProductDTO> products;
+    ArrayList<TagDTO> tagDTOsUpdate = new ArrayList<>();
 
     /**
      * Creates new form DanhSachXuatForm
@@ -64,7 +65,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             if (order.getStatus() == 2) {
                 row.add("Chờ xuất");
             } else if (order.getStatus() == 3) {
-                row.add("Đã xuất");
+                row.add("Hoàn tất");
             }
             model.addRow(row);
         }
@@ -117,11 +118,27 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    public void checkScan() {
-        String error = "";
+    public void checkScan(String product_id) {
+//        String error = "";
+        int quantity, count = 0;
         for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
-            if (detailScan.containsKey(tbModelDetail.getValueAt(i, 2)) && detailScan.containsValue(tbModelDetail.getValueAt(i, 4))) {
-                tbModelDetail.setValueAt("ok", i, 0);
+            if (product_id.equals(tbModelDetail.getValueAt(i, 2))) {
+                count++;
+            }
+        }
+        if (count == 0) {
+            JOptionPane.showMessageDialog(this, "Sản phẩm " + product_id + " không thuộc đơn hàng!");
+            jBtnXuat.setEnabled(false);
+            return;
+        }
+        for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
+            if (detailScan.containsKey(tbModelDetail.getValueAt(i, 2))) {
+                quantity = detailScan.get(tbModelDetail.getValueAt(i, 2));
+                if (quantity == Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4)))) {
+                    tbModelDetail.setValueAt("ok", i, 0);
+                } else if (quantity > Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4)))) {
+                    tbModelDetail.setValueAt("redundant", i, 0);
+                }
             }
         }
     }
@@ -336,27 +353,32 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
             if (tbModelDetail.getValueAt(i, 0).equals("ok")) {
                 count++;
+            } else if (tbModelDetail.getValueAt(i, 0).equals("redundant")) {
+                error += "Sản phẩm " + tbModelDetail.getValueAt(i, 2) + " bị dư\n";
             } else {
                 error += "Sản phẩm " + tbModelDetail.getValueAt(i, 2) + " chưa hoàn tất\n";
             }
         }
-        if (error != "") {
+        if (!error.equals("")) {
             JOptionPane.showMessageDialog(this, error);
             return;
         }
         if (count == tbModelDetail.getRowCount()) {
-//            if (orderBUS.updateOrderCompleted(orderId)) { // cập nhật đơn
-//                
-//                if (tagBUS.updateTagsOut(tagDTOs)) { // cập nhật date và gate out cho tag
-//                    
-//                }
-//            }
-            tbModelOrder.setValueAt("Hoàn tất", rowOrder, 2);
-            JOptionPane.showMessageDialog(this, "Xuất đơn thành công!");
-            jBtnHuy.setEnabled(false);
-            jBtnQuet.setEnabled(false);
-            jBtnXuat.setEnabled(false);
-            isScanning = false;
+            tagDTOsUpdate = new ArrayList<>();
+            if (orderBUS.updateOrderCompleted(orderId)) { // cập nhật đơn
+                for (TagDTO a : tagDTOs) {
+                    a.setOrderId(orderId);
+                }
+                if (tagBUS.updateTagsOut(tagDTOs)) { // cập nhật date và gate out cho tag
+                    tbModelOrder.setValueAt("Hoàn tất", rowOrder, 2);
+                    JOptionPane.showMessageDialog(this, "Xuất đơn thành công!");
+                    jBtnHuy.setEnabled(false);
+                    jBtnQuet.setEnabled(false);
+                    jBtnXuat.setEnabled(false);
+                    isScanning = false;
+                }
+            }
+
         }
     }//GEN-LAST:event_jBtnXuatActionPerformed
 
@@ -367,7 +389,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         MainRead.tagMap.clear();
         MainRead.tagDTOsMR = tagBUS.getList();
         detailScan.clear();
-        MainRead.thucThi();
+//        MainRead.thucThi();
         jBtnHuy.setEnabled(true);
         jBtnQuet.setEnabled(false);
         jBtnXuat.setEnabled(true);

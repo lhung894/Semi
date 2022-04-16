@@ -53,14 +53,15 @@ public class TagDAO {
         conn = new Connect();
         conn.getConnection();
         //(tag_id,product_id,tag_gate_in,tag_date_in,tag_gate_out,tag_date_out)
-        String query = "INSERT INTO Tag"
+        String query = "INSERT INTO Tag (tag_id,product_id,tag_gate_in,tag_date_in,tag_gate_out,tag_date_out,order_id)"
                 + " VALUES ('" + tagDTO.getTagId()
                 + "','" + tagDTO.getProductId() + "'"
                 + ",'" + tagDTO.getTagGateIn() + "'"
-                + "," + tagDTO.getTagDateIn()
+                + ",'" + tagDTO.getTagDateIn() + "'"
                 + ",'" + tagDTO.getTagGateOut() + "'"
                 + "," + tagDTO.getTagDateOut()
                 + ",'" + tagDTO.getOrderId() + "')";
+        System.out.println("query: " + query);
         if (conn.executeUpdate(query)) {
             conn.close();
             System.out.println("TagDAO insert success.");
