@@ -286,7 +286,5 @@ public class XuatExcel
         }
     }
 
-    public static void main(String[] args)
-    {
-    }
+  
 }

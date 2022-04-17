@@ -71,7 +71,6 @@ public class BaoCaoForm extends javax.swing.JFrame {
                 row.add("Hoàn tất");
             }
             model.addRow(row);
-            ordersFind.add(order);
         }
     }
 
@@ -82,7 +81,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
 //        productBUS = new ProductBUS();
         products = productBUS.getList();
         tbModelOrder.setRowCount(0);
-        tableModelOrder(tbModelOrder, orders);
+//        tableModelOrder(tbModelOrder, orders);
         jTableOrder.setRowSorter(null);
         jTableOrder.setAutoCreateRowSorter(true);
         jTableOrder.setModel(tbModelOrder);
