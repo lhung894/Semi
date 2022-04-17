@@ -37,7 +37,6 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     TagBUS tagBUS = new TagBUS();
     OrderBUS orderBUS = new OrderBUS();
     OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
-    Utils ult = new Utils();
     int rowOrder = -2, rowDetail = -2;
     boolean isScanning = false;
     String orderId = "";
@@ -45,7 +44,6 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     public static HashMap<String, Integer> detailScan = new HashMap<>();
     ArrayList<OrderDetailDTO> details;
     ArrayList<ProductDTO> products;
-    ArrayList<TagDTO> tagDTOsUpdate = new ArrayList<>();
 
     /**
      * Creates new form DanhSachXuatForm
@@ -54,6 +52,8 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         initComponents();
         initTableOrder();
         this.setVisible(false);
+        jTableOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     public void tableModelOrder(DefaultTableModel model) {
@@ -81,7 +81,6 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         jTableOrder.setRowSorter(null);
         jTableOrder.setAutoCreateRowSorter(true);
         jTableOrder.setModel(tbModelOrder);
-        jTableOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jBtnQuet.setEnabled(false);
         jBtnHuy.setEnabled(false);
         jBtnXuat.setEnabled(false);
@@ -115,7 +114,6 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         tbModelDetail.setRowCount(0);
         tableModelDetail(tbModelDetail);
         jTableDetail.setModel(tbModelDetail);
-        jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     public void checkScan(String product_id) {
@@ -364,7 +362,6 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             return;
         }
         if (count == tbModelDetail.getRowCount()) {
-            tagDTOsUpdate = new ArrayList<>();
             if (orderBUS.updateOrderCompleted(orderId)) { // cập nhật đơn
                 for (TagDTO a : tagDTOs) {
                     a.setOrderId(orderId);
@@ -397,7 +394,8 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 
     private void jBtnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnHuyActionPerformed
         // TODO add your handling code here:
-        tbModelDetail.setRowCount(0);
+//        tbModelDetail.setRowCount(0);
+        initTableDetail();
         jTableOrder.setRowSelectionAllowed(true);
         isScanning = false;
         MainRead.flag = 0;

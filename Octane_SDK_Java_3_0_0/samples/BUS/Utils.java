@@ -117,15 +117,15 @@ public class Utils
     }
 
     /////////////////Tính số ngày với 2 tham số truyền vào
-    public int totalDays2(String thoigian, String d)
+    public int totalDays2(String dateFrom, String dateTo)
     {
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String hientai = d;
-        System.out.println("thoigian: " + thoigian + "\nhientai: " + hientai);
+        String hientai = dateTo;
+        System.out.println("thoigian: " + dateFrom + "\nhientai: " + hientai);
         int total = -1;
         try
         {
-            Date date1 = myFormat.parse(thoigian);
+            Date date1 = myFormat.parse(dateFrom);
             Date date2 = myFormat.parse(hientai);
             long diff = date2.getTime() - date1.getTime();
             System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
