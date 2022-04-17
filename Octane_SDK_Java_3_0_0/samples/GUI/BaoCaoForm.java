@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import BUS.BaoCaoBUS;
 import com.toedter.calendar.JDateChooser;
 import BUS.OrderBUS;
 import BUS.OrderDetailBUS;
@@ -40,6 +41,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
     ProductBUS productBUS = new ProductBUS();
     OrderBUS orderBUS = new OrderBUS();
     OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
+    BaoCaoBUS baoCaoBUS = new BaoCaoBUS();
     int rowOrder = -2, rowDetail = -2;
     String orderId = "";
     ArrayList<OrderDTO> orders, ordersFind = new ArrayList<>();
@@ -68,6 +70,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
                 row.add("Hoàn tất");
             }
             model.addRow(row);
+            ordersFind.add(order);
         }
     }
 
@@ -324,7 +327,8 @@ public class BaoCaoForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu để xuất!");
             return;
         }
-        JOptionPane.showMessageDialog(this, "Xuất báo cáo!");
+        baoCaoBUS.initBaoCao(ordersFind);
+//        JOptionPane.showMessageDialog(this, "Xuất báo cáo!");
     }//GEN-LAST:event_jBtnXuatActionPerformed
 
     private void jBtnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTimKiemActionPerformed
