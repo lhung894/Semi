@@ -1,4 +1,4 @@
-package DAO;
+package BUS;
 //
 //import BUS.NhanVienBUS;
 //import BUS.PhongBanBUS;
@@ -6,6 +6,7 @@ package DAO;
 //import DTO.NhanVienDTO;
 //import DTO.PhongBanDTO;
 
+import DTO.BaoCaoDTO;
 import java.awt.Color;
 import java.awt.FileDialog;
 import java.io.File;
@@ -58,7 +59,7 @@ public class XuatExcel
 
     // Xuất file Excel 
     @SuppressWarnings("empty-statement")
-    public void xuatFileExcelDonHang(ArrayList<String> a)
+    public void xuatFileExcelDonHang(ArrayList<BaoCaoDTO> baoCaoDTOs)
     {
         fd.setTitle("Xuất đơn hàng ra excel");
         String url = getFile();
@@ -87,7 +88,7 @@ public class XuatExcel
             HSSFCell cellTitleCell = (HSSFCell) rowTitle.createCell(1);
             cellTitleCell.setCellValue("PHIẾU XUẤT KHO");
             cellTitleCell.setCellStyle(styleTitle);
-            CellRangeAddress cellRangeAddress = new CellRangeAddress(1, 1, 1, 10);
+            CellRangeAddress cellRangeAddress = new CellRangeAddress(1, 1, 1, 9);
             rowTitle.getSheet().addMergedRegion(cellRangeAddress);
             RegionUtil.setBorderTop(BorderStyle.DOUBLE, cellRangeAddress, sheet);
             RegionUtil.setBorderBottom(BorderStyle.DOUBLE, cellRangeAddress, sheet);
@@ -122,88 +123,139 @@ public class XuatExcel
 
             Row row = sheet.createRow(5);
             row.setHeight((short) 400);
-            HSSFCell cell1 = (HSSFCell) row.createCell(1, CellType.NUMERIC);
-            cell1.setCellValue("STT");
-            cell1.setCellStyle(style);
-            HSSFCell cell2 = (HSSFCell) row.createCell(2, CellType.STRING);
+            HSSFCell cell2 = (HSSFCell) row.createCell(1, CellType.STRING);
             cell2.setCellValue("Mã Đơn");
             cell2.setCellStyle(style);
-            HSSFCell cell3 = (HSSFCell) row.createCell(3, CellType.STRING);
+            HSSFCell cell3 = (HSSFCell) row.createCell(2, CellType.STRING);
             cell3.setCellValue("Ngày Tạo Đơn");
             cell3.setCellStyle(style);
-            HSSFCell cell4 = (HSSFCell) row.createCell(4, CellType.STRING);
+            HSSFCell cell4 = (HSSFCell) row.createCell(3, CellType.STRING);
             cell4.setCellValue("Trạng Thái");
             cell4.setCellStyle(style);
-            HSSFCell cell5 = (HSSFCell) row.createCell(5, CellType.STRING);
+            HSSFCell cell5 = (HSSFCell) row.createCell(4, CellType.STRING);
             cell5.setCellValue("Mã Sản Phẩm");
             cell5.setCellStyle(style);
-            HSSFCell cell6 = (HSSFCell) row.createCell(6, CellType.STRING);
+            HSSFCell cell6 = (HSSFCell) row.createCell(5, CellType.STRING);
             cell6.setCellValue("Tên Sản Phẩm");
             cell6.setCellStyle(style);
-            HSSFCell cell7 = (HSSFCell) row.createCell(7, CellType.STRING);
+            HSSFCell cell7 = (HSSFCell) row.createCell(6, CellType.STRING);
             cell7.setCellValue("Số Lượng");
             cell7.setCellStyle(style);
-            HSSFCell cell8 = (HSSFCell) row.createCell(8, CellType.STRING);
+            HSSFCell cell8 = (HSSFCell) row.createCell(7, CellType.STRING);
             cell8.setCellValue("Mã Tag");
             cell8.setCellStyle(style);
-            HSSFCell cell9 = (HSSFCell) row.createCell(9, CellType.STRING);
+            HSSFCell cell9 = (HSSFCell) row.createCell(8, CellType.STRING);
             cell9.setCellValue("Cổng Xuất");
             cell9.setCellStyle(style);
-            HSSFCell cell10 = (HSSFCell) row.createCell(10, CellType.STRING);
+            HSSFCell cell10 = (HSSFCell) row.createCell(9, CellType.STRING);
             cell10.setCellValue("Ngày Xuất");
             cell10.setCellStyle(style);
 
             for (int i = 1; i <= 10; ++i)
             {
 
-                if (i == 6)
+                if (i == 5 || i == 2 || i == 9)
                 {
                     sheet.setColumnWidth(i, 25 * 256);
+                } else if (i == 7)
+                {
+                    sheet.setColumnWidth(i, 25 * 350);
                 } else
                 {
                     sheet.setColumnWidth(i, 25 * 150);
                 }
             }
 
-            
             // truyen dl cho row
-            int count = 0, rowPrint = 6;
-            String x = "";
-            for (String k : a)
+            int rowPrint = 6, beginOrder = 6, endOrder = 6, beginProduct = 6, endProduct = 6;
+            String orderId = "", productId = "";
+            for (BaoCaoDTO k : baoCaoDTOs)//row
             {
-//                if (x.equals(k)) {
-//                    count++;
-//                } else {
-//                    x = k;
-//                    count = 1;
-//                }
                 Row rowData = sheet.createRow(rowPrint);
                 rowData.setHeight((short) 400);
-                for (int j = 1; j <= 10; ++j)
+                if (!orderId.equals(k.getOrder_id()))
                 {
-                    HSSFCell cellData = (HSSFCell) rowData.createCell(j);   
+                    orderId = k.getOrder_id();
+                    if (endOrder > beginOrder)
+                    {
+                        for (int u = 1; u <= 3; u++)
+                        {
+                            CellRangeAddress cellRangeAddress2 = new CellRangeAddress(beginOrder, endOrder, u, u);
+                            rowData.getSheet().addMergedRegion(cellRangeAddress2);
+                        }
+                    }
+                    beginOrder = rowPrint;
+                } else
+                {
+                    endOrder = rowPrint;
                 }
+                if (!productId.equals(k.getProduct_id()))
+                {
+                    productId = k.getProduct_id();
+                    if (endProduct > beginProduct)
+                    {
+                        for (int u = 4; u <= 6; u++)
+                        {
+                            CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct, u, u);
+                            rowData.getSheet().addMergedRegion(cellRangeAddress3);
+                        }
+                    }
+                    beginProduct = rowPrint;
+                } else
+                {
+                    endProduct = rowPrint - 1;
+                }
+                for (int j = 1; j <= 9; ++j)//column
+                {
+                    HSSFCell cellData = (HSSFCell) rowData.createCell(j);
+                    cellData.setCellStyle(style);
+                    if (j == 1)
+                    {
+                        cellData.setCellValue(k.getOrder_id());
+                        cellData.setCellStyle(style);
+                    } else if (j == 2)
+                    {
+                        cellData.setCellValue(k.getOrder_date());
+                        cellData.setCellStyle(style);
+                    } else if (j == 3)
+                    {
+                        if (k.getStatus() == 2)
+                        {
+                            cellData.setCellValue("Chờ xuất");
+                        } else
+                        {
+                            cellData.setCellValue("Hoàn tất");
+                        }
+                        cellData.setCellStyle(style);
+                    } else if (j == 4)
+                    {
+                        cellData.setCellValue(k.getProduct_id());
+                        cellData.setCellStyle(style);
+                    } else if (j == 5)
+                    {
+                        cellData.setCellValue(k.getProduct_name());
+                        cellData.setCellStyle(style);
+                    } else if (j == 6)
+                    {
+                        cellData.setCellValue(k.getOrder_quantity());
+                        cellData.setCellStyle(style);
+                    } else if (j == 7)
+                    {
+                        cellData.setCellValue(k.getTag_id());
+                        cellData.setCellStyle(style);
+                    } else if (j == 8)
+                    {
+                        cellData.setCellValue(k.getTag_gate_out());
+                        cellData.setCellStyle(style);
+                    } else if (j == 9)
+                    {
+                        cellData.setCellValue(k.getTag_date_out());
+                        cellData.setCellStyle(style);
+                    }
+                }
+
                 rowPrint++;
             }
-//
-//            for (int i = 0; i < 10; ++i)
-//            {
-//                rownum++;
-//                row = sheet.createRow(rownum);
-//                //Gọi các chi tiết khác từ class NhanVienBUS
-////                NhanVienBUS nvBUS = new NhanVienBUS();
-////                String hoNV = nvBUS.Timphantucot(String.valueOf(nv.getManhanvien()), 2);
-////                String tenNV = nvBUS.Timphantucot(String.valueOf(nv.getManhanvien()), 3);
-////                //
-//                row.createCell(1, CellType.NUMERIC).setCellValue(i);
-////                row.createCell(1, CellType.STRING).setCellValue(nv.getManhanvien());
-////                row.createCell(2, CellType.STRING).setCellValue(hoNV);
-////                row.createCell(3, CellType.STRING).setCellValue(tenNV);
-////                row.createCell(4, CellType.STRING).setCellValue(String.valueOf(nv.getNgaysinh()));
-////                row.createCell(5, CellType.STRING).setCellValue(nv.getGioitinh());
-////                row.createCell(6, CellType.STRING).setCellValue(nv.getDiachi());
-////                row.createCell(7, CellType.STRING).setCellValue(nv.getSodienthoai());
-//            }
 
             File file = new File(url);
             file.getParentFile().mkdirs();
@@ -225,7 +277,7 @@ public class XuatExcel
                 if (outFile != null)
                 {
                     outFile.close();
-                    System.exit(0);
+//                    System.exit(0);
                 }
             } catch (IOException ex)
             {
@@ -236,14 +288,5 @@ public class XuatExcel
 
     public static void main(String[] args)
     {
-        XuatExcel xe = new XuatExcel();
-        ArrayList<String> a = new ArrayList<>();
-        a.add("1");
-        a.add("1");
-        a.add("1");
-        a.add("2");
-        a.add("2");
-        a.add("3");
-        xe.xuatFileExcelDonHang(a);
     }
 }

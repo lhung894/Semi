@@ -11,6 +11,7 @@ import BUS.OrderDetailBUS;
 import BUS.ProductBUS;
 import BUS.TagBUS;
 import BUS.Utils;
+import BUS.XuatExcel;
 import DTO.OrderDTO;
 import DTO.OrderDetailDTO;
 import DTO.ProductDTO;
@@ -42,6 +43,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
     OrderBUS orderBUS = new OrderBUS();
     OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
     BaoCaoBUS baoCaoBUS = new BaoCaoBUS();
+    XuatExcel xuatExcel = new XuatExcel();
     int rowOrder = -2, rowDetail = -2;
     String orderId = "";
     ArrayList<OrderDTO> orders, ordersFind = new ArrayList<>();
@@ -53,7 +55,6 @@ public class BaoCaoForm extends javax.swing.JFrame {
      */
     public BaoCaoForm() {
         initComponents();
-        initTableOrder();
         this.setVisible(false);
         jTableOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -327,7 +328,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu để xuất!");
             return;
         }
-        baoCaoBUS.initBaoCao(ordersFind);
+        xuatExcel.xuatFileExcelDonHang(baoCaoBUS.initBaoCao(ordersFind));
 //        JOptionPane.showMessageDialog(this, "Xuất báo cáo!");
     }//GEN-LAST:event_jBtnXuatActionPerformed
 
@@ -425,6 +426,16 @@ public class BaoCaoForm extends javax.swing.JFrame {
                 new BaoCaoForm().setVisible(true);
             }
         });
+    }
+
+    public JPanel getjPanel1()
+    {
+        return jPanel1;
+    }
+
+    public void setjPanel1(JPanel jPanel1)
+    {
+        this.jPanel1 = jPanel1;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
