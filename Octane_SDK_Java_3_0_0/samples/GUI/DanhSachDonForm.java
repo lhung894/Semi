@@ -76,7 +76,8 @@ public class DanhSachDonForm extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -87,6 +88,7 @@ public class DanhSachDonForm extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableDetail = new javax.swing.JTable();
         jBtnToOrder = new javax.swing.JButton();
+        jBtnThuchien = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 245));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
@@ -107,9 +109,11 @@ public class DanhSachDonForm extends javax.swing.JPanel {
         tableCol.add("Order Date");
         tableCol.add("Status");
 
-        tbModelOrder = new DefaultTableModel (tableCol,0){
+        tbModelOrder = new DefaultTableModel (tableCol,0)
+        {
             @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex){
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
                 return false;
             }
         };
@@ -126,8 +130,10 @@ public class DanhSachDonForm extends javax.swing.JPanel {
         //        jTableOrder.setSelectionBackground(new Color(76,121,255));
         jTableOrder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableOrder.setGridColor(new java.awt.Color(83, 86, 88));
-        jTableOrder.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jTableOrder.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jTableOrderMouseClicked(evt);
             }
         });
@@ -149,9 +155,11 @@ public class DanhSachDonForm extends javax.swing.JPanel {
         tableColDetail.add("Product Name");
         tableColDetail.add("Order Quantity");
 
-        tbModelDetail = new DefaultTableModel (tableColDetail,0){
+        tbModelDetail = new DefaultTableModel (tableColDetail,0)
+        {
             @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex){
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
                 return false;
             }
         };
@@ -169,8 +177,10 @@ public class DanhSachDonForm extends javax.swing.JPanel {
         jTableDetail.setAutoCreateRowSorter(true);
         jTableDetail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableDetail.setGridColor(new java.awt.Color(83, 86, 88));
-        jTableDetail.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jTableDetail.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jTableDetailMouseClicked(evt);
             }
         });
@@ -185,12 +195,33 @@ public class DanhSachDonForm extends javax.swing.JPanel {
 
         jBtnToOrder.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jBtnToOrder.setText("THỰC HIỆN XUẤT");
-        jBtnToOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBtnToOrder.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jBtnToOrderActionPerformed(evt);
             }
         });
         jPanel1.add(jBtnToOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, -1, -1));
+
+        jBtnThuchien.setBackground(new java.awt.Color(136, 193, 184));
+        jBtnThuchien.setFont(new java.awt.Font("Verdana", 1, 13)); // NOI18N
+        jBtnThuchien.setText("Thực hiện");
+        jBtnThuchien.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                jBtnThuchienMouseClicked(evt);
+            }
+        });
+        jBtnThuchien.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBtnThuchienActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jBtnThuchien, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, 130, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -240,6 +271,16 @@ public class DanhSachDonForm extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnToOrderActionPerformed
 
+    private void jBtnThuchienMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jBtnThuchienMouseClicked
+    {//GEN-HEADEREND:event_jBtnThuchienMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnThuchienMouseClicked
+
+    private void jBtnThuchienActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnThuchienActionPerformed
+    {//GEN-HEADEREND:event_jBtnThuchienActionPerformed
+        
+    }//GEN-LAST:event_jBtnThuchienActionPerformed
+
     public JPanel getjPanel1() {
         return jPanel1;
     }
@@ -249,6 +290,7 @@ public class DanhSachDonForm extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnThuchien;
     private javax.swing.JButton jBtnToOrder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

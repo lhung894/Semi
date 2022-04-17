@@ -64,7 +64,7 @@ public class ReadTags
             mread.setInputForm(d.getInputTag());
             mread.setOutputForm(d.getListOrder());
             reader.setTagReportListener(mread);
-            
+
             System.out.println("Applying Settings");
             reader.applySettings(settings);
 
