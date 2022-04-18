@@ -54,6 +54,7 @@ public class TaoDonForm extends javax.swing.JFrame {
     }
 
     public void clear() {
+        tbModelOrder.setRowCount(0);
         jBtnToOrder.setEnabled(false);
         jBtnCreate.setEnabled(false);
         jBtnDel.setEnabled(false);
@@ -79,10 +80,11 @@ public class TaoDonForm extends javax.swing.JFrame {
     }
 
     public void initTable() {
+        clear();
         tbModelProduct.setRowCount(0);
         tableModelProduct(tbModelProduct);
-        jTableProduct.setRowSorter(null);
-        jTableProduct.setAutoCreateRowSorter(true);
+//        jTableProduct.setRowSorter(null);
+//        jTableProduct.setAutoCreateRowSorter(true);
         jTableProduct.setModel(tbModelProduct);
         jTableProduct.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
@@ -189,7 +191,6 @@ public class TaoDonForm extends javax.swing.JFrame {
         //        jTableOrder.getTableHeader().setForeground(new Color(51, 51, 51));
         jTableProduct.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
         //        jTableOrder.setSelectionBackground(new Color(76,121,255));
-        jTableProduct.setAutoCreateRowSorter(true);
         jTableProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableProduct.setGridColor(new java.awt.Color(83, 86, 88));
         jTableProduct.addMouseListener(new java.awt.event.MouseAdapter() {

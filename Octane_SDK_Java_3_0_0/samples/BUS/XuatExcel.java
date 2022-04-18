@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -35,10 +36,12 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 
 public class XuatExcel {
 
@@ -70,19 +73,23 @@ public class XuatExcel {
             HSSFSheet sheet = workbook.createSheet("Đơn Xuất");//Tên sheet
 
             HSSFCellStyle styleTitle = workbook.createCellStyle(); // Style cho Title
+            HSSFFont font = workbook.createFont();
+            font.setBold(true);
             styleTitle.setBorderTop(BorderStyle.THIN);
             styleTitle.setBorderBottom(BorderStyle.THIN);
             styleTitle.setBorderRight(BorderStyle.THIN);
             styleTitle.setBorderLeft(BorderStyle.THIN);
             styleTitle.setAlignment(HorizontalAlignment.CENTER);
             styleTitle.setVerticalAlignment(VerticalAlignment.CENTER);
+            styleTitle.setFillBackgroundColor(IndexedColors.YELLOW.index);
+            styleTitle.setFont(font);
 
             Row rowTitle = sheet.createRow(1);
             rowTitle.setHeight((short) 800);
             HSSFCell cellTitleCell = (HSSFCell) rowTitle.createCell(1);
-            cellTitleCell.setCellValue("PHIẾU XUẤT KHO");
+            cellTitleCell.setCellValue("BÁO CÁO DANH SÁCH ĐƠN XUẤT KHO");
             cellTitleCell.setCellStyle(styleTitle);
-            CellRangeAddress cellRangeAddress = new CellRangeAddress(1, 1, 1, 9);
+            CellRangeAddress cellRangeAddress = new CellRangeAddress(1, 1, 1, 11);
             rowTitle.getSheet().addMergedRegion(cellRangeAddress);
             RegionUtil.setBorderTop(BorderStyle.DOUBLE, cellRangeAddress, sheet);
             RegionUtil.setBorderBottom(BorderStyle.DOUBLE, cellRangeAddress, sheet);
@@ -93,11 +100,12 @@ public class XuatExcel {
             HSSFCellStyle styleName = workbook.createCellStyle(); // Style cho Title
             styleName.setAlignment(HorizontalAlignment.LEFT);
             styleName.setVerticalAlignment(VerticalAlignment.CENTER);
+            styleName.setFont(font);
 
             Row rowNhap = sheet.createRow(3);
             rowNhap.setHeight((short) 600);
             HSSFCell cellNhap = (HSSFCell) rowNhap.createCell(1);
-            cellNhap.setCellValue("Người Lập Đơn: Lê Việt Hưng");
+            cellNhap.setCellValue("Người Tạo Báo Cáo: Dương Như Kiệt");
             cellNhap.setCellStyle(styleName);
             CellRangeAddress cellRangeAddress1 = new CellRangeAddress(3, 3, 1, 3);
             rowNhap.getSheet().addMergedRegion(cellRangeAddress1);
@@ -106,8 +114,54 @@ public class XuatExcel {
             RegionUtil.setBorderLeft(BorderStyle.DOUBLE, cellRangeAddress1, sheet);
             RegionUtil.setBorderRight(BorderStyle.DOUBLE, cellRangeAddress1, sheet);
 
-            /// Style for Data
-            HSSFCellStyle style = workbook.createCellStyle(); // Style cho Title
+            /// Style header
+            HSSFCellStyle styleHeader = workbook.createCellStyle();
+            styleHeader.setBorderTop(BorderStyle.THIN);
+            styleHeader.setBorderBottom(BorderStyle.THIN);
+            styleHeader.setBorderRight(BorderStyle.THIN);
+            styleHeader.setBorderLeft(BorderStyle.THIN);
+            styleHeader.setAlignment(HorizontalAlignment.CENTER);
+            styleHeader.setVerticalAlignment(VerticalAlignment.CENTER);
+            styleHeader.setFont(font);
+
+            Row row = sheet.createRow(5);
+            row.setHeight((short) 400);
+            HSSFCell cell2 = (HSSFCell) row.createCell(1, CellType.STRING);
+            cell2.setCellValue("Mã Đơn");
+            cell2.setCellStyle(styleHeader);
+            HSSFCell cell3 = (HSSFCell) row.createCell(2, CellType.STRING);
+            cell3.setCellValue("Ngày Tạo Đơn");
+            cell3.setCellStyle(styleHeader);
+            HSSFCell cell4 = (HSSFCell) row.createCell(3, CellType.STRING);
+            cell4.setCellValue("Trạng Thái");
+            cell4.setCellStyle(styleHeader);
+            HSSFCell cell5 = (HSSFCell) row.createCell(4, CellType.STRING);
+            cell5.setCellValue("Mã Sản Phẩm");
+            cell5.setCellStyle(styleHeader);
+            HSSFCell cell6 = (HSSFCell) row.createCell(5, CellType.STRING);
+            cell6.setCellValue("Tên Sản Phẩm");
+            cell6.setCellStyle(styleHeader);
+            HSSFCell cell7 = (HSSFCell) row.createCell(6, CellType.STRING);
+            cell7.setCellValue("Số Lượng Đơn");
+            cell7.setCellStyle(styleHeader);
+            HSSFCell cell8 = (HSSFCell) row.createCell(7, CellType.STRING);
+            cell8.setCellValue("Mã Tag");
+            cell8.setCellStyle(styleHeader);
+            HSSFCell cell9 = (HSSFCell) row.createCell(8, CellType.STRING);
+            cell9.setCellValue("Cổng Vào");
+            cell9.setCellStyle(styleHeader);
+            HSSFCell cell10 = (HSSFCell) row.createCell(9, CellType.STRING);
+            cell10.setCellValue("Ngày Vào");
+            cell10.setCellStyle(styleHeader);
+            HSSFCell cell11 = (HSSFCell) row.createCell(10, CellType.STRING);
+            cell11.setCellValue("Cổng Xuất");
+            cell11.setCellStyle(styleHeader);
+            HSSFCell cell12 = (HSSFCell) row.createCell(11, CellType.STRING);
+            cell12.setCellValue("Ngày Xuất");
+            cell12.setCellStyle(styleHeader);
+
+            // Style rows
+            HSSFCellStyle style = workbook.createCellStyle();
             style.setBorderTop(BorderStyle.THIN);
             style.setBorderBottom(BorderStyle.THIN);
             style.setBorderRight(BorderStyle.THIN);
@@ -115,39 +169,9 @@ public class XuatExcel {
             style.setAlignment(HorizontalAlignment.CENTER);
             style.setVerticalAlignment(VerticalAlignment.CENTER);
 
-            Row row = sheet.createRow(5);
-            row.setHeight((short) 400);
-            HSSFCell cell2 = (HSSFCell) row.createCell(1, CellType.STRING);
-            cell2.setCellValue("Mã Đơn");
-            cell2.setCellStyle(style);
-            HSSFCell cell3 = (HSSFCell) row.createCell(2, CellType.STRING);
-            cell3.setCellValue("Ngày Tạo Đơn");
-            cell3.setCellStyle(style);
-            HSSFCell cell4 = (HSSFCell) row.createCell(3, CellType.STRING);
-            cell4.setCellValue("Trạng Thái");
-            cell4.setCellStyle(style);
-            HSSFCell cell5 = (HSSFCell) row.createCell(4, CellType.STRING);
-            cell5.setCellValue("Mã Sản Phẩm");
-            cell5.setCellStyle(style);
-            HSSFCell cell6 = (HSSFCell) row.createCell(5, CellType.STRING);
-            cell6.setCellValue("Tên Sản Phẩm");
-            cell6.setCellStyle(style);
-            HSSFCell cell7 = (HSSFCell) row.createCell(6, CellType.STRING);
-            cell7.setCellValue("Số Lượng");
-            cell7.setCellStyle(style);
-            HSSFCell cell8 = (HSSFCell) row.createCell(7, CellType.STRING);
-            cell8.setCellValue("Mã Tag");
-            cell8.setCellStyle(style);
-            HSSFCell cell9 = (HSSFCell) row.createCell(8, CellType.STRING);
-            cell9.setCellValue("Cổng Xuất");
-            cell9.setCellStyle(style);
-            HSSFCell cell10 = (HSSFCell) row.createCell(9, CellType.STRING);
-            cell10.setCellValue("Ngày Xuất");
-            cell10.setCellStyle(style);
+            for (int i = 1; i <= 12; ++i) {
 
-            for (int i = 1; i <= 10; ++i) {
-
-                if (i == 5 || i == 2 || i == 9) {
+                if (i == 5 || i == 2 || i == 9 || i == 11) {
                     sheet.setColumnWidth(i, 25 * 256);
                 } else if (i == 7) {
                     sheet.setColumnWidth(i, 25 * 350);
@@ -164,6 +188,24 @@ public class XuatExcel {
                 Row rowData = sheet.createRow(rowPrint);
                 rowData.setHeight((short) 400);
                 if (!orderId.equals(k.getOrder_id())) {
+                    if (!productId.equals(k.getProduct_id())) {
+                        productId = k.getProduct_id();
+                        if (endProduct > beginProduct) {
+                            for (int u = 4; u <= 6; u++) {
+                                CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct, u, u);
+                                rowData.getSheet().addMergedRegion(cellRangeAddress3);
+                            }
+                        }
+                        beginProduct = rowPrint;
+                    } else {
+                        if (endProduct > beginProduct) {
+                            for (int u = 4; u <= 6; u++) {
+                                CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct, u, u);
+                                rowData.getSheet().addMergedRegion(cellRangeAddress3);
+                            }
+                        }
+                        beginProduct = rowPrint;
+                    }
                     orderId = k.getOrder_id();
                     if (endOrder > beginOrder) {
                         for (int u = 1; u <= 3; u++) {
@@ -173,24 +215,21 @@ public class XuatExcel {
                     }
                     beginOrder = rowPrint;
                 } else {
+                    if (!productId.equals(k.getProduct_id())) {
+                        productId = k.getProduct_id();
+                        if (endProduct > beginProduct) {
+                            for (int u = 4; u <= 6; u++) {
+                                CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct, u, u);
+                                rowData.getSheet().addMergedRegion(cellRangeAddress3);
+                            }
+                        }
+                        beginProduct = rowPrint;
+                    } else {
+                        endProduct = rowPrint;
+                    }
                     endOrder = rowPrint;
                 }
-                if (orderId.equals(k.getOrder_id()) && !productId.equals(k.getProduct_id())
-                        || !orderId.equals(k.getOrder_id()) && !productId.equals(k.getProduct_id())) {
-                    productId = k.getProduct_id();
-                    if (endProduct > beginProduct) {
-                        for (int u = 4; u <= 6; u++) {
-                            CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct, u, u);
-                            rowData.getSheet().addMergedRegion(cellRangeAddress3);
-                        }
-                    }
-                    beginProduct = rowPrint;
-                } else if (orderId.equals(k.getOrder_id()) && productId.equals(k.getProduct_id())) {
-                    endProduct = rowPrint;
-                } else if (!orderId.equals(k.getOrder_id()) && productId.equals(k.getProduct_id())) {
-                    beginProduct = rowPrint;
-                }
-                for (int j = 1; j <= 9; ++j)//column
+                for (int j = 1; j <= 11; ++j)//column
                 {
                     HSSFCell cellData = (HSSFCell) rowData.createCell(j);
                     cellData.setCellStyle(style);
@@ -220,9 +259,15 @@ public class XuatExcel {
                         cellData.setCellValue(k.getTag_id());
                         cellData.setCellStyle(style);
                     } else if (j == 8) {
-                        cellData.setCellValue(k.getTag_gate_out());
+                        cellData.setCellValue(k.getTag_gate_in());
                         cellData.setCellStyle(style);
                     } else if (j == 9) {
+                        cellData.setCellValue(k.getTag_date_in());
+                        cellData.setCellStyle(style);
+                    } else if (j == 10) {
+                        cellData.setCellValue(k.getTag_gate_out());
+                        cellData.setCellStyle(style);
+                    } else if (j == 11) {
                         cellData.setCellValue(k.getTag_date_out());
                         cellData.setCellStyle(style);
                     }
@@ -258,7 +303,6 @@ public class XuatExcel {
             try {
                 if (outFile != null) {
                     outFile.close();
-//                    System.exit(0);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(XuatExcel.class.getName()).log(Level.SEVERE, null, ex);

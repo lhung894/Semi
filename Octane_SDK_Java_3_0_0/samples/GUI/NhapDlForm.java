@@ -60,6 +60,17 @@ public class NhapDlForm extends javax.swing.JFrame {
         jBtnAdd.setEnabled(false);
     }
 
+    public void clear() {
+        tbModelTag.setRowCount(0);
+        jTableTag.clearSelection();
+        jTableProduct.clearSelection();
+        rowProduct = -2;
+        rowTag = -2;
+        selectedTag = false;
+        selectedProduct = false;
+        jBtnAdd.setEnabled(false);
+    }
+
     public void initTableTagSet() {
         tbModelTag.setRowCount(0);
         tableModelTagSet(tbModelTag);
@@ -84,6 +95,7 @@ public class NhapDlForm extends javax.swing.JFrame {
     }
 
     public void initTableProduct() {
+        clear();
         tbModelProduct.setRowCount(0);
         tableModelProduct(tbModelProduct);
 //        jTableProduct.setRowSorter(null);
@@ -366,7 +378,6 @@ public class NhapDlForm extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
         // TODO add your handling code here:
-
         initTagAuto();
     }//GEN-LAST:event_jButton1ActionPerformed
 

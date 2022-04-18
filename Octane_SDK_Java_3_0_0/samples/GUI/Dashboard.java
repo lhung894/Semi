@@ -41,8 +41,7 @@ public class Dashboard extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jPanelCreateOrder = new javax.swing.JPanel();
@@ -84,10 +83,8 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         jBtnInputCOrder.setText("Back");
-        jBtnInputCOrder.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnInputCOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnInputCOrderActionPerformed(evt);
             }
         });
@@ -112,7 +109,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         //jPanel3.setVisible(false);
-        jCreateOrder.add(inputTag.getjPanel1());
+        jCreateOrder.add(createOrder.getjPanel1());
 
         jPanel1.add(jPanelCreateOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         jPanelCreateOrder.setVisible(false);
@@ -131,10 +128,8 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         jBtnInputBack.setText("Back");
-        jBtnInputBack.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnInputBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnInputBackActionPerformed(evt);
             }
         });
@@ -158,7 +153,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         //jPanelInput.setVisible(false);
-        jInput.add(createOrder.getjPanel1());
+        jInput.add(inputTag.getjPanel1());
 
         jPanel1.add(jPanelInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 520));
         jPanelInput.setVisible(false);
@@ -166,40 +161,32 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jBtnInput.setText("GÁN TAG");
-        jBtnInput.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnInputActionPerformed(evt);
             }
         });
         jPanelMenu.add(jBtnInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 260));
 
         jBtnCreateOrder.setText("TẠO ĐƠN XUẤT");
-        jBtnCreateOrder.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnCreateOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnCreateOrderActionPerformed(evt);
             }
         });
         jPanelMenu.add(jBtnCreateOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, 400, 260));
 
         jBtnOrder.setText("ĐƠN XUẤT");
-        jBtnOrder.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnOrderActionPerformed(evt);
             }
         });
         jPanelMenu.add(jBtnOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 400, 260));
 
         jBtnBaoCao.setText("BÁO CÁO");
-        jBtnBaoCao.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnBaoCao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnBaoCaoActionPerformed(evt);
             }
         });
@@ -221,10 +208,8 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         jBtnOrderBack.setText("Back");
-        jBtnOrderBack.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnOrderBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnOrderBackActionPerformed(evt);
             }
         });
@@ -268,10 +253,8 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         jBtnBaoCaoBack.setText("Back");
-        jBtnBaoCaoBack.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnBaoCaoBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnBaoCaoBackActionPerformed(evt);
             }
         });
@@ -320,8 +303,8 @@ public class Dashboard extends javax.swing.JFrame {
     private void jBtnInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnInputActionPerformed
         // TODO add your handling code here:
         jPanelMenu.setVisible(false);
-        jPanelCreateOrder.setVisible(true);
-        jPanelInput.setVisible(false);
+        jPanelCreateOrder.setVisible(false);
+        jPanelInput.setVisible(true);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
         inputTag.initTableProduct();
@@ -332,8 +315,8 @@ public class Dashboard extends javax.swing.JFrame {
     private void jBtnCreateOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCreateOrderActionPerformed
         // TODO add your handling code here:
         jPanelMenu.setVisible(false);
-        jPanelCreateOrder.setVisible(false);
-        jPanelInput.setVisible(true);
+        jPanelCreateOrder.setVisible(true);
+        jPanelInput.setVisible(false);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
         createOrder.initTable();

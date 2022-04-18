@@ -56,6 +56,19 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
+    public void clear() {
+        tbModelDetail.setRowCount(0);
+        jBtnQuet.setEnabled(false);
+        jBtnHuy.setEnabled(false);
+        jBtnXuat.setEnabled(false);
+        rowOrder = -2;
+        rowDetail = -2;
+        isScanning = false;
+        orderId = "";
+        tagDTOs.clear();
+        detailScan.clear();
+    }
+
     public void tableModelOrder(DefaultTableModel model) {
         orderBUS = new OrderBUS();
         for (OrderDTO order : orderBUS.getList()) {
@@ -72,6 +85,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     }
 
     public void initTableOrder() {
+        clear();
 //        orderDetailBUS = new OrderDetailBUS();
         details = orderDetailBUS.getList();
 //        productBUS = new ProductBUS();
@@ -81,9 +95,6 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         jTableOrder.setRowSorter(null);
         jTableOrder.setAutoCreateRowSorter(true);
         jTableOrder.setModel(tbModelOrder);
-        jBtnQuet.setEnabled(false);
-        jBtnHuy.setEnabled(false);
-        jBtnXuat.setEnabled(false);
     }
 
     public void tableModelDetail(DefaultTableModel model) {

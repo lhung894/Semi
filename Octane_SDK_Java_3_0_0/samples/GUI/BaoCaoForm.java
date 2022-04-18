@@ -59,6 +59,12 @@ public class BaoCaoForm extends javax.swing.JFrame {
         jTableOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
+    
+    public void clear() {
+        jDateFrom.setCalendar(null);
+        jDateTo.setCalendar(null);
+        tbModelDetail.setRowCount(0);
+    }
 
     public void tableModelOrder(DefaultTableModel model, ArrayList<OrderDTO> orderDTOs) {
         for (OrderDTO order : orderDTOs) {
@@ -75,6 +81,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
     }
 
     public void initTableOrder() {
+        clear();
 //        orderDetailBUS = new OrderDetailBUS();
         orders = orderBUS.getList();
         details = orderDetailBUS.getList();
@@ -358,10 +365,6 @@ public class BaoCaoForm extends javax.swing.JFrame {
     private void jBtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRefreshActionPerformed
         // TODO add your handling code here:
         initTableOrder();
-        jDateFrom.setCalendar(null);
-        jDateTo.setCalendar(null);
-        tbModelDetail.setRowCount(0);
-        tbModelOrder.setRowCount(0);
     }//GEN-LAST:event_jBtnRefreshActionPerformed
 
     private void jTableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrderMouseClicked
