@@ -172,6 +172,7 @@ public class XuatExcel {
                         }
                     }
                     beginOrder = rowPrint;
+                    endProduct = rowPrint - 1;
                 } else {
                     endOrder = rowPrint;
                 }
@@ -179,13 +180,13 @@ public class XuatExcel {
                     productId = k.getProduct_id();
                     if (endProduct > beginProduct) {
                         for (int u = 4; u <= 6; u++) {
-                            CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct + 1, u, u);
+                            CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct, u, u);
                             rowData.getSheet().addMergedRegion(cellRangeAddress3);
                         }
                     }
                     beginProduct = rowPrint;
                 } else {
-                    endProduct = rowPrint - 1;
+                    endProduct = rowPrint;
                 }
                 for (int j = 1; j <= 9; ++j)//column
                 {
@@ -233,7 +234,7 @@ public class XuatExcel {
                     }
                     if (endProduct > beginProduct) {
                         for (int u = 4; u <= 6; u++) {
-                            CellRangeAddress cellRangeAddress5 = new CellRangeAddress(beginProduct, endProduct + 1, u, u);
+                            CellRangeAddress cellRangeAddress5 = new CellRangeAddress(beginProduct, endProduct, u, u);
                             rowData.getSheet().addMergedRegion(cellRangeAddress5);
                         }
                     }
