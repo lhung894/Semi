@@ -172,11 +172,11 @@ public class XuatExcel {
                         }
                     }
                     beginOrder = rowPrint;
-                    endProduct = rowPrint - 1;
                 } else {
                     endOrder = rowPrint;
                 }
-                if (!productId.equals(k.getProduct_id())) {
+                if (orderId.equals(k.getOrder_id()) && !productId.equals(k.getProduct_id())
+                        || !orderId.equals(k.getOrder_id()) && !productId.equals(k.getProduct_id())) {
                     productId = k.getProduct_id();
                     if (endProduct > beginProduct) {
                         for (int u = 4; u <= 6; u++) {
@@ -185,8 +185,10 @@ public class XuatExcel {
                         }
                     }
                     beginProduct = rowPrint;
-                } else {
+                } else if (orderId.equals(k.getOrder_id()) && productId.equals(k.getProduct_id())) {
                     endProduct = rowPrint;
+                } else if (!orderId.equals(k.getOrder_id()) && productId.equals(k.getProduct_id())) {
+                    beginProduct = rowPrint;
                 }
                 for (int j = 1; j <= 9; ++j)//column
                 {
