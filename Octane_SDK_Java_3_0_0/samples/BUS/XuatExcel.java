@@ -40,18 +40,15 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 
-public class XuatExcel
-{
+public class XuatExcel {
 
     FileDialog fd = new FileDialog(new JFrame(), "Xuất excel", FileDialog.SAVE);
 
-    private String getFile()
-    {
+    private String getFile() {
         fd.setFile("donxuat.xls");
         fd.setVisible(true);
         String url = fd.getDirectory() + fd.getFile();
-        if (url.equals("nullnull"))
-        {
+        if (url.equals("nullnull")) {
             return null;
         }
         return url;
@@ -59,18 +56,15 @@ public class XuatExcel
 
     // Xuất file Excel 
     @SuppressWarnings("empty-statement")
-    public void xuatFileExcelDonHang(ArrayList<BaoCaoDTO> baoCaoDTOs)
-    {
+    public void xuatFileExcelDonHang(ArrayList<BaoCaoDTO> baoCaoDTOs) {
         fd.setTitle("Xuất đơn hàng ra excel");
         String url = getFile();
-        if (url == null)
-        {
+        if (url == null) {
             return;
         }
 
         FileOutputStream outFile = null;
-        try
-        {
+        try {
             //Create a Work Book
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet("Đơn Xuất");//Tên sheet
@@ -151,17 +145,13 @@ public class XuatExcel
             cell10.setCellValue("Ngày Xuất");
             cell10.setCellStyle(style);
 
-            for (int i = 1; i <= 10; ++i)
-            {
+            for (int i = 1; i <= 10; ++i) {
 
-                if (i == 5 || i == 2 || i == 9)
-                {
+                if (i == 5 || i == 2 || i == 9) {
                     sheet.setColumnWidth(i, 25 * 256);
-                } else if (i == 7)
-                {
+                } else if (i == 7) {
                     sheet.setColumnWidth(i, 25 * 350);
-                } else
-                {
+                } else {
                     sheet.setColumnWidth(i, 25 * 150);
                 }
             }
@@ -173,90 +163,83 @@ public class XuatExcel
             {
                 Row rowData = sheet.createRow(rowPrint);
                 rowData.setHeight((short) 400);
-                if (!orderId.equals(k.getOrder_id()))
-                {
+                if (!orderId.equals(k.getOrder_id())) {
                     orderId = k.getOrder_id();
-                    if (endOrder > beginOrder)
-                    {
-                        for (int u = 1; u <= 3; u++)
-                        {
+                    if (endOrder > beginOrder) {
+                        for (int u = 1; u <= 3; u++) {
                             CellRangeAddress cellRangeAddress2 = new CellRangeAddress(beginOrder, endOrder, u, u);
                             rowData.getSheet().addMergedRegion(cellRangeAddress2);
                         }
                     }
                     beginOrder = rowPrint;
-                } else
-                {
+                } else {
                     endOrder = rowPrint;
                 }
-                if (!productId.equals(k.getProduct_id()))
-                {
+                if (!productId.equals(k.getProduct_id())) {
                     productId = k.getProduct_id();
-                    if (endProduct > beginProduct)
-                    {
-                        for (int u = 4; u <= 6; u++)
-                        {
-                            CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct, u, u);
+                    if (endProduct > beginProduct) {
+                        for (int u = 4; u <= 6; u++) {
+                            CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct + 1, u, u);
                             rowData.getSheet().addMergedRegion(cellRangeAddress3);
                         }
                     }
                     beginProduct = rowPrint;
-                } else
-                {
+                } else {
                     endProduct = rowPrint - 1;
                 }
                 for (int j = 1; j <= 9; ++j)//column
                 {
                     HSSFCell cellData = (HSSFCell) rowData.createCell(j);
                     cellData.setCellStyle(style);
-                    if (j == 1)
-                    {
+                    if (j == 1) {
                         cellData.setCellValue(k.getOrder_id());
                         cellData.setCellStyle(style);
-                    } else if (j == 2)
-                    {
+                    } else if (j == 2) {
                         cellData.setCellValue(k.getOrder_date());
                         cellData.setCellStyle(style);
-                    } else if (j == 3)
-                    {
-                        if (k.getStatus() == 2)
-                        {
+                    } else if (j == 3) {
+                        if (k.getStatus() == 2) {
                             cellData.setCellValue("Chờ xuất");
-                        } else
-                        {
+                        } else {
                             cellData.setCellValue("Hoàn tất");
                         }
                         cellData.setCellStyle(style);
-                    } else if (j == 4)
-                    {
+                    } else if (j == 4) {
                         cellData.setCellValue(k.getProduct_id());
                         cellData.setCellStyle(style);
-                    } else if (j == 5)
-                    {
+                    } else if (j == 5) {
                         cellData.setCellValue(k.getProduct_name());
                         cellData.setCellStyle(style);
-                    } else if (j == 6)
-                    {
+                    } else if (j == 6) {
                         cellData.setCellValue(k.getOrder_quantity());
                         cellData.setCellStyle(style);
-                    } else if (j == 7)
-                    {
+                    } else if (j == 7) {
                         cellData.setCellValue(k.getTag_id());
                         cellData.setCellStyle(style);
-                    } else if (j == 8)
-                    {
+                    } else if (j == 8) {
                         cellData.setCellValue(k.getTag_gate_out());
                         cellData.setCellStyle(style);
-                    } else if (j == 9)
-                    {
+                    } else if (j == 9) {
                         cellData.setCellValue(k.getTag_date_out());
                         cellData.setCellStyle(style);
                     }
                 }
-
+                if (rowPrint - 5 == baoCaoDTOs.size()) {
+                    if (endOrder > beginOrder) {
+                        for (int u = 1; u <= 3; u++) {
+                            CellRangeAddress cellRangeAddress4 = new CellRangeAddress(beginOrder, endOrder, u, u);
+                            rowData.getSheet().addMergedRegion(cellRangeAddress4);
+                        }
+                    }
+                    if (endProduct > beginProduct) {
+                        for (int u = 4; u <= 6; u++) {
+                            CellRangeAddress cellRangeAddress5 = new CellRangeAddress(beginProduct, endProduct + 1, u, u);
+                            rowData.getSheet().addMergedRegion(cellRangeAddress5);
+                        }
+                    }
+                }
                 rowPrint++;
             }
-
             File file = new File(url);
             file.getParentFile().mkdirs();
             outFile = new FileOutputStream(file);
@@ -264,27 +247,20 @@ public class XuatExcel
 
             JOptionPane.showMessageDialog(null, "Ghi file thành công: " + file.getAbsolutePath());
 
-        } catch (FileNotFoundException ex)
-        {
+        } catch (FileNotFoundException ex) {
             Logger.getLogger(XuatExcel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             Logger.getLogger(XuatExcel.class.getName()).log(Level.SEVERE, null, ex);
-        } finally
-        {
-            try
-            {
-                if (outFile != null)
-                {
+        } finally {
+            try {
+                if (outFile != null) {
                     outFile.close();
 //                    System.exit(0);
                 }
-            } catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 Logger.getLogger(XuatExcel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-  
 }

@@ -121,6 +121,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
         if (ordersFind != null) {
             ordersFind.clear();
         }
+        tbModelDetail.setRowCount(0);
         tbModelOrder.setRowCount(0);
         Date orderDate = null;
         for (OrderDTO order : orders) {
@@ -210,7 +211,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
                 jBtnRefreshActionPerformed(evt);
             }
         });
-        jPanel1.add(jBtnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 80, 30));
+        jPanel1.add(jBtnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 90, 30));
 
         jDateTo.setBackground(new java.awt.Color(214, 217, 223));
         jDateTo.setDateFormatString("yyyy-MM-dd");
@@ -360,6 +361,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
         jDateFrom.setCalendar(null);
         jDateTo.setCalendar(null);
         tbModelDetail.setRowCount(0);
+        tbModelOrder.setRowCount(0);
     }//GEN-LAST:event_jBtnRefreshActionPerformed
 
     private void jTableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrderMouseClicked
