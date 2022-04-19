@@ -136,6 +136,21 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             }
         }
         if (count == 0) {
+            int beepCount = 2;
+            for (int i = 0; i < beepCount; ++i) {
+//                System.out.println("Beep : " + i);
+                // Ring the bell again using the Toolkit 
+                java.awt.Toolkit.getDefaultToolkit().beep();
+                try {
+                    Thread.sleep(600); // introduce delay
+                } catch (InterruptedException e) {
+                }
+                java.awt.Toolkit.getDefaultToolkit().beep();
+                try {
+                    Thread.sleep(1000); // introduce delay
+                } catch (InterruptedException e) {
+                }
+            }
             JOptionPane.showMessageDialog(this, "Sản phẩm " + product_id + " không thuộc đơn hàng!");
             jBtnXuat.setEnabled(false);
             return;
@@ -145,8 +160,19 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
                 quantity = detailScan.get(tbModelDetail.getValueAt(i, 2));
                 if (quantity == Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4)))) {
                     tbModelDetail.setValueAt("ok", i, 0);
+                    java.awt.Toolkit.getDefaultToolkit().beep();
                 } else if (quantity > Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4)))) {
                     tbModelDetail.setValueAt("redundant", i, 0);
+                    int beepCount = 1;
+                    for (int b = 0; b < beepCount; ++b) {
+                        // Ring the bell again using the Toolkit 
+                        java.awt.Toolkit.getDefaultToolkit().beep();
+                        try {
+                            Thread.sleep(600); // introduce delay
+                        } catch (InterruptedException e) {
+                        }
+                        java.awt.Toolkit.getDefaultToolkit().beep();
+                    }
                 }
             }
         }

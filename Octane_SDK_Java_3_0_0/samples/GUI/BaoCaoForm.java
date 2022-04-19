@@ -45,7 +45,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
     BaoCaoBUS baoCaoBUS = new BaoCaoBUS();
     XuatExcel xuatExcel = new XuatExcel();
     int rowOrder = -2, rowDetail = -2;
-    String orderId = "";
+    String orderId = "", dateFrom, dateTo;
     ArrayList<OrderDTO> orders, ordersFind = new ArrayList<>();
     ArrayList<OrderDetailDTO> details;
     ArrayList<ProductDTO> products;
@@ -59,7 +59,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
         jTableOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-    
+
     public void clear() {
         jDateFrom.setCalendar(null);
         jDateTo.setCalendar(null);
@@ -335,14 +335,14 @@ public class BaoCaoForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu để xuất!");
             return;
         }
-        xuatExcel.xuatFileExcelDonHang(baoCaoBUS.initBaoCao(ordersFind));
+        xuatExcel.xuatFileExcelDonHang(baoCaoBUS.initBaoCao(ordersFind), dateFrom, dateTo);
 //        JOptionPane.showMessageDialog(this, "Xuất báo cáo!");
     }//GEN-LAST:event_jBtnXuatActionPerformed
 
     private void jBtnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTimKiemActionPerformed
         // TODO add your handling code here:
-        String dateFrom = ((JTextField) jDateFrom.getDateEditor().getUiComponent()).getText(),
-                dateTo = ((JTextField) jDateTo.getDateEditor().getUiComponent()).getText();
+        dateFrom = ((JTextField) jDateFrom.getDateEditor().getUiComponent()).getText();
+        dateTo = ((JTextField) jDateTo.getDateEditor().getUiComponent()).getText();
         if (dateFrom.equals("") || dateTo.equals("")) {
             JOptionPane.showMessageDialog(this, "Ngày \"đến\" / ngày \"từ\" không được bỏ trống!");
             return;
@@ -432,13 +432,11 @@ public class BaoCaoForm extends javax.swing.JFrame {
         });
     }
 
-    public JPanel getjPanel1()
-    {
+    public JPanel getjPanel1() {
         return jPanel1;
     }
 
-    public void setjPanel1(JPanel jPanel1)
-    {
+    public void setjPanel1(JPanel jPanel1) {
         this.jPanel1 = jPanel1;
     }
 

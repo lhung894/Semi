@@ -11,19 +11,16 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-public class Utils
-{
+public class Utils {
 
     public LastIdDAO maDLCuoi;
 
-    public Utils()
-    {
+    public Utils() {
 //        maDLCuoi = new LastIdDAO();
     }
 
     ////////////////Tạo order ID
-    public String initOrderId()
-    {
+    public String initOrderId() {
         maDLCuoi = new LastIdDAO();
         String temp = maDLCuoi.getOrderId();
 //        System.out.println("temp order: " + temp);
@@ -35,8 +32,7 @@ public class Utils
     }
 
     ////////////////Tạo order detail ID
-    public void initOrderDetailId(ArrayList<OrderDetailDTO> orderDetailDTOs)
-    {
+    public void initOrderDetailId(ArrayList<OrderDetailDTO> orderDetailDTOs) {
         maDLCuoi = new LastIdDAO();
         String temp = maDLCuoi.getOrderDetailId();
         int ma = Integer.parseInt(temp);
@@ -49,8 +45,7 @@ public class Utils
     }
 
     ////////////////Lấy ngày hiện tại
-    public String initDateNow()
-    {
+    public String initDateNow() {
         final Date currentTime = new Date();
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
@@ -59,33 +54,27 @@ public class Utils
         return date;
     }
 
-    public Date getDateWithoutTimeUsingFormat()
-    {
-        try
-        {
+    public Date getDateWithoutTimeUsingFormat() {
+        try {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             return formatter.parse(formatter.format(new Date()));
-        } catch (ParseException e)
-        {
+        } catch (ParseException e) {
             System.out.println(e);
             return null;
         }
     }
 
     ////////////////Lấy ngày đầu tiên của tháng kế tiếp
-    public String firstDayOfnextMonth(String ngay)
-    {
+    public String firstDayOfnextMonth(String ngay) {
         String thanglamviec = getMonth(ngay);
         String namlamviec = getYear(ngay);
         int temp1 = Integer.parseInt(thanglamviec);
         temp1++;
         thanglamviec = String.valueOf(temp1);
-        if (thanglamviec.length() == 1)
-        {
+        if (thanglamviec.length() == 1) {
             thanglamviec = "0" + thanglamviec;
         }
-        if (thanglamviec.equals("13"))
-        {
+        if (thanglamviec.equals("13")) {
             int temp2 = Integer.parseInt(namlamviec);
             temp2++;
             namlamviec = String.valueOf(temp2);
@@ -96,119 +85,99 @@ public class Utils
     }
 
     /////////////////Tính số ngày so với hiện tại
-    public int totalDays(String thoigian)
-    {
+    public int totalDays(String thoigian) {
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
         String hientai = initDateNow();
         System.out.println("thoigian: " + thoigian + "\nhientai: " + hientai);
         int total = -1;
-        try
-        {
+        try {
             Date date1 = myFormat.parse(thoigian);
             Date date2 = myFormat.parse(hientai);
             long diff = date2.getTime() - date1.getTime();
             System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
             total = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-        } catch (ParseException e)
-        {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return total;
     }
 
     /////////////////Tính số ngày với 2 tham số truyền vào
-    public int totalDays2(String dateFrom, String dateTo)
-    {
+    public int totalDays2(String dateFrom, String dateTo) {
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
         String hientai = dateTo;
         System.out.println("thoigian: " + dateFrom + "\nhientai: " + hientai);
         int total = -1;
-        try
-        {
+        try {
             Date date1 = myFormat.parse(dateFrom);
             Date date2 = myFormat.parse(hientai);
             long diff = date2.getTime() - date1.getTime();
             System.out.println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
             total = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-        } catch (ParseException e)
-        {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return total;
     }
 
     ////////////////Tách năm
-    public static String getYear(String name)
-    {
+    public static String getYear(String name) {
         int pos = name.indexOf("-");
         //System.out.println (pos);
-        if (pos == -1)
-        {
+        if (pos == -1) {
             return null;
         }
-        if (pos == name.length() - 1)
-        {
+        if (pos == name.length() - 1) {
             return null;
         }
         return name.substring(0, pos);
     }
 
     ////////////////Tách tháng
-    public static String getMonth(String name)
-    {
+    public static String getMonth(String name) {
         int pos = name.indexOf("-");
         //System.out.println (pos);
         int pos1 = name.indexOf("-", pos + 1);
         //System.out.println (pos1);
-        if (pos == -1)
-        {
+        if (pos == -1) {
             return null;
         }
-        if (pos == name.length() - 1)
-        {
+        if (pos == name.length() - 1) {
             return null;
         }
         return name.substring(pos + 1, pos1);
     }
 
     ////////////////Tách ngày
-    public static String getDay(String name)
-    {
+    public static String getDay(String name) {
         int pos = name.indexOf("-");
         //System.out.println (pos);
         int pos1 = name.indexOf("-", pos + 1);
         //System.out.println (pos1);
-        if (pos == -1)
-        {
+        if (pos == -1) {
             return null;
         }
-        if (pos == name.length() - 1)
-        {
+        if (pos == name.length() - 1) {
             return null;
         }
         return name.substring(pos1 + 1, name.length());
     }
 
     ////////////////Thêm 0 vào ngày có length = 1
-    public String them0(String num)
-    {
-        if (num.length() >= 2)
-        {
+    public String them0(String num) {
+        if (num.length() >= 2) {
             return num;
-        } else
-        {
+        } else {
             num = "0" + num;
             return num;
         }
     }
 
     ////////////////Tháng -> ngày cuối cùng của tháng
-    public int lastDayOfMonth(String date)
-    {
+    public int lastDayOfMonth(String date) {
         int monthcheck = Integer.parseInt(getMonth(date));
         int year = Integer.parseInt(getYear(date));
-        switch (monthcheck)
-        {
+        switch (monthcheck) {
             case 1:
             case 3:
             case 5:
@@ -218,11 +187,9 @@ public class Utils
             case 12:
                 return 31;
             case 2:
-                if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0))
-                {
+                if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {
                     return 29;
-                } else
-                {
+                } else {
                     return 28;
                 }
             default:
@@ -230,44 +197,35 @@ public class Utils
         }
     }
 
-    public Date stringToDate(String strDate)
-    {
-        try
-        {
+    public Date stringToDate(String strDate) {
+        try {
             SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = myFormat.parse(strDate);
             return date;
-        } catch (ParseException e)
-        {
+        } catch (ParseException e) {
             return new Date(0, 0, 0);
         }
     }
 
-    public static void afterDay(StringBuilder message, String title1, String date1, String title2, String date2)
-    {
+    public static void afterDay(StringBuilder message, String title1, String date1, String title2, String date2) {
         int result = date1.compareTo(date2);
-        if (result <= 0)
-        {
+        if (result <= 0) {
             message.append(title1 + " phải sau " + title2 + "\n");
         }
     }
 
-    public static void beforeOrEquals(StringBuilder message, String title1, String date1, String title2, String date2)
-    {
+    public static void beforeOrEquals(StringBuilder message, String title1, String date1, String title2, String date2) {
         int result = date1.compareTo(date2);
-        if (result > 0)
-        {
+        if (result > 0) {
             message.append(title1 + " phải trước hoặc bằng " + title2 + "\n");
         }
     }
 
 }
 
-class main
-{
+class main {
 
-    public static void main(String[] args) throws ParseException
-    {
+    public static void main(String[] args) throws ParseException {
         Utils ult = new Utils();
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 //        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -301,7 +259,24 @@ class main
 //        {
 //            System.out.println("hop le");
 //        }
-        
+
+        System.out.println("now: " + ult.initDateNow());
+        int beepCount = 1;
+        for (int i = 0; i < beepCount; ++i) {
+            System.out.println("Beep : " + i);
+            // Ring the bell again using the Toolkit 
+            java.awt.Toolkit.getDefaultToolkit().beep();
+            try {
+                Thread.sleep(600); // introduce delay
+            } catch (InterruptedException e) {
+            }
+            java.awt.Toolkit.getDefaultToolkit().beep();
+            try {
+                Thread.sleep(1000); // introduce delay
+            } catch (InterruptedException e) {
+            }
+        }
+        System.out.println("now: " + ult.initDateNow());
         System.out.println("now: " + ult.initDateNow());
     }
 }

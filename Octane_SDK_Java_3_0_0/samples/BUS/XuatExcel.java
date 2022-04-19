@@ -35,6 +35,7 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -57,9 +58,21 @@ public class XuatExcel {
         return url;
     }
 
+    public HSSFColor setColor(HSSFWorkbook workbook, Color color) {
+        HSSFPalette palette = workbook.getCustomPalette();
+        HSSFColor hssfColor = null;
+        try {
+            hssfColor = palette.findSimilarColor(color.getRed(), color.getGreen(), color.getBlue());
+            System.out.println("Color is: " + hssfColor.getIndex());
+        } catch (Exception e) {
+            System.out.println("Color error!!");
+        }
+        return hssfColor;
+    }
+
     // Xuất file Excel 
     @SuppressWarnings("empty-statement")
-    public void xuatFileExcelDonHang(ArrayList<BaoCaoDTO> baoCaoDTOs) {
+    public void xuatFileExcelDonHang(ArrayList<BaoCaoDTO> baoCaoDTOs, String dateFrom, String dateTo) {
         fd.setTitle("Xuất đơn hàng ra excel");
         String url = getFile();
         if (url == null) {
@@ -71,18 +84,23 @@ public class XuatExcel {
             //Create a Work Book
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet("Đơn Xuất");//Tên sheet
-
-            HSSFCellStyle styleTitle = workbook.createCellStyle(); // Style cho Title
+            
             HSSFFont font = workbook.createFont();
             font.setBold(true);
+
+            HSSFCellStyle styleTitle = workbook.createCellStyle(); // Style cho Title
+            HSSFFont fontTitle = workbook.createFont();
+            fontTitle.setBold(true);
+            fontTitle.setFontHeight((short) 300);
             styleTitle.setBorderTop(BorderStyle.THIN);
             styleTitle.setBorderBottom(BorderStyle.THIN);
             styleTitle.setBorderRight(BorderStyle.THIN);
             styleTitle.setBorderLeft(BorderStyle.THIN);
             styleTitle.setAlignment(HorizontalAlignment.CENTER);
             styleTitle.setVerticalAlignment(VerticalAlignment.CENTER);
-            styleTitle.setFillBackgroundColor(IndexedColors.YELLOW.index);
-            styleTitle.setFont(font);
+            styleTitle.setFillForegroundColor((short) 51);
+            styleTitle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            styleTitle.setFont(fontTitle);
 
             Row rowTitle = sheet.createRow(1);
             rowTitle.setHeight((short) 800);
@@ -99,20 +117,38 @@ public class XuatExcel {
             ////Style cho ng nhap
             HSSFCellStyle styleName = workbook.createCellStyle(); // Style cho Title
             styleName.setAlignment(HorizontalAlignment.LEFT);
+            styleName.setBorderTop(BorderStyle.THIN);
+            styleName.setBorderBottom(BorderStyle.THIN);
+            styleName.setBorderRight(BorderStyle.THIN);
+            styleName.setBorderLeft(BorderStyle.THIN);
             styleName.setVerticalAlignment(VerticalAlignment.CENTER);
             styleName.setFont(font);
+            styleName.setFillForegroundColor((short) 29);
+            styleName.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             Row rowNhap = sheet.createRow(3);
             rowNhap.setHeight((short) 600);
             HSSFCell cellNhap = (HSSFCell) rowNhap.createCell(1);
-            cellNhap.setCellValue("Người Tạo Báo Cáo: Dương Như Kiệt");
+            cellNhap.setCellValue("NGƯỜI LẬP BÁO CÁO: DƯƠNG NHƯ KIỆT");
             cellNhap.setCellStyle(styleName);
             CellRangeAddress cellRangeAddress1 = new CellRangeAddress(3, 3, 1, 3);
             rowNhap.getSheet().addMergedRegion(cellRangeAddress1);
-            RegionUtil.setBorderTop(BorderStyle.DOUBLE, cellRangeAddress1, sheet);
-            RegionUtil.setBorderBottom(BorderStyle.DOUBLE, cellRangeAddress1, sheet);
-            RegionUtil.setBorderLeft(BorderStyle.DOUBLE, cellRangeAddress1, sheet);
-            RegionUtil.setBorderRight(BorderStyle.DOUBLE, cellRangeAddress1, sheet);
+            RegionUtil.setBorderTop(BorderStyle.THIN, cellRangeAddress1, sheet);
+            RegionUtil.setBorderBottom(BorderStyle.THIN, cellRangeAddress1, sheet);
+            RegionUtil.setBorderLeft(BorderStyle.THIN, cellRangeAddress1, sheet);
+            RegionUtil.setBorderRight(BorderStyle.THIN, cellRangeAddress1, sheet);
+            
+//            Row rowDate = sheet.createRow(3);
+//            rowDate.setHeight((short) 600);
+            HSSFCell cellDate = (HSSFCell) rowNhap.createCell(5);
+            cellDate.setCellValue("TỪ " + dateFrom + " ĐẾN " + dateTo);
+            cellDate.setCellStyle(styleName);
+            CellRangeAddress cellRangeAddressDate = new CellRangeAddress(3, 3, 5, 6);
+            rowNhap.getSheet().addMergedRegion(cellRangeAddressDate);
+            RegionUtil.setBorderTop(BorderStyle.THIN, cellRangeAddressDate, sheet);
+            RegionUtil.setBorderBottom(BorderStyle.THIN, cellRangeAddressDate, sheet);
+            RegionUtil.setBorderLeft(BorderStyle.THIN, cellRangeAddressDate, sheet);
+            RegionUtil.setBorderRight(BorderStyle.THIN, cellRangeAddressDate, sheet);
 
             /// Style header
             HSSFCellStyle styleHeader = workbook.createCellStyle();
@@ -123,6 +159,8 @@ public class XuatExcel {
             styleHeader.setAlignment(HorizontalAlignment.CENTER);
             styleHeader.setVerticalAlignment(VerticalAlignment.CENTER);
             styleHeader.setFont(font);
+            styleHeader.setFillForegroundColor((short) 50);
+            styleHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             Row row = sheet.createRow(5);
             row.setHeight((short) 400);
@@ -142,7 +180,7 @@ public class XuatExcel {
             cell6.setCellValue("Tên Sản Phẩm");
             cell6.setCellStyle(styleHeader);
             HSSFCell cell7 = (HSSFCell) row.createCell(6, CellType.STRING);
-            cell7.setCellValue("Số Lượng Đơn");
+            cell7.setCellValue("Số Lượng Đặt");
             cell7.setCellStyle(styleHeader);
             HSSFCell cell8 = (HSSFCell) row.createCell(7, CellType.STRING);
             cell8.setCellValue("Mã Tag");
@@ -168,22 +206,30 @@ public class XuatExcel {
             style.setBorderLeft(BorderStyle.THIN);
             style.setAlignment(HorizontalAlignment.CENTER);
             style.setVerticalAlignment(VerticalAlignment.CENTER);
+            /////////////////////////////////////////
+            HSSFCellStyle style2 = workbook.createCellStyle();
+            style2.setBorderTop(BorderStyle.THIN);
+            style2.setBorderBottom(BorderStyle.THIN);
+            style2.setBorderRight(BorderStyle.THIN);
+            style2.setBorderLeft(BorderStyle.THIN);
+            style2.setAlignment(HorizontalAlignment.CENTER);
+            style2.setVerticalAlignment(VerticalAlignment.CENTER);
+            style2.setFillForegroundColor((short) 26);
+            style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             for (int i = 1; i <= 12; ++i) {
-
-                if (i == 5 || i == 2 || i == 9 || i == 11) {
-                    sheet.setColumnWidth(i, 25 * 256);
-                } else if (i == 7) {
-                    sheet.setColumnWidth(i, 25 * 350);
-                } else {
-                    sheet.setColumnWidth(i, 25 * 150);
+                switch (i) {
+                    case 5, 2, 9, 11 -> sheet.setColumnWidth(i, 25 * 256);
+                    case 7 -> sheet.setColumnWidth(i, 25 * 350);
+                    default -> sheet.setColumnWidth(i, 25 * 150);
                 }
             }
 
-            // truyen dl cho row
-            int rowPrint = 6, beginOrder = 6, endOrder = 6, beginProduct = 6, endProduct = 6;
+            // INIT
+            int rowPrint = 6, beginOrder = 6, endOrder = 6, beginProduct = 6, endProduct = 6, count = 0;
             String orderId = "", productId = "";
-            for (BaoCaoDTO k : baoCaoDTOs)//row
+            // PRINT ROW
+            for (BaoCaoDTO k : baoCaoDTOs)
             {
                 Row rowData = sheet.createRow(rowPrint);
                 rowData.setHeight((short) 400);
@@ -214,6 +260,7 @@ public class XuatExcel {
                         }
                     }
                     beginOrder = rowPrint;
+                    count++;
                 } else {
                     if (!productId.equals(k.getProduct_id())) {
                         productId = k.getProduct_id();
@@ -229,47 +276,53 @@ public class XuatExcel {
                     }
                     endOrder = rowPrint;
                 }
-                for (int j = 1; j <= 11; ++j)//column
+                // PRINT COLUMN
+                for (int j = 1; j <= 11; ++j)
                 {
                     HSSFCell cellData = (HSSFCell) rowData.createCell(j);
-                    cellData.setCellStyle(style);
-                    if (j == 1) {
-                        cellData.setCellValue(k.getOrder_id());
+                    if (count % 2 == 0) {
+                        cellData.setCellStyle(style2);
+                    } else {
                         cellData.setCellStyle(style);
-                    } else if (j == 2) {
-                        cellData.setCellValue(k.getOrder_date());
-                        cellData.setCellStyle(style);
-                    } else if (j == 3) {
-                        if (k.getStatus() == 2) {
-                            cellData.setCellValue("Chờ xuất");
-                        } else {
-                            cellData.setCellValue("Hoàn tất");
+                    }
+                    switch (j) {
+                        case 1 ->  {
+                            cellData.setCellValue(k.getOrder_id());
                         }
-                        cellData.setCellStyle(style);
-                    } else if (j == 4) {
-                        cellData.setCellValue(k.getProduct_id());
-                        cellData.setCellStyle(style);
-                    } else if (j == 5) {
-                        cellData.setCellValue(k.getProduct_name());
-                        cellData.setCellStyle(style);
-                    } else if (j == 6) {
-                        cellData.setCellValue(k.getOrder_quantity());
-                        cellData.setCellStyle(style);
-                    } else if (j == 7) {
-                        cellData.setCellValue(k.getTag_id());
-                        cellData.setCellStyle(style);
-                    } else if (j == 8) {
-                        cellData.setCellValue(k.getTag_gate_in());
-                        cellData.setCellStyle(style);
-                    } else if (j == 9) {
-                        cellData.setCellValue(k.getTag_date_in());
-                        cellData.setCellStyle(style);
-                    } else if (j == 10) {
-                        cellData.setCellValue(k.getTag_gate_out());
-                        cellData.setCellStyle(style);
-                    } else if (j == 11) {
-                        cellData.setCellValue(k.getTag_date_out());
-                        cellData.setCellStyle(style);
+                        case 2 ->  {
+                            cellData.setCellValue(k.getOrder_date());
+                        }
+                        case 3 ->  {
+                            if (k.getStatus() == 2) {
+                                cellData.setCellValue("Chờ xuất");
+                            } else {
+                                cellData.setCellValue("Hoàn tất");
+                            }
+                        }
+                        case 4 ->  {
+                            cellData.setCellValue(k.getProduct_id());
+                        }
+                        case 5 ->  {
+                            cellData.setCellValue(k.getProduct_name());
+                        }
+                        case 6 ->  {
+                            cellData.setCellValue(k.getOrder_quantity());
+                        }
+                        case 7 ->  {
+                            cellData.setCellValue(k.getTag_id());
+                        }
+                        case 8 ->  {
+                            cellData.setCellValue(k.getTag_gate_in());
+                        }
+                        case 9 ->  {
+                            cellData.setCellValue(k.getTag_date_in());
+                        }
+                        case 10 ->  {
+                            cellData.setCellValue(k.getTag_gate_out());
+                        }
+                        case 11 ->  {
+                            cellData.setCellValue(k.getTag_date_out());
+                        }
                     }
                 }
                 if (rowPrint - 5 == baoCaoDTOs.size()) {
