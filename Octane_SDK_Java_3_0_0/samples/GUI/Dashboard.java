@@ -329,6 +329,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelInput.setVisible(false);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
+        inputTag.tagDTOs.clear();
         MainRead.flag = 0;
         MainRead.tagMap.clear();
     }//GEN-LAST:event_jBtnInputBackActionPerformed

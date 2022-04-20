@@ -69,6 +69,9 @@ public class NhapDlForm extends javax.swing.JFrame {
         selectedTag = false;
         selectedProduct = false;
         jBtnAdd.setEnabled(false);
+        if (tagDTOs != null) {
+            tagDTOs.clear();
+        }
     }
 
     public void initTableTagSet() {
@@ -114,6 +117,7 @@ public class NhapDlForm extends javax.swing.JFrame {
     }
 
     public void tableModelTag(DefaultTableModel model) {
+        System.out.println("tag print:" + tagDTOs);
         for (TagDTO tag : tagDTOs) {
             System.out.println("tag: " + tag);
             Vector row = new Vector();
@@ -345,15 +349,19 @@ public class NhapDlForm extends javax.swing.JFrame {
 
     private void jBtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddActionPerformed
         // TODO add your handling code here:
-        TagDTO tagDTO = new TagDTO(idTag, idProduct, "", null, "", null, "");
+        TagDTO tagDTO = new TagDTO(idTag, idProduct, "", null, "", null, ""),
+                tagTemp = new TagDTO(idTag, null, null, null, null, null, null);
         for (TagDTO t : tagDTOs) {
             if (t.getTagId().equals(idTag)) {
                 tagDTO.setTagGateIn(t.getTagGateIn());
                 tagDTO.setTagDateIn(t.getTagDateIn());
+                tagTemp.setTagGateIn(t.getTagGateIn());
+                tagTemp.setTagDateIn(t.getTagDateIn());
                 break;
             }
         }
         System.out.println("tagDTO: " + tagDTO);
+        System.out.println("tagTemp: " + tagTemp);
         if (tagBUS.insertTag(tagDTO)) {
             ProductDTO productDTO = new ProductDTO();
             productDTO.setProductId((String) tbModelProduct.getValueAt(rowProduct, 0));
@@ -369,6 +377,22 @@ public class NhapDlForm extends javax.swing.JFrame {
                 selectedTag = false;
                 selectedProduct = false;
                 jBtnAdd.setEnabled(false);
+//                if (tagDTOs.remove(tagTemp)) {
+//                    System.out.println("remove ok");
+//                } else {
+//                    System.out.println("remove fail");
+//                }
+                System.out.println("tag after remove: " + tagDTOs);
+                for (TagDTO t : tagDTOs) {
+                    if (t.getTagId().equals(idTag)) {
+                        if (tagDTOs.remove(t)) {
+                            System.out.println("remove ok");
+                        } else {
+                            System.out.println("remove fail");
+                        }
+                        break;
+                    }
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thất bại!");

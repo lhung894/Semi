@@ -214,7 +214,7 @@ public class XuatExcel {
             style2.setBorderLeft(BorderStyle.THIN);
             style2.setAlignment(HorizontalAlignment.CENTER);
             style2.setVerticalAlignment(VerticalAlignment.CENTER);
-            style2.setFillForegroundColor((short) 26);
+            style2.setFillForegroundColor((short) 41);
             style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             for (int i = 1; i <= 12; ++i) {

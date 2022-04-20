@@ -25,8 +25,7 @@ import java.util.logging.Logger;
  *
  * @author Hyung
  */
-public class MainRead implements TagReportListener
-{
+public class MainRead implements TagReportListener {
 
     public static HashMap<String, Tag> tagMap = new HashMap<>();
     public static int flag = 0;
@@ -35,17 +34,15 @@ public class MainRead implements TagReportListener
     public static DanhSachXuatForm outputForm;
     TagDTO tagDTO;
     Utils ult = new Utils();
+    String error = "";
 
     @Override
-    public void onTagReported(ImpinjReader reader, TagReport tr)
-    {
-        if (flag == 1)
-        {
+    public void onTagReported(ImpinjReader reader, TagReport tr) {
+        if (flag == 1) {
             List<Tag> tags = tr.getTags();
-            for (Tag t : tags)
-            {
-                if (tagMap.put(t.getEpc().toString(), t) == null)
-                {
+            for (Tag t : tags) {
+                if (!tagMap.containsKey(t.getEpc().toString())) {
+                    tagMap.put(t.getEpc().toString(), t);
                     tagDTO = new TagDTO();
                     tagDTO.setTagId(t.getEpc().toString());
 //                    if (reader.getName() != null) {
@@ -61,13 +58,11 @@ public class MainRead implements TagReportListener
                     inputForm.initTagAuto();
                 }
             }
-        } else if (flag == 2)
-        {
+        } else if (flag == 2) {
             List<Tag> tags = tr.getTags();
-            for (Tag t : tags)
-            {
-                if (tagMap.put(t.getEpc().toString(), t) == null)
-                {
+            for (Tag t : tags) {
+                if (tagMap.containsKey(t.getEpc().toString())) {
+                    tagMap.put(t.getEpc().toString(), t);
                     tagDTO = new TagDTO();
                     tagDTO.setTagId(t.getEpc().toString());
 //                    if (reader.getName() != null) {
@@ -77,23 +72,23 @@ public class MainRead implements TagReportListener
 //                    }
                     tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
                     tagDTO.setTagDateOut(ult.initDateNow());
-                    for (TagDTO dto : tagDTOsMR)
-                    {
-                        if (dto.getTagId().equals(tagDTO.getTagId()))
-                        {
+                    for (TagDTO dto : tagDTOsMR) {
+                        if (dto.getTagId().equals(tagDTO.getTagId())) {
                             tagDTO.setProductId(dto.getProductId());
-                            break;
+                            ////////
+                            outputForm.tagDTOs.add(tagDTO);
+                            if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
+                                outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) + 1);
+                            } else {
+                                outputForm.detailScan.put(tagDTO.getProductId(), 1);
+                            }
+                            outputForm.checkScan(tagDTO.getProductId());
+                            return;
                         }
                     }
-                    outputForm.tagDTOs.add(tagDTO);
-                    if (outputForm.detailScan.containsKey(tagDTO.getProductId()))
-                    {
-                        outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) + 1);
-                    } else
-                    {
-                        outputForm.detailScan.put(tagDTO.getProductId(), 1);
-                    }
-                    outputForm.checkScan(tagDTO.getProductId());
+                    outputForm.errorScan += "Tag " + tagDTO.getTagId() +" không tồn tại trong kho.";
+                    outputForm.checkError();
+                    ////////
                     System.out.println("ok??????????????????????????");
 //                    outputForm.initTagAuto();
                 }
@@ -115,8 +110,7 @@ public class MainRead implements TagReportListener
 //tag: 3008 33B2 DDD9 06C0 0000 0000
 //tag: 300F 4F57 3AD0 01C0 8369 A249
 //tag: 3008 33B2 DDD9 0140 0000 002D
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
 //        List<String> tagsString = new ArrayList<String>();
 //        tagsString.add("3500 0000 1000 0010 0000 1759");
 //        tagsString.add("00B0 7A14 2C2B 2848 0800 0166");
@@ -154,85 +148,68 @@ public class MainRead implements TagReportListener
         mread.setOutputForm(d.getListOrder());
     }
 
-    public static void thucThi()
-    {
+    public static void thucThi() {
         TagDTO test = new TagDTO();
         test.setTagId("abc");
-        for (TagDTO dto : tagDTOsMR)
-        {
-            if (dto.getTagId().equals(test.getTagId()))
-            {
+        for (TagDTO dto : tagDTOsMR) {
+            if (dto.getTagId().equals(test.getTagId())) {
                 test.setProductId(dto.getProductId());
                 break;
             }
         }
         outputForm.tagDTOs.add(test);
-        if (outputForm.detailScan.containsKey(test.getProductId()))
-        {
+        if (outputForm.detailScan.containsKey(test.getProductId())) {
             outputForm.detailScan.put(test.getProductId(), outputForm.detailScan.get(test.getProductId()) + 1);
-        } else
-        {
+        } else {
             outputForm.detailScan.put(test.getProductId(), 1);
         }
         outputForm.checkScan(test.getProductId());
         test = new TagDTO();
         test.setTagId("def");
-        for (TagDTO dto : tagDTOsMR)
-        {
-            if (dto.getTagId().equals(test.getTagId()))
-            {
+        for (TagDTO dto : tagDTOsMR) {
+            if (dto.getTagId().equals(test.getTagId())) {
                 test.setProductId(dto.getProductId());
                 break;
             }
         }
         outputForm.tagDTOs.add(test);
-        if (outputForm.detailScan.containsKey(test.getProductId()))
-        {
+        if (outputForm.detailScan.containsKey(test.getProductId())) {
             outputForm.detailScan.put(test.getProductId(), outputForm.detailScan.get(test.getProductId()) + 1);
-        } else
-        {
+        } else {
             outputForm.detailScan.put(test.getProductId(), 1);
         }
         outputForm.checkScan(test.getProductId());
     }
 
-    public static HashMap<String, Tag> getTagMap()
-    {
+    public static HashMap<String, Tag> getTagMap() {
         return tagMap;
     }
 
-    public static void setTagMap(HashMap<String, Tag> tagMap)
-    {
+    public static void setTagMap(HashMap<String, Tag> tagMap) {
         MainRead.tagMap = tagMap;
     }
 
-    public static int getFlag()
-    {
+    public static int getFlag() {
         return flag;
     }
 
-    public static void setFlag(int flag)
-    {
+    public static void setFlag(int flag) {
         MainRead.flag = flag;
     }
 
-    public NhapDlForm getInputForm()
-    {
+    public NhapDlForm getInputForm() {
         return inputForm;
     }
 
-    public void setInputForm(NhapDlForm inputForm)
-    {
+    public void setInputForm(NhapDlForm inputForm) {
         this.inputForm = inputForm;
     }
 
-    public DanhSachXuatForm getOutputForm()
-    {
+    public DanhSachXuatForm getOutputForm() {
         return outputForm;
     }
 
-    public void setOutputForm(DanhSachXuatForm outputForm)
-    {
+    public void setOutputForm(DanhSachXuatForm outputForm) {
         this.outputForm = outputForm;
     }
 
