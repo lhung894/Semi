@@ -76,4 +76,20 @@ public class OrderDAO {
         System.out.println("OrderDAO update fail.");
         return false;
     }
+    
+    public boolean deleteOrder(String orderId) {
+        conn = new Connect();
+        conn.getConnection();
+        String query = "DELETE FROM Order_Product"
+                + " WHERE order_id='" + orderId + "';";
+//        System.out.println("query: " + query);       
+        if (conn.executeUpdate(query)) {
+            conn.close();
+            System.out.println("OrderDAO delete success.");
+            return true;
+        }
+        conn.close();
+        System.out.println("OrderDAO delete fail.");
+        return false;
+    }
 }

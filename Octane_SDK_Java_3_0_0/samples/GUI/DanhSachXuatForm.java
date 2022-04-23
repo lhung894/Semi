@@ -62,12 +62,17 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         jBtnQuet.setEnabled(false);
         jBtnHuy.setEnabled(false);
         jBtnXuat.setEnabled(false);
+        jBtnXoa.setEnabled(false);
         rowOrder = -2;
         rowDetail = -2;
 //        isScanning = false;
         orderId = "";
-        tagDTOs.clear();
-        detailScan.clear();
+        if (tagDTOs != null || !tagDTOs.isEmpty()) {
+            tagDTOs.clear();
+        }
+        if (detailScan != null || !detailScan.isEmpty()) {
+            detailScan.clear();
+        }
         errorScan = "";
         jTableOrder.setRowSelectionAllowed(true);
     }
@@ -194,6 +199,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         jBtnXuat = new javax.swing.JButton();
         jBtnQuet = new javax.swing.JButton();
         jBtnHuy = new javax.swing.JButton();
+        jBtnXoa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -321,6 +327,15 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         });
         jPanel1.add(jBtnHuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, 120, -1));
 
+        jBtnXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jBtnXoa.setText("XÓA ĐƠN");
+        jBtnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnXoaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jBtnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 120, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -345,6 +360,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         if (row == rowOrder) {
             jTableOrder.clearSelection();
             jBtnQuet.setEnabled(false);
+            jBtnXoa.setEnabled(false);
             rowOrder = -2;
             orderId = "";
             tbModelDetail.setRowCount(0);
@@ -355,12 +371,15 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             orderId = (String) jTableOrder.getValueAt(row, 0);
             initTableDetail();
             if (tbModelOrder.getValueAt(rowOrder, 2).equals("Hoàn tất")) {
+                orderId = "";
                 jBtnHuy.setEnabled(false);
                 jBtnQuet.setEnabled(false);
                 jBtnXuat.setEnabled(false);
+                jBtnXoa.setEnabled(false);
                 return;
             }
             jBtnQuet.setEnabled(true);
+            jBtnXoa.setEnabled(true);
         }
     }//GEN-LAST:event_jTableOrderMouseClicked
 
@@ -443,6 +462,43 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         clear();
     }//GEN-LAST:event_jBtnHuyActionPerformed
 
+    private void jBtnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnXoaActionPerformed
+        // TODO add your handling code here:
+        if (orderId.equals("")) {
+            JOptionPane.showMessageDialog(this, "Order Id null!");
+            return;
+        }
+        ArrayList<ProductDTO> tempUpdate = new ArrayList<>();
+        ProductDTO productDTO;
+        for (OrderDetailDTO detail : details) {
+            if (detail.getOrderId().equals(orderId)) {
+                productDTO = new ProductDTO();
+                productDTO.setProductId(detail.getProductId());
+                for (ProductDTO product : products) {
+                    if (product.getProductId().equals(detail.getProductId())) {
+                        productDTO.setProductQuantity(detail.getOrderQuantity() + product.getProductQuantity());
+                    }
+                }
+                tempUpdate.add(productDTO);
+//                details.add(new OrderDetailDTO(detail.getOrderDetailId(), orderId, detail.getProductId(), detail.getOrderQuantity()));
+            }
+        }
+        if (!orderDetailBUS.deleteDetail(orderId)) {
+            JOptionPane.showMessageDialog(this, "Xóa chi tiết đơn thất bại!");
+            return;
+        }
+        if (!orderBUS.deleteOrder(orderId)) {
+            JOptionPane.showMessageDialog(this, "Xóa đơn thất bại!");
+            return;
+        }
+        if (!productBUS.updateProducts(tempUpdate)) {
+            JOptionPane.showMessageDialog(this, "Cập nhật sản phẩm thất bại!");
+        }
+        tbModelOrder.removeRow(rowOrder);
+        JOptionPane.showMessageDialog(this, "Xóa đơn thành công!");
+        clear();
+    }//GEN-LAST:event_jBtnXoaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -489,6 +545,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnHuy;
     private javax.swing.JButton jBtnQuet;
+    private javax.swing.JButton jBtnXoa;
     private javax.swing.JButton jBtnXuat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

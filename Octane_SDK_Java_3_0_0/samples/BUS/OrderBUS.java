@@ -44,4 +44,13 @@ public class OrderBUS {
         System.out.println("update order completed fail BUS");
         return false;
     }
+    
+    public boolean deleteOrder(String orderId) {
+        if (orderDAO.deleteOrder(orderId)) {
+            System.out.println("delete order success BUS");
+            return true;
+        }
+        System.out.println("delete order fail BUS");
+        return false;
+    }
 }

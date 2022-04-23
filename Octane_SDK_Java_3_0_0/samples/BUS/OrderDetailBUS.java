@@ -33,4 +33,13 @@ public class OrderDetailBUS {
         }
         return false;
     }
+    
+    public boolean deleteDetail(String orderId) {
+        if (orderDetailDAO.deleteDetail(orderId)) {
+            System.out.println("delete detail success BUS");
+            return true;
+        }
+        System.out.println("delete detail fail BUS");
+        return false;
+    }
 }

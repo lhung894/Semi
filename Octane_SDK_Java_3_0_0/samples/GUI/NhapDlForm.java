@@ -47,6 +47,7 @@ public class NhapDlForm extends javax.swing.JFrame {
         initTableTag();
         initTableProduct();
         jBtnAdd.setEnabled(false);
+        jBtnRefresh.setVisible(false);
     }
 
     public NhapDlForm(Set<String> tags) {
@@ -166,7 +167,7 @@ public class NhapDlForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableProduct = new javax.swing.JTable();
         jBtnAdd = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jBtnRefresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -277,13 +278,13 @@ public class NhapDlForm extends javax.swing.JFrame {
         });
         jPanel1.add(jBtnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 150, 42));
 
-        jButton1.setText("Refresh");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBtnRefresh.setText("Refresh");
+        jBtnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBtnRefreshActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 80, 31));
+        jPanel1.add(jBtnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 80, 31));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -319,7 +320,7 @@ public class NhapDlForm extends javax.swing.JFrame {
             System.out.println("click table: " + jTableTag.getValueAt(rowTag, 0));
             System.out.println("tbmodel: " + tbModelTag.getValueAt(rowTag, 0));
         }
-        if (selectedTag && selectedProduct && idTag != "" && idProduct != "") {
+        if (selectedTag && selectedProduct && !"".equals(idTag) && !"".equals(idProduct)) {
             jBtnAdd.setEnabled(true);
         }
     }//GEN-LAST:event_jTableTagMouseClicked
@@ -342,7 +343,7 @@ public class NhapDlForm extends javax.swing.JFrame {
             idProduct = (String) jTableProduct.getValueAt(rowProduct, 0);
             System.out.println("click: " + jTableProduct.getValueAt(rowProduct, 0)); //ch?nh
         }
-        if (selectedTag && selectedProduct && idTag != "" && idProduct != "") {
+        if (selectedTag && selectedProduct && !"".equals(idTag) && !"".equals(idProduct)) {
             jBtnAdd.setEnabled(true);
         }
     }//GEN-LAST:event_jTableProductMouseClicked
@@ -398,11 +399,11 @@ public class NhapDlForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnAddActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
-    {//GEN-HEADEREND:event_jButton1ActionPerformed
+    private void jBtnRefreshActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnRefreshActionPerformed
+    {//GEN-HEADEREND:event_jBtnRefreshActionPerformed
         // TODO add your handling code here:
         initTagAuto();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBtnRefreshActionPerformed
 
     /**
      * @param args the command line arguments
@@ -449,7 +450,7 @@ public class NhapDlForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAdd;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBtnRefresh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
