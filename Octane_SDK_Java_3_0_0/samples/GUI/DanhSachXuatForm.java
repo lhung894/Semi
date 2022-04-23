@@ -129,11 +129,12 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         tableModelDetail(tbModelDetail);
         jTableDetail.setModel(tbModelDetail);
     }
-    
+
     public void checkError() {
         if (!errorScan.equals("")) {
             JOptionPane.showMessageDialog(this, errorScan);
             jBtnXuat.setEnabled(false);
+            errorScan = "";
         }
     }
 
@@ -146,21 +147,6 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             }
         }
         if (count == 0) {
-            int beepCount = 2;
-            for (int i = 0; i < beepCount; ++i) {
-//                System.out.println("Beep : " + i);
-                // Ring the bell again using the Toolkit 
-                java.awt.Toolkit.getDefaultToolkit().beep();
-                try {
-                    Thread.sleep(600); // introduce delay
-                } catch (InterruptedException e) {
-                }
-                java.awt.Toolkit.getDefaultToolkit().beep();
-                try {
-                    Thread.sleep(1000); // introduce delay
-                } catch (InterruptedException e) {
-                }
-            }
             JOptionPane.showMessageDialog(this, "Sản phẩm " + product_id + " không thuộc đơn hàng!");
             jBtnXuat.setEnabled(false);
             return;
@@ -450,18 +436,11 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         // TODO add your handling code here:
 //        tbModelDetail.setRowCount(0);
         initTableDetail();
-        jTableOrder.setRowSelectionAllowed(true);
 //        isScanning = false;
         MainRead.flag = 0;
         MainRead.tagMap.clear();
-        detailScan.clear();
-        tagDTOs.clear();
-        errorScan = "";
-        orderId = "";
         jTableOrder.clearSelection();
-        jBtnHuy.setEnabled(false);
-        jBtnQuet.setEnabled(true);
-        jBtnXuat.setEnabled(false);
+        clear();
     }//GEN-LAST:event_jBtnHuyActionPerformed
 
     /**

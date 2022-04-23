@@ -34,7 +34,7 @@ public class MainRead implements TagReportListener {
     public static DanhSachXuatForm outputForm;
     TagDTO tagDTO;
     Utils ult = new Utils();
-    String error = "";
+//    String error = "";
 
     @Override
     public void onTagReported(ImpinjReader reader, TagReport tr) {
@@ -61,7 +61,7 @@ public class MainRead implements TagReportListener {
         } else if (flag == 2) {
             List<Tag> tags = tr.getTags();
             for (Tag t : tags) {
-                if (tagMap.containsKey(t.getEpc().toString())) {
+                if (!tagMap.containsKey(t.getEpc().toString())) {
                     tagMap.put(t.getEpc().toString(), t);
                     tagDTO = new TagDTO();
                     tagDTO.setTagId(t.getEpc().toString());

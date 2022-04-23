@@ -20,7 +20,7 @@ public class ReadTags
         try
         {
 //            String hostname = System.getProperty(SampleProperties.hostname);
-            String hostname = "169.254.96.13"; //169.254.96.13 //169.254.153.74
+            String hostname = "169.254.1.1"; //169.254.96.13 //169.254.153.74 // 169.254.1.1
 
             if (hostname == null)
             {
