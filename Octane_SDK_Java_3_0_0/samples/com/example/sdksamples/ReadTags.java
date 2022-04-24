@@ -1,6 +1,7 @@
 package com.example.sdksamples;
 
 import GUI.Dashboard;
+import GUI.LoginForm;
 import GUI.NhapDlForm;
 import com.impinj.octane.*;
 import java.util.ArrayList;
@@ -11,19 +12,18 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-public class ReadTags
-{
+public class ReadTags {
+    public static LoginForm l;
+    public static Dashboard d;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
 
-        try
-        {
+//    public void main() {
+        try {
 //            String hostname = System.getProperty(SampleProperties.hostname);
-            String hostname = "169.254.1.1"; //169.254.96.13 //169.254.153.74 // 169.254.1.1
+            String hostname = "169.254.96.13"; //169.254.96.13 //169.254.153.74 // 169.254.1.1
 
-            if (hostname == null)
-            {
+            if (hostname == null) {
                 throw new Exception("Must specify the '"
                         + SampleProperties.hostname + "' property");
             }
@@ -48,8 +48,7 @@ public class ReadTags
             // set some special settings for antenna 1
             AntennaConfigGroup antennas = settings.getAntennas();
             antennas.disableAll();
-            antennas.enableById(new short[]
-            {
+            antennas.enableById(new short[]{
                 1
             });
             antennas.getAntenna((short) 1).setIsMaxRxSensitivity(false);
@@ -60,7 +59,9 @@ public class ReadTags
 //            reader.setTagReportListener(new Vd());
             MainRead mread = new MainRead();
 //            NhapDlForm test = new NhapDlForm();
-            Dashboard d = new Dashboard();
+            l = new LoginForm();
+            d = new Dashboard();
+//            d.setVisible(false);
             mread.setInputForm(d.getInputTag());
             mread.setOutputForm(d.getListOrder());
             reader.setTagReportListener(mread);
@@ -77,14 +78,21 @@ public class ReadTags
 
             reader.stop();
             reader.disconnect();
-        } catch (OctaneSdkException ex)
-        {
+        } catch (OctaneSdkException ex) {
             System.out.println(ex.getMessage());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace(System.out);
         }
+    }
+
+    public static void visibleDashboard() {
+        d.setVisible(true);
+        d.setHello();
+    }
+    
+    public static void visibleLogin() {
+        l.setVisible(true);
     }
 }
 
@@ -102,8 +110,7 @@ public class ReadTags
 //    }
 //
 //}
-class ReadTagExample implements TagReportListener
-{
+class ReadTagExample implements TagReportListener {
 
     public static HashMap<String, Tag> tagMap = new HashMap<>();
     boolean flag = false;
@@ -114,20 +121,17 @@ class ReadTagExample implements TagReportListener
 //    }
 
     @Override
-    public void onTagReported(ImpinjReader reader, TagReport tr)
-    {
+    public void onTagReported(ImpinjReader reader, TagReport tr) {
         List<Tag> tags = tr.getTags();
 //        Set<String> epcSet = new HashSet<>();
-        for (Tag t : tags)
-        {
+        for (Tag t : tags) {
 //            System.out.println("dl l?y dc la" + t.getEpc().toString());
 //            epcSet.add(t.getEpc().toString());
             tagMap.put(t.getEpc().toString(), t);
         }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         List<String> tagsString = new ArrayList<String>();
         tagsString.add("abc");
         tagsString.add("abc");

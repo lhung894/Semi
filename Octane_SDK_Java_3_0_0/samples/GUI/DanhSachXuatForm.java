@@ -414,7 +414,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             return;
         }
         if (count == tbModelDetail.getRowCount()) {
-            if (orderBUS.updateOrderCompleted(orderId)) { // cập nhật đơn
+            if (orderBUS.updateOrderCompleted(orderId, Dashboard.userLogin.getUserId())) { // cập nhật đơn
                 for (TagDTO a : tagDTOs) {
                     a.setOrderId(orderId);
                 }

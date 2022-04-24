@@ -11,6 +11,8 @@ package DTO;
 public class BaoCaoDTO {
     private String order_id;
     private String order_date;
+    private String user_created;
+    private String user_completed;
     private int status;
     private String product_id;
     private String product_name;
@@ -24,9 +26,11 @@ public class BaoCaoDTO {
     public BaoCaoDTO() {
     }
 
-    public BaoCaoDTO(String order_id, String order_date, int status, String product_id, String product_name, int order_quantity, String tag_id, String tag_gate_in, String tag_date_in, String tag_gate_out, String tag_date_out) {
+    public BaoCaoDTO(String order_id, String order_date, String user_created, String user_completed, int status, String product_id, String product_name, int order_quantity, String tag_id, String tag_gate_in, String tag_date_in, String tag_gate_out, String tag_date_out) {
         this.order_id = order_id;
         this.order_date = order_date;
+        this.user_created = user_created;
+        this.user_completed = user_completed;
         this.status = status;
         this.product_id = product_id;
         this.product_name = product_name;
@@ -52,6 +56,22 @@ public class BaoCaoDTO {
 
     public void setOrder_date(String order_date) {
         this.order_date = order_date;
+    }
+
+    public String getUser_created() {
+        return user_created;
+    }
+
+    public void setUser_created(String user_created) {
+        this.user_created = user_created;
+    }
+
+    public String getUser_completed() {
+        return user_completed;
+    }
+
+    public void setUser_completed(String user_completed) {
+        this.user_completed = user_completed;
     }
 
     public int getStatus() {
@@ -128,6 +148,6 @@ public class BaoCaoDTO {
 
     @Override
     public String toString() {
-        return "BaoCaoDTO{" + "order_id=" + order_id + ", order_date=" + order_date + ", status=" + status + ", product_id=" + product_id + ", product_name=" + product_name + ", order_quantity=" + order_quantity + ", tag_id=" + tag_id + ", tag_gate_in=" + tag_gate_in + ", tag_date_in=" + tag_date_in + ", tag_gate_out=" + tag_gate_out + ", tag_date_out=" + tag_date_out + "}\n";
+        return "BaoCaoDTO{" + "order_id=" + order_id + ", order_date=" + order_date + ", user_created=" + user_created + ", user_completed=" + user_completed + ", status=" + status + ", product_id=" + product_id + ", product_name=" + product_name + ", order_quantity=" + order_quantity + ", tag_id=" + tag_id + ", tag_gate_in=" + tag_gate_in + ", tag_date_in=" + tag_date_in + ", tag_gate_out=" + tag_gate_out + ", tag_date_out=" + tag_date_out + "}\n";
     }
 }

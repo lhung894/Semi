@@ -298,6 +298,8 @@ public class TaoDonForm extends javax.swing.JFrame {
         OrderDTO order = new OrderDTO();
         order.setOrderId(ult.initOrderId());
         order.setOrderDate(ult.initDateNow());
+        order.setUserCreated(Dashboard.userLogin.getUserId());
+        order.setUserCompleted("");
         order.setStatus(2);
 //        System.out.println("date: " + order.getOrderDate());
 //        System.out.println("Order: " + order);

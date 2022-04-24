@@ -29,7 +29,9 @@ public class OrderDAO {
                 OrderDTO dto = new OrderDTO();
                 dto.setOrderId(conn.rs.getString(1));
                 dto.setOrderDate(conn.rs.getString(2));
-                dto.setStatus(conn.rs.getInt(3));
+                dto.setUserCreated(conn.rs.getString(3));
+                dto.setUserCompleted(conn.rs.getString(4));
+                dto.setStatus(conn.rs.getInt(5));
                 orderDTOs.add(dto);
             }
         } catch (SQLException e) {
@@ -50,6 +52,8 @@ public class OrderDAO {
         String query = "INSERT INTO Order_Product"
                 + " VALUES ('" + orderDTO.getOrderId() + "'"
                 + ",'" + orderDTO.getOrderDate() + "'"
+                + ",'" + orderDTO.getUserCreated() + "'"
+                + ",'" + orderDTO.getUserCompleted() + "'"
                 + "," + orderDTO.getStatus() + ")";
         if (conn.executeUpdate(query)) {
             conn.close();
@@ -61,11 +65,11 @@ public class OrderDAO {
         return false;
     }
     
-    public boolean updateOrderCompleted(String orderId) {
+    public boolean updateOrderCompleted(String orderId, String userId) {
         conn = new Connect();
         conn.getConnection();
         String query = "UPDATE Order_Product SET"
-                + " Status=3"
+                + " status=3, completed_by='" + userId + "'"
                 + " WHERE order_id='" + orderId + "';";
         if (conn.executeUpdate(query)) {
             conn.close();

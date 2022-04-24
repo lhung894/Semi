@@ -4,10 +4,14 @@
  */
 package GUI;
 
+import DTO.UserDTO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import com.example.sdksamples.MainRead;
+import com.example.sdksamples.ReadTags;
 import java.util.HashMap;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,7 +23,8 @@ public class Dashboard extends javax.swing.JFrame {
     private TaoDonForm createOrder;
     private DanhSachXuatForm listOrder;
     private BaoCaoForm baoCaoForm;
-    
+    public static UserDTO userLogin = new UserDTO();
+
     /**
      * Creates new form Dashboard
      */
@@ -31,7 +36,20 @@ public class Dashboard extends javax.swing.JFrame {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-        this.setVisible(true);
+        this.setVisible(false);
+        jPanelMenu.setVisible(true);
+        jPanelCreateOrder.setVisible(false);
+        jPanelInput.setVisible(false);
+        jPanelOrder.setVisible(false);
+        jPanelBaoCao.setVisible(false);
+        jBtnInputBack.setVisible(false);
+        jBtnCreateOrderBack.setVisible(false);
+        jBtnOrderBack.setVisible(false);
+        jBtnBaoCaoBack.setVisible(false);
+    }
+
+    public void falseFunc1() {
+
     }
 
     /**
@@ -44,17 +62,20 @@ public class Dashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanelCreateOrder = new javax.swing.JPanel();
-        jCreateOrder = new javax.swing.JPanel();
-        jBtnInputCOrder = new javax.swing.JButton();
-        jPanelInput = new javax.swing.JPanel();
-        jInput = new javax.swing.JPanel();
-        jBtnInputBack = new javax.swing.JButton();
         jPanelMenu = new javax.swing.JPanel();
         jBtnInput = new javax.swing.JButton();
         jBtnCreateOrder = new javax.swing.JButton();
         jBtnOrder = new javax.swing.JButton();
         jBtnBaoCao = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jBtnLogout = new javax.swing.JButton();
+        jLabelHello = new javax.swing.JLabel();
+        jPanelCreateOrder = new javax.swing.JPanel();
+        jCreateOrder = new javax.swing.JPanel();
+        jBtnCreateOrderBack = new javax.swing.JButton();
+        jPanelInput = new javax.swing.JPanel();
+        jInput = new javax.swing.JPanel();
+        jBtnInputBack = new javax.swing.JButton();
         jPanelOrder = new javax.swing.JPanel();
         jOrder = new javax.swing.JPanel();
         jBtnOrderBack = new javax.swing.JButton();
@@ -69,6 +90,72 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanelMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jBtnInput.setText("GÁN TAG");
+        jBtnInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnInputActionPerformed(evt);
+            }
+        });
+        jPanelMenu.add(jBtnInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 240));
+
+        jBtnCreateOrder.setText("TẠO ĐƠN XUẤT");
+        jBtnCreateOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCreateOrderActionPerformed(evt);
+            }
+        });
+        jPanelMenu.add(jBtnCreateOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 400, 240));
+
+        jBtnOrder.setText("ĐƠN XUẤT");
+        jBtnOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnOrderActionPerformed(evt);
+            }
+        });
+        jPanelMenu.add(jBtnOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 400, 240));
+
+        jBtnBaoCao.setText("BÁO CÁO");
+        jBtnBaoCao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBaoCaoActionPerformed(evt);
+            }
+        });
+        jPanelMenu.add(jBtnBaoCao, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, 400, 240));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jBtnLogout.setText("Logout");
+        jBtnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLogoutActionPerformed(evt);
+            }
+        });
+
+        jLabelHello.setText("Xin chào, Admin");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelHello, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 514, Short.MAX_VALUE)
+                .addComponent(jBtnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabelHello, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanelMenu.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 40));
+
+        jPanel1.add(jPanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 520));
+
         jPanelCreateOrder.setBackground(new java.awt.Color(245, 245, 245));
 
         javax.swing.GroupLayout jCreateOrderLayout = new javax.swing.GroupLayout(jCreateOrder);
@@ -82,10 +169,10 @@ public class Dashboard extends javax.swing.JFrame {
             .addGap(0, 480, Short.MAX_VALUE)
         );
 
-        jBtnInputCOrder.setText("Back");
-        jBtnInputCOrder.addActionListener(new java.awt.event.ActionListener() {
+        jBtnCreateOrderBack.setText("Back");
+        jBtnCreateOrderBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnInputCOrderActionPerformed(evt);
+                jBtnCreateOrderBackActionPerformed(evt);
             }
         });
 
@@ -96,13 +183,13 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCreateOrderLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanelCreateOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBtnInputCOrder)
+                    .addComponent(jBtnCreateOrderBack)
                     .addComponent(jCreateOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanelCreateOrderLayout.setVerticalGroup(
             jPanelCreateOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCreateOrderLayout.createSequentialGroup()
-                .addComponent(jBtnInputCOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addComponent(jBtnCreateOrderBack, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCreateOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -157,42 +244,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel1.add(jPanelInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 520));
         jPanelInput.setVisible(false);
-
-        jPanelMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jBtnInput.setText("GÁN TAG");
-        jBtnInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnInputActionPerformed(evt);
-            }
-        });
-        jPanelMenu.add(jBtnInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 260));
-
-        jBtnCreateOrder.setText("TẠO ĐƠN XUẤT");
-        jBtnCreateOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnCreateOrderActionPerformed(evt);
-            }
-        });
-        jPanelMenu.add(jBtnCreateOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, 400, 260));
-
-        jBtnOrder.setText("ĐƠN XUẤT");
-        jBtnOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnOrderActionPerformed(evt);
-            }
-        });
-        jPanelMenu.add(jBtnOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 400, 260));
-
-        jBtnBaoCao.setText("BÁO CÁO");
-        jBtnBaoCao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnBaoCaoActionPerformed(evt);
-            }
-        });
-        jPanelMenu.add(jBtnBaoCao, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 400, 260));
-
-        jPanel1.add(jPanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 520));
 
         jPanelOrder.setBackground(new java.awt.Color(245, 245, 245));
 
@@ -307,6 +358,10 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelInput.setVisible(true);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
+        jBtnInputBack.setVisible(true);
+        jBtnCreateOrderBack.setVisible(false);
+        jBtnOrderBack.setVisible(false);
+        jBtnBaoCaoBack.setVisible(false);
         inputTag.initTableProduct();
         MainRead.flag = 1;
         MainRead.tagMap.clear();
@@ -319,6 +374,10 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelInput.setVisible(false);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
+        jBtnInputBack.setVisible(false);
+        jBtnCreateOrderBack.setVisible(true);
+        jBtnOrderBack.setVisible(false);
+        jBtnBaoCaoBack.setVisible(false);
         createOrder.initTable();
     }//GEN-LAST:event_jBtnCreateOrderActionPerformed
 
@@ -329,19 +388,27 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelInput.setVisible(false);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
+        jBtnInputBack.setVisible(false);
+        jBtnCreateOrderBack.setVisible(false);
+        jBtnOrderBack.setVisible(false);
+        jBtnBaoCaoBack.setVisible(false);
         inputTag.tagDTOs.clear();
         MainRead.flag = 0;
         MainRead.tagMap.clear();
     }//GEN-LAST:event_jBtnInputBackActionPerformed
 
-    private void jBtnInputCOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnInputCOrderActionPerformed
+    private void jBtnCreateOrderBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCreateOrderBackActionPerformed
         // TODO add your handling code here:
         jPanelMenu.setVisible(true);
         jPanelCreateOrder.setVisible(false);
         jPanelInput.setVisible(false);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
-    }//GEN-LAST:event_jBtnInputCOrderActionPerformed
+        jBtnInputBack.setVisible(false);
+        jBtnCreateOrderBack.setVisible(false);
+        jBtnOrderBack.setVisible(false);
+        jBtnBaoCaoBack.setVisible(false);
+    }//GEN-LAST:event_jBtnCreateOrderBackActionPerformed
 
     private void jBtnOrderBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOrderBackActionPerformed
         // TODO add your handling code here:
@@ -350,6 +417,10 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelInput.setVisible(false);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
+        jBtnInputBack.setVisible(false);
+        jBtnCreateOrderBack.setVisible(false);
+        jBtnOrderBack.setVisible(false);
+        jBtnBaoCaoBack.setVisible(false);
         MainRead.flag = 0;
         MainRead.tagMap.clear();
     }//GEN-LAST:event_jBtnOrderBackActionPerformed
@@ -361,6 +432,10 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelInput.setVisible(false);
         jPanelOrder.setVisible(true);
         jPanelBaoCao.setVisible(false);
+        jBtnInputBack.setVisible(false);
+        jBtnCreateOrderBack.setVisible(false);
+        jBtnOrderBack.setVisible(true);
+        jBtnBaoCaoBack.setVisible(false);
         listOrder.initTableOrder();
     }//GEN-LAST:event_jBtnOrderActionPerformed
 
@@ -372,6 +447,10 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelInput.setVisible(false);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
+        jBtnInputBack.setVisible(false);
+        jBtnCreateOrderBack.setVisible(false);
+        jBtnOrderBack.setVisible(false);
+        jBtnBaoCaoBack.setVisible(false);
     }//GEN-LAST:event_jBtnBaoCaoBackActionPerformed
 
     private void jBtnBaoCaoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnBaoCaoActionPerformed
@@ -382,9 +461,31 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelInput.setVisible(false);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(true);
+        jBtnInputBack.setVisible(false);
+        jBtnCreateOrderBack.setVisible(false);
+        jBtnOrderBack.setVisible(false);
+        jBtnBaoCaoBack.setVisible(true);
         baoCaoForm.initTableOrder();
     }//GEN-LAST:event_jBtnBaoCaoActionPerformed
 
+    private void jBtnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLogoutActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn muốn đăng xuất?",
+                "Xác Nhận", JOptionPane.OK_CANCEL_OPTION);
+        if (confirm == JOptionPane.OK_OPTION) {
+            this.setVisible(false);
+            ReadTags.visibleLogin();
+//            dispose(); ////  Exit Program
+//            LoginForm lg = new LoginForm();
+//            lg.setVisible(true);
+        }
+
+    }//GEN-LAST:event_jBtnLogoutActionPerformed
+
+    public void setHello () {
+        jLabelHello.setText("Xin chào, " + userLogin.getFullName());
+    }
+    
     public NhapDlForm getInputTag() {
         return inputTag;
     }
@@ -399,6 +500,14 @@ public class Dashboard extends javax.swing.JFrame {
 
     public void setListOrder(DanhSachXuatForm listOrder) {
         this.listOrder = listOrder;
+    }
+
+    public JLabel getjLabelHello() {
+        return jLabelHello;
+    }
+
+    public void setjLabelHello(JLabel jLabelHello) {
+        this.jLabelHello = jLabelHello;
     }
 
     /**
@@ -441,15 +550,18 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton jBtnBaoCao;
     private javax.swing.JButton jBtnBaoCaoBack;
     private javax.swing.JButton jBtnCreateOrder;
+    private javax.swing.JButton jBtnCreateOrderBack;
     private javax.swing.JButton jBtnInput;
     private javax.swing.JButton jBtnInputBack;
-    private javax.swing.JButton jBtnInputCOrder;
+    private javax.swing.JButton jBtnLogout;
     private javax.swing.JButton jBtnOrder;
     private javax.swing.JButton jBtnOrderBack;
     private javax.swing.JPanel jCreateOrder;
     private javax.swing.JPanel jInput;
+    private javax.swing.JLabel jLabelHello;
     private javax.swing.JPanel jOrder;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelBaoCao;
     private javax.swing.JPanel jPanelCreateOrder;
     private javax.swing.JPanel jPanelInput;

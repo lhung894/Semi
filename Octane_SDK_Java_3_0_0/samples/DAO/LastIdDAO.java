@@ -12,6 +12,7 @@ import java.sql.SQLException;
  */
 public class LastIdDAO {
 
+    private String userId;
     private String productId;
     private String orderId;
     private String orderDetailId;
@@ -22,7 +23,8 @@ public class LastIdDAO {
         System.out.println("LastId: " + this.toString());
     }
 
-    public LastIdDAO(String productId, String orderId, String orderDetailId) {
+    public LastIdDAO(String userId, String productId, String orderId, String orderDetailId) {
+        this.userId = userId;
         this.productId = productId;
         this.orderId = orderId;
         this.orderDetailId = orderDetailId;
@@ -35,9 +37,10 @@ public class LastIdDAO {
         try {
             conn.executeQuery(query);
             while (conn.rs.next()) {
-                setProductId(conn.rs.getString(1));
-                setOrderId(conn.rs.getString(2));
-                setOrderDetailId(conn.rs.getString(3));
+                setUserId(conn.rs.getString(1));
+                setProductId(conn.rs.getString(2));
+                setOrderId(conn.rs.getString(3));
+                setOrderDetailId(conn.rs.getString(4));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -82,6 +85,22 @@ public class LastIdDAO {
         System.out.println("Update last OrderDetailId fail.");
         conn.close();
         return false;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Connect getConn() {
+        return conn;
+    }
+
+    public void setConn(Connect conn) {
+        this.conn = conn;
     }
 
     public String getProductId() {

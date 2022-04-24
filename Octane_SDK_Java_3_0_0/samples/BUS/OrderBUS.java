@@ -36,8 +36,8 @@ public class OrderBUS {
         return false;
     }
 
-    public boolean updateOrderCompleted(String orderId) {
-        if (orderDAO.updateOrderCompleted(orderId)) {
+    public boolean updateOrderCompleted(String orderId, String userId) {
+        if (orderDAO.updateOrderCompleted(orderId, userId)) {
             System.out.println("update order completed success BUS");
             return true;
         }

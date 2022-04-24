@@ -13,14 +13,18 @@ import java.util.Date;
 public class OrderDTO {
     private String orderId;
     private String orderDate;
+    private String userCreated;
+    private String userCompleted;
     private int status;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String orderId, String orderDate, int status) {
+    public OrderDTO(String orderId, String orderDate, String userCreated, String userCompleted, int status) {
         this.orderId = orderId;
         this.orderDate = orderDate;
+        this.userCreated = userCreated;
+        this.userCompleted = userCompleted;
         this.status = status;
     }
 
@@ -40,6 +44,22 @@ public class OrderDTO {
         this.orderDate = orderDate;
     }
 
+    public String getUserCreated() {
+        return userCreated;
+    }
+
+    public void setUserCreated(String userCreated) {
+        this.userCreated = userCreated;
+    }
+
+    public String getUserCompleted() {
+        return userCompleted;
+    }
+
+    public void setUserCompleted(String userCompleted) {
+        this.userCompleted = userCompleted;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -50,6 +70,6 @@ public class OrderDTO {
 
     @Override
     public String toString() {
-        return "OrderDTO{" + "orderId=" + orderId + ", orderDate=" + orderDate + ", status=" + status + "}\n";
+        return "OrderDTO{" + "orderId=" + orderId + ", orderDate=" + orderDate + ", userCreated=" + userCreated + ", userCompleted=" + userCompleted + ", status=" + status + "}\n";
     }
 }
