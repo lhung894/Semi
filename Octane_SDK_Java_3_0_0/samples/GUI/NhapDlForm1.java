@@ -77,6 +77,7 @@ public class NhapDlForm1 extends javax.swing.JFrame
     {
         tbModelTag.setRowCount(0);
         tableModelTag(tbModelTag);
+        initTagAuto();
         jTableTag.setRowSorter(null);
         jTableTag.setAutoCreateRowSorter(true);
         jTableTag.setModel(tbModelTag);
@@ -89,8 +90,25 @@ public class NhapDlForm1 extends javax.swing.JFrame
         tableModelTag(tbModelTag);
     }
 
+    void clear()
+    {
+        tbModelTag.setRowCount(0);
+        jTableTag.clearSelection();
+        jTableProduct.clearSelection();
+        rowProduct = -2;
+        rowTag = -2;
+        selectedTag = false;
+        selectedProduct = false;
+        jBtnAdd.setEnabled(false);
+        if (!tagDTOs.isEmpty())
+        {
+            tagDTOs.clear();
+        }
+    }
+
     public void initTableProduct()
     {
+        clear();
         tbModelProduct.setRowCount(0);
         tableModelProduct(tbModelProduct);
 //        jTableProduct.setRowSorter(null);
@@ -377,13 +395,16 @@ public class NhapDlForm1 extends javax.swing.JFrame
 
     private void jBtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddActionPerformed
         // TODO add your handling code here:
-        TagDTO tagDTO = new TagDTO(idTag, idProduct, "", null, "", null, "");
+        TagDTO tagDTO = new TagDTO(idTag, idProduct, "", null, "", null, ""),
+                tagTempDTO = new TagDTO();
+
         for (TagDTO t : tagDTOs)
         {
             if (t.getTagId().equals(idTag))
             {
                 tagDTO.setTagGateIn(t.getTagGateIn());
                 tagDTO.setTagDateIn(t.getTagDateIn());
+                tagTempDTO = t;
                 break;
             }
         }
@@ -405,6 +426,13 @@ public class NhapDlForm1 extends javax.swing.JFrame
                 selectedTag = false;
                 selectedProduct = false;
                 jBtnAdd.setEnabled(false);
+                if (tagDTOs.remove(tagTempDTO))
+                {
+                    System.out.println("OK!!! Xoa");
+                } else
+                {
+                    System.out.println("Not xoa!!");
+                }
             }
         } else
         {

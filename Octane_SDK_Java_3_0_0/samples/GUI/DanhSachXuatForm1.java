@@ -39,12 +39,13 @@ public class DanhSachXuatForm1 extends javax.swing.JFrame
     OrderBUS orderBUS = new OrderBUS();
     OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
     int rowOrder = -2, rowDetail = -2;
-    boolean isScanning = false;
+//    boolean isScanning = false;
     String orderId = "";
     public static ArrayList<TagDTO> tagDTOs = new ArrayList<>();
     public static HashMap<String, Integer> detailScan = new HashMap<>();
     ArrayList<OrderDetailDTO> details;
     ArrayList<ProductDTO> products;
+    public static String errorString = "";
 
     /**
      * Creates new form DanhSachXuatForm
@@ -56,6 +57,31 @@ public class DanhSachXuatForm1 extends javax.swing.JFrame
         this.setVisible(false);
         jTableOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    void clear()
+    {
+        tbModelDetail.setRowCount(0);
+        jBtnQuet.setEnabled(false);
+        jBtnHuy.setEnabled(false);
+        jBtnXuat.setEnabled(false);
+        rowOrder = -2;
+        rowDetail = -2;
+        orderId = "";
+        tagDTOs.clear();
+        detailScan.clear();
+        errorString = "";
+        jTableOrder.setRowSelectionAllowed(true);
+    }
+
+    public void checkError()
+    {
+        if (!errorString.equals(""))
+        {
+            JOptionPane.showMessageDialog(this, errorString);
+            jBtnXuat.setEnabled(false);
+            errorString = "";
+        }
     }
 
     public void tableModelOrder(DefaultTableModel model)
@@ -84,14 +110,13 @@ public class DanhSachXuatForm1 extends javax.swing.JFrame
         jBtnQuet.setEnabled(false);
         jBtnHuy.setEnabled(false);
         jBtnXuat.setEnabled(false);
-         rowOrder = -2;
+        rowOrder = -2;
         rowDetail = -2;
-        isScanning = false;
+//        isScanning = false;
         orderId = "";
         tagDTOs.clear();
         detailScan.clear();
-        
-        
+
 //        orderDetailBUS = new OrderDetailBUS();
         details = orderDetailBUS.getList();
 //        productBUS = new ProductBUS();
@@ -167,7 +192,7 @@ public class DanhSachXuatForm1 extends javax.swing.JFrame
                     tbModelDetail.setValueAt("OK", i, 0);
                 } else if (quantity > Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4))))
                 {
-                    tbModelDetail.setValueAt("redundant", i, 0);
+                    tbModelDetail.setValueAt("Dư thừa SP", i, 0);
                 }
             }
         }
@@ -362,11 +387,12 @@ public class DanhSachXuatForm1 extends javax.swing.JFrame
 
     private void jTableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrderMouseClicked
         // TODO add your handling code here:
-        if (isScanning)
-        {
-            jTableOrder.setRowSelectionAllowed(false);
-            return;
-        }
+//        if (isScanning)
+//        {
+//            jTableOrder.setRowSelectionAllowed(false);
+//            return;
+//        }
+
         int row = jTableOrder.getSelectedRow();
         if (row == rowOrder)
         {
@@ -414,10 +440,10 @@ public class DanhSachXuatForm1 extends javax.swing.JFrame
         int count = 0;
         for (int i = 0; i < tbModelDetail.getRowCount(); i++)
         {
-            if (tbModelDetail.getValueAt(i, 0).equals("ok"))
+            if (tbModelDetail.getValueAt(i, 0).equals("OK"))
             {
                 count++;
-            } else if (tbModelDetail.getValueAt(i, 0).equals("redundant"))
+            } else if (tbModelDetail.getValueAt(i, 0).equals("Dư thừa SP"))
             {
                 error += "Sản phẩm " + tbModelDetail.getValueAt(i, 2) + " bị dư\n";
             } else
@@ -442,10 +468,11 @@ public class DanhSachXuatForm1 extends javax.swing.JFrame
                 { // cập nhật date và gate out cho tag
                     tbModelOrder.setValueAt("Hoàn thành", rowOrder, 2);
                     JOptionPane.showMessageDialog(this, "Quét đơn thành công!");
-                    jBtnHuy.setEnabled(false);
-                    jBtnQuet.setEnabled(false);
-                    jBtnXuat.setEnabled(false);
-                    isScanning = false;
+                    clear();
+//                    jBtnHuy.setEnabled(false);
+//                    jBtnQuet.setEnabled(false);
+//                    jBtnXuat.setEnabled(false);
+//                    isScanning = false;
                 }
             }
 
@@ -454,10 +481,18 @@ public class DanhSachXuatForm1 extends javax.swing.JFrame
 
     private void jBtnQuetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnQuetActionPerformed
         // TODO add your handling code here:
-        isScanning = true;
-        MainRead.flag = 2;
-        MainRead.tagMap.clear();
-        MainRead.tagDTOsMR = tagBUS.getList();
+//        isScanning = true;
+        if (orderId.equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "L?i Order ID!!!");
+            return;
+        }
+//        MainRead.flag = 2;
+//        MainRead.tagMap.clear();
+//        MainRead.tagDTOsMR = tagBUS.getList();
+        LoginForm.flag = 2;
+        LoginForm.tagMap.clear();
+        LoginForm.tagDTOsMR = tagBUS.getList();
         detailScan.clear();
 //        MainRead.thucThi();
         jBtnHuy.setEnabled(true);
@@ -469,15 +504,19 @@ public class DanhSachXuatForm1 extends javax.swing.JFrame
         // TODO add your handling code here:
 //        tbModelDetail.setRowCount(0);
         initTableDetail();
-        jTableOrder.setRowSelectionAllowed(true);
-        isScanning = false;
-        MainRead.flag = 0;
-        MainRead.tagMap.clear();
-        detailScan.clear();
-        tagDTOs.clear();
-        jBtnHuy.setEnabled(false);
-        jBtnQuet.setEnabled(true);
-        jBtnXuat.setEnabled(false);
+//        jTableOrder.setRowSelectionAllowed(true);
+//        isScanning = false;
+        LoginForm.flag = 0;
+        LoginForm.tagMap.clear();
+        clear();
+//        detailScan.clear();
+//        tagDTOs.clear();
+//        errorString="";
+//        orderId="";
+        jTableOrder.clearSelection();
+//        jBtnHuy.setEnabled(false);
+//        jBtnQuet.setEnabled(true);
+//        jBtnXuat.setEnabled(false);
     }//GEN-LAST:event_jBtnHuyActionPerformed
 
     /**

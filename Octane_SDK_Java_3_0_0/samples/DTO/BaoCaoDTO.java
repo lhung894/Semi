@@ -16,13 +16,16 @@ public class BaoCaoDTO {
     private String product_name;
     private int order_quantity;
     private String tag_id;
+    private String tag_gate_in;
+    private String tag_date_in;
     private String tag_gate_out;
     private String tag_date_out;
 
     public BaoCaoDTO() {
     }
 
-    public BaoCaoDTO(String order_id, String order_date, int status, String product_id, String product_name, int order_quantity, String tag_id, String tag_gate_out, String tag_date_out) {
+    public BaoCaoDTO(String order_id, String order_date, int status, String product_id, String product_name, int order_quantity, String tag_id, String tag_gate_in, String tag_date_in, String tag_gate_out, String tag_date_out)
+    {
         this.order_id = order_id;
         this.order_date = order_date;
         this.status = status;
@@ -30,10 +33,13 @@ public class BaoCaoDTO {
         this.product_name = product_name;
         this.order_quantity = order_quantity;
         this.tag_id = tag_id;
+        this.tag_gate_in = tag_gate_in;
+        this.tag_date_in = tag_date_in;
         this.tag_gate_out = tag_gate_out;
         this.tag_date_out = tag_date_out;
     }
 
+   
     public String getOrder_id() {
         return order_id;
     }
@@ -106,8 +112,33 @@ public class BaoCaoDTO {
         this.tag_date_out = tag_date_out;
     }
 
-    @Override
-    public String toString() {
-        return "BaoCaoDTO{" + "order_id=" + order_id + ", order_date=" + order_date + ", status=" + status + ", product_id=" + product_id + ", product_name=" + product_name + ", order_quantity=" + order_quantity + ", tag_id=" + tag_id + ", tag_gate_out=" + tag_gate_out + ", tag_date_out=" + tag_date_out + "}\n";
+    public String getTag_gate_in()
+    {
+        return tag_gate_in;
     }
+
+    public void setTag_gate_in(String tag_gate_in)
+    {
+        this.tag_gate_in = tag_gate_in;
+    }
+
+    public String getTag_date_in()
+    {
+        return tag_date_in;
+    }
+
+    public void setTag_date_in(String tag_date_in)
+    {
+        this.tag_date_in = tag_date_in;
+    }
+    
+    
+
+    @Override
+    public String toString()
+    {
+        return "BaoCaoDTO{" + "order_id=" + order_id + ", order_date=" + order_date + ", status=" + status + ", product_id=" + product_id + ", product_name=" + product_name + ", order_quantity=" + order_quantity + ", tag_id=" + tag_id + ", tag_gate_in=" + tag_gate_in + ", tag_date_in=" + tag_date_in + ", tag_gate_out=" + tag_gate_out + ", tag_date_out=" + tag_date_out + '}';
+    }
+
+   
 }

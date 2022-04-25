@@ -36,19 +36,21 @@ public class DashBoard1 extends javax.swing.JFrame
     private TaoDonForm1 createOrder;
     private DanhSachXuatForm1 listOrder;
     private BaoCaoForm1 baoCaoForm;
+    private LoginForm loginForm;
 
     /**
      * Creates new form DashBoard
      */
-    public DashBoard1()
+    public DashBoard1(LoginForm login)
     {
         inputTag = new NhapDlForm1();
         createOrder = new TaoDonForm1();
         listOrder = new DanhSachXuatForm1();
         baoCaoForm = new BaoCaoForm1();
+        this.loginForm = login;
         setUndecorated(true);
         initComponents();
-        setVisible(true);
+        setVisible(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DashBoard1.DISPOSE_ON_CLOSE);
     }
@@ -69,6 +71,7 @@ public class DashBoard1 extends javax.swing.JFrame
         jLabelClosed = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         menuIcon = new javax.swing.JPanel();
         linehideMenu = new javax.swing.JPanel();
@@ -162,17 +165,22 @@ public class DashBoard1 extends javax.swing.JFrame
         kGradientPanel2.add(jLabelClosed, new org.netbeans.lib.awtextra.AbsoluteConstraints(1209, 0, 40, 50));
 
         jLabel6.setFont(new java.awt.Font("DialogInput", 1, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(167, 193, 169));
+        jLabel6.setForeground(new java.awt.Color(204, 204, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_waving_hand_emoji_32.png"))); // NOI18N
-        jLabel6.setText("Xin chào Hưng");
-        kGradientPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 0, 230, 50));
+        kGradientPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 0, 110, 50));
 
         jLabel8.setFont(new java.awt.Font("DialogInput", 1, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(233, 242, 249));
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-furniture-store-32.png"))); // NOI18N
         jLabel8.setText("<html> <span>QUẢN LÝ KHO <span> </html> ");
         kGradientPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 50));
+
+        jLabel9.setFont(new java.awt.Font("DialogInput", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(167, 193, 169));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_waving_hand_emoji_32.png"))); // NOI18N
+        jLabel9.setText("Xin chào");
+        kGradientPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 0, 140, 50));
 
         kGradientPanel1.add(kGradientPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -684,15 +692,15 @@ public class DashBoard1 extends javax.swing.JFrame
 
     private void btnLogoutMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_btnLogoutMouseClicked
     {//GEN-HEADEREND:event_btnLogoutMouseClicked
-//        clickMenu(logout, hidemenu, 1);
-//        int confirm = JOptionPane.showConfirmDialog(DashBoard1.this, "Bạn muốn đăng xuất?",
-//                "Xác Nhận", JOptionPane.OK_CANCEL_OPTION);
-//        if (confirm == JOptionPane.OK_OPTION)
-//        {
-//            this.dispose(); ////  Exit Program
-//            LoginForm lg = new LoginForm();
-//            lg.setVisible(true);
-//        }
+        clickMenu(logout, hidemenu, 1);
+        int confirm = JOptionPane.showConfirmDialog(DashBoard1.this, "Bạn muốn đăng xuất?",
+                "Xác Nhận", JOptionPane.OK_CANCEL_OPTION);
+        if (confirm == JOptionPane.OK_OPTION)
+        {
+            LoginForm.flag=0;
+            this.setVisible(false);
+            loginForm.setVisible(true);
+        }
     }//GEN-LAST:event_btnLogoutMouseClicked
 
     private void btnLogoutMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_btnLogoutMouseEntered
@@ -733,8 +741,8 @@ public class DashBoard1 extends javax.swing.JFrame
         jOrder.setVisible(false);
         jBaoCao.setVisible(true);
         baoCaoForm.initTableOrder();
-        MainRead.flag = 0;
-        MainRead.tagMap.clear();
+        LoginForm.flag = 0;
+        LoginForm.tagMap.clear();
     }//GEN-LAST:event_baoCaoLabelMouseClicked
 
     public NhapDlForm1 getInputTag() {
@@ -778,8 +786,9 @@ public class DashBoard1 extends javax.swing.JFrame
         jCreateOrder.setVisible(false);
         jBaoCao.setVisible(false);
         inputTag.initTableProduct();
-        MainRead.flag = 1;
-        MainRead.tagMap.clear();
+        
+        LoginForm.flag = 1;
+        LoginForm.tagMap.clear();
     }//GEN-LAST:event_ganTagLabelMouseClicked
 
     private void taoDonXuatLabelMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_taoDonXuatLabelMouseClicked
@@ -790,8 +799,8 @@ public class DashBoard1 extends javax.swing.JFrame
         jInput.setVisible(false);
         jBaoCao.setVisible(false);
         createOrder.initTable();
-        MainRead.flag = 0;
-        MainRead.tagMap.clear();
+        LoginForm.flag = 0;
+        LoginForm.tagMap.clear();
     }//GEN-LAST:event_taoDonXuatLabelMouseClicked
 
     private void taoDonXuatLabelMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_taoDonXuatLabelMouseEntered
@@ -887,6 +896,89 @@ public class DashBoard1 extends javax.swing.JFrame
         this.jLabelMini = jLabelMini;
     }
 
+    public JLabel getjLabel6()
+    {
+        return jLabel6;
+    }
+
+    public void setjLabel6(JLabel jLabel6)
+    {
+        this.jLabel6 = jLabel6;
+    }
+
+    public JLabel getjLabel9()
+    {
+        return jLabel9;
+    }
+
+    public void setjLabel9(JLabel jLabel9)
+    {
+        this.jLabel9 = jLabel9;
+    }
+
+    public JPanel getGanTagPanel()
+    {
+        return ganTagPanel;
+    }
+
+    public void setGanTagPanel(JPanel ganTagPanel)
+    {
+        this.ganTagPanel = ganTagPanel;
+    }
+
+    public JPanel getjBaoCao()
+    {
+        return jBaoCao;
+    }
+
+    public void setjBaoCao(JPanel jBaoCao)
+    {
+        this.jBaoCao = jBaoCao;
+    }
+
+    public JPanel getjCreateOrder()
+    {
+        return jCreateOrder;
+    }
+
+    public void setjCreateOrder(JPanel jCreateOrder)
+    {
+        this.jCreateOrder = jCreateOrder;
+    }
+
+    public JPanel getjInput()
+    {
+        return jInput;
+    }
+
+    public void setjInput(JPanel jInput)
+    {
+        this.jInput = jInput;
+    }
+
+    public JPanel getjOrder()
+    {
+        return jOrder;
+    }
+
+    public void setjOrder(JPanel jOrder)
+    {
+        this.jOrder = jOrder;
+    }
+
+    public JLabel getjLabel1()
+    {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1)
+    {
+        this.jLabel1 = jLabel1;
+    }
+    
+    
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel baoCaoLabel;
@@ -900,9 +992,10 @@ public class DashBoard1 extends javax.swing.JFrame
     private javax.swing.JPanel jCreateOrder;
     private javax.swing.JPanel jInput;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel6;
+    public static javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelClosed;
     private javax.swing.JLabel jLabelMini;
     private javax.swing.JPanel jOrder;

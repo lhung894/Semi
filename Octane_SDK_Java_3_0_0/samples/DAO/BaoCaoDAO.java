@@ -23,7 +23,7 @@ public class BaoCaoDAO {
         ArrayList<BaoCaoDTO> orderDTOs = new ArrayList<BaoCaoDTO>();
         conn = new Connect();
         conn.getConnection();
-        String query = "select op.order_id,op.order_date,op.status,op.product_id,op.product_name,op.order_quantity,Tag.tag_id,Tag.tag_gate_out,Tag.tag_date_out \n"
+        String query = "select op.order_id,op.order_date,op.status,op.product_id,op.product_name,op.order_quantity,Tag.tag_id,Tag.tag_gate_in,Tag.tag_date_in,Tag.tag_gate_out,Tag.tag_date_out \n"
                 + "from (select temp.order_id,temp.product_id,Product.product_name,temp.order_date,temp.order_quantity,temp.status from \n"
                 + "(select Order_Detail.order_id,Order_Detail.product_id,Order_Detail.order_quantity,Order_Product.order_date,Order_Product.status \n"
                 + "from Order_Detail left join Order_Product \n"
@@ -41,8 +41,10 @@ public class BaoCaoDAO {
                 dto.setProduct_name(conn.rs.getString(5));
                 dto.setOrder_quantity(conn.rs.getInt(6));
                 dto.setTag_id(conn.rs.getString(7));
-                dto.setTag_gate_out(conn.rs.getString(8));
-                dto.setTag_date_out(conn.rs.getString(9));
+                dto.setTag_gate_in(conn.rs.getString(8));
+                dto.setTag_date_in(conn.rs.getString(9));
+                dto.setTag_gate_out(conn.rs.getString(10));
+                dto.setTag_date_out(conn.rs.getString(11));
                 orderDTOs.add(dto);
             }
         } catch (SQLException e) {

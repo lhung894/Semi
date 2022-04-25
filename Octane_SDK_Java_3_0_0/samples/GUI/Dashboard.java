@@ -325,8 +325,8 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
         inputTag.initTableProduct();
-        MainRead.flag = 1;
-        MainRead.tagMap.clear();
+//        MainRead.flag = 1;
+//        MainRead.tagMap.clear();
     }//GEN-LAST:event_jBtnInputActionPerformed
 
     private void jBtnCreateOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCreateOrderActionPerformed
@@ -346,8 +346,8 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelInput.setVisible(false);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
-        MainRead.flag = 0;
-        MainRead.tagMap.clear();
+//        MainRead.flag = 0;
+//        MainRead.tagMap.clear();
     }//GEN-LAST:event_jBtnInputBackActionPerformed
 
     private void jBtnInputCOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnInputCOrderActionPerformed
@@ -366,8 +366,8 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelInput.setVisible(false);
         jPanelOrder.setVisible(false);
         jPanelBaoCao.setVisible(false);
-        MainRead.flag = 0;
-        MainRead.tagMap.clear();
+//        MainRead.flag = 0;
+//        MainRead.tagMap.clear();
     }//GEN-LAST:event_jBtnOrderBackActionPerformed
 
     private void jBtnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOrderActionPerformed

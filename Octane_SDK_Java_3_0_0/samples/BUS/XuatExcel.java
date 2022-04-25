@@ -7,6 +7,7 @@ package BUS;
 //import DTO.PhongBanDTO;
 
 import DTO.BaoCaoDTO;
+import GUI.DashBoard1;
 import abbot.Log;
 import java.awt.Color;
 import java.awt.FileDialog;
@@ -74,8 +75,8 @@ public class XuatExcel
             hssfColor = palette.findSimilarColor(color.getRed(), color.getGreen(), color.getBlue());
 //            if (hssfColor == null)
 //            {
-//                System.out.println("Tao m?i mã màu!!" +r1+"-"+ g1+"-"+b1);
-//                palette.setColorAtIndex(HSSFColor.HSSFColorPredefined.AUTOMATIC.getIndex(), r1, g1, b1);
+//                System.out.println("Tao m?i mã màu!!");
+//                palette.set(HSSFColor.HSSFColorPredefined.AUTOMATIC.getIndex(), color.getRed(), color.getGreen(), color.getBlue());
 //                hssfColor = palette.getColor(HSSFColor.HSSFColorPredefined.AUTOMATIC.getIndex());
 //            }
             System.out.println("mã màu là: " + hssfColor.getIndex());
@@ -179,7 +180,7 @@ public class XuatExcel
             Row rowNhap = sheet.createRow(4);
             rowNhap.setHeight((short) 600);
             HSSFCell cellNhap = (HSSFCell) rowNhap.createCell(1);
-            cellNhap.setCellValue("Người Lập Đơn: Lê Việt Hưng");
+            cellNhap.setCellValue("Người Lập Đơn: " + DashBoard1.jLabel6.getText().toString());
             cellNhap.setCellStyle(styleName);
             CellRangeAddress cellRangeAddress1 = new CellRangeAddress(4, 4, 1, 3);
             rowNhap.getSheet().addMergedRegion(cellRangeAddress1);
@@ -191,6 +192,8 @@ public class XuatExcel
             /// Style for Data
             Color colorRow = Color.decode("#4A5771");
             Color colorRowBack = Color.decode("#D5DCE9");
+            Color color2 = Color.decode("#DDDDDD");
+            HSSFColor testColor2 = setColor(workbook, color2);
             HSSFColor colorRowE = setColor(workbook, colorRow);
             HSSFFont fontRow = workbook.createFont();
             fontRow.setBold(true);
@@ -203,8 +206,8 @@ public class XuatExcel
             style.setAlignment(HorizontalAlignment.CENTER);
             style.setVerticalAlignment(VerticalAlignment.CENTER);
             style.setFont(fontRow);
-//            style.setFillForegroundColor(colorRowEB.getIndex());
-//            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            style.setFillForegroundColor(testColor2.getIndex());
+            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             HSSFCellStyle styleDatarow = workbook.createCellStyle();
             styleDatarow.setBorderTop(BorderStyle.THIN);
@@ -214,6 +217,17 @@ public class XuatExcel
             styleDatarow.setAlignment(HorizontalAlignment.CENTER);
             styleDatarow.setVerticalAlignment(VerticalAlignment.CENTER);
 //            style.setFont(fontRow);
+
+            
+            HSSFCellStyle style2 = workbook.createCellStyle(); 
+            style2.setBorderTop(BorderStyle.THIN);
+            style2.setBorderBottom(BorderStyle.THIN);
+            style2.setBorderRight(BorderStyle.THIN);
+            style2.setBorderLeft(BorderStyle.THIN);
+            style2.setAlignment(HorizontalAlignment.CENTER);
+            style2.setVerticalAlignment(VerticalAlignment.CENTER);
+            style2.setFillForegroundColor(testColor2.getIndex());
+            style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             Row row = sheet.createRow(6);
             row.setHeight((short) 400);
@@ -239,16 +253,22 @@ public class XuatExcel
             cell8.setCellValue("Tag Sản Phẩm");
             cell8.setCellStyle(style);
             HSSFCell cell9 = (HSSFCell) row.createCell(8, CellType.STRING);
-            cell9.setCellValue("Cổng Xuất");
+            cell9.setCellValue("Cổng Nhập");
             cell9.setCellStyle(style);
             HSSFCell cell10 = (HSSFCell) row.createCell(9, CellType.STRING);
-            cell10.setCellValue("Ngày Xuất");
+            cell10.setCellValue("Ngày Nhập");
             cell10.setCellStyle(style);
+            HSSFCell cell11 = (HSSFCell) row.createCell(10, CellType.STRING);
+            cell11.setCellValue("Cổng Xuất");
+            cell11.setCellStyle(style);
+            HSSFCell cell12 = (HSSFCell) row.createCell(11, CellType.STRING);
+            cell12.setCellValue("Ngày Xuất");
+            cell12.setCellStyle(style);
 
-            for (int i = 1; i <= 10; ++i)
+            for (int i = 1; i <= 12; ++i)
             {
 
-                if (i == 5 || i == 2 || i == 9)
+                if (i == 5 || i == 2 || i == 9 || i==11)
                 {
                     sheet.setColumnWidth(i, 25 * 256);
                 } else if (i == 7)
@@ -262,26 +282,33 @@ public class XuatExcel
 
             // truyen dl cho row
             // truyen dl cho row
-            int rowPrint = 7, beginOrder = 7, endOrder = 7, beginProduct = 7, endProduct = 7;
+            int rowPrint = 7, beginOrder = 7, endOrder = 7, beginProduct = 7, endProduct = 7, count = 0;
             String orderId = "", productId = "";
             for (BaoCaoDTO k : baoCaoDTOs)//row
             {
                 Row rowData = sheet.createRow(rowPrint);
                 rowData.setHeight((short) 400);
 
-                if (!orderId.equals(k.getOrder_id())) {
-                    if (!productId.equals(k.getProduct_id())) {
+                if (!orderId.equals(k.getOrder_id()))
+                {
+                    if (!productId.equals(k.getProduct_id()))
+                    {
                         productId = k.getProduct_id();
-                        if (endProduct > beginProduct) {
-                            for (int u = 4; u <= 6; u++) {
+                        if (endProduct > beginProduct)
+                        {
+                            for (int u = 4; u <= 6; u++)
+                            {
                                 CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct, u, u);
                                 rowData.getSheet().addMergedRegion(cellRangeAddress3);
                             }
                         }
                         beginProduct = rowPrint;
-                    } else {
-                        if (endProduct > beginProduct) {
-                            for (int u = 4; u <= 6; u++) {
+                    } else
+                    {
+                        if (endProduct > beginProduct)
+                        {
+                            for (int u = 4; u <= 6; u++)
+                            {
                                 CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct, u, u);
                                 rowData.getSheet().addMergedRegion(cellRangeAddress3);
                             }
@@ -289,75 +316,98 @@ public class XuatExcel
                         beginProduct = rowPrint;
                     }
                     orderId = k.getOrder_id();
-                    if (endOrder > beginOrder) {
-                        for (int u = 1; u <= 3; u++) {
+                    if (endOrder > beginOrder)
+                    {
+                        for (int u = 1; u <= 3; u++)
+                        {
                             CellRangeAddress cellRangeAddress2 = new CellRangeAddress(beginOrder, endOrder, u, u);
                             rowData.getSheet().addMergedRegion(cellRangeAddress2);
                         }
                     }
                     beginOrder = rowPrint;
-                } else {
-                    if (!productId.equals(k.getProduct_id())) {
+                    count++;
+                } else
+                {
+                    if (!productId.equals(k.getProduct_id()))
+                    {
                         productId = k.getProduct_id();
-                        if (endProduct > beginProduct) {
-                            for (int u = 4; u <= 6; u++) {
+                        if (endProduct > beginProduct)
+                        {
+                            for (int u = 4; u <= 6; u++)
+                            {
                                 CellRangeAddress cellRangeAddress3 = new CellRangeAddress(beginProduct, endProduct, u, u);
                                 rowData.getSheet().addMergedRegion(cellRangeAddress3);
+
                             }
                         }
                         beginProduct = rowPrint;
-                    } else {
+                    } else
+                    {
                         endProduct = rowPrint;
                     }
                     endOrder = rowPrint;
                 }
 
-                for (int j = 1; j <= 9; ++j)//column
+                for (int j = 1; j <= 11; ++j)//column
                 {
                     HSSFCell cellData = (HSSFCell) rowData.createCell(j);
-                    cellData.setCellStyle(style);
-                    if (j == 1)
+                    if (count % 2 == 0)
                     {
-                        cellData.setCellValue(k.getOrder_id());
+                        cellData.setCellStyle(style2);
+                    } else
+                    {
                         cellData.setCellStyle(styleDatarow);
-                    } else if (j == 2)
+                    }
+                    switch (j)
                     {
-                        cellData.setCellValue(k.getOrder_date());
-                        cellData.setCellStyle(styleDatarow);
-                    } else if (j == 3)
-                    {
-                        if (k.getStatus() == 2)
+                        case 1 ->
                         {
-                            cellData.setCellValue("Ðang Chờ");
-                        } else
-                        {
-                            cellData.setCellValue("Hoàn thành");
+                            cellData.setCellValue(k.getOrder_id());
                         }
-                        cellData.setCellStyle(styleDatarow);
-                    } else if (j == 4)
-                    {
-                        cellData.setCellValue(k.getProduct_id());
-                        cellData.setCellStyle(styleDatarow);
-                    } else if (j == 5)
-                    {
-                        cellData.setCellValue(k.getProduct_name());
-                        cellData.setCellStyle(styleDatarow);
-                    } else if (j == 6)
-                    {
-                        cellData.setCellValue(k.getOrder_quantity());
-                        cellData.setCellStyle(styleDatarow);
-                    } else if (j == 7)
-                    {
-                        cellData.setCellValue(k.getTag_id());
-                        cellData.setCellStyle(styleDatarow);
-                    } else if (j == 8)
-                    {
-                        cellData.setCellValue(k.getTag_gate_out());
-                        cellData.setCellStyle(styleDatarow);
-                    } else if (j == 9)
-                    {
-                        cellData.setCellValue(k.getTag_date_out());
-                        cellData.setCellStyle(styleDatarow);
+                        case 2 ->
+                        {
+                            cellData.setCellValue(k.getOrder_date());
+                        }
+                        case 3 ->
+                        {
+                            if (k.getStatus() == 2)
+                            {
+                                cellData.setCellValue("Đang Chờ");
+                            } else
+                            {
+                                cellData.setCellValue("Hoàn thành");
+                            }
+                        }
+                        case 4 ->
+                        {
+                            cellData.setCellValue(k.getProduct_id());
+                        }
+                        case 5 ->
+                        {
+                            cellData.setCellValue(k.getProduct_name());
+                        }
+                        case 6 ->
+                        {
+                            cellData.setCellValue(k.getOrder_quantity());
+                        }
+                        case 7 ->
+                        {
+                            cellData.setCellValue(k.getTag_id());
+                        }
+                        case 8 ->
+                        {
+                            cellData.setCellValue(k.getTag_gate_in());
+                        }
+                        case 9 ->
+                        {
+                            cellData.setCellValue(k.getTag_date_in());
+                        }
+                         case 10 ->  {
+                            cellData.setCellValue(k.getTag_gate_out());
+                        }
+                        case 11 ->  {
+                            cellData.setCellValue(k.getTag_date_out());
+                        }
                     }
                 }
                 if (rowPrint - 6 == baoCaoDTOs.size())

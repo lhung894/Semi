@@ -382,9 +382,9 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     private void jBtnQuetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnQuetActionPerformed
         // TODO add your handling code here:
         isScanning = true;
-        MainRead.flag = 2;
-        MainRead.tagMap.clear();
-        MainRead.tagDTOsMR = tagBUS.getList();
+//        MainRead.flag = 2;
+//        MainRead.tagMap.clear();
+//        MainRead.tagDTOsMR = tagBUS.getList();
         detailScan.clear();
 //        MainRead.thucThi();
         jBtnHuy.setEnabled(true);
@@ -398,8 +398,8 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         initTableDetail();
         jTableOrder.setRowSelectionAllowed(true);
         isScanning = false;
-        MainRead.flag = 0;
-        MainRead.tagMap.clear();
+//        MainRead.flag = 0;
+//        MainRead.tagMap.clear();
         detailScan.clear();
         tagDTOs.clear();
         jBtnHuy.setEnabled(false);

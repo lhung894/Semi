@@ -2,6 +2,7 @@ package com.example.sdksamples;
 
 import GUI.DashBoard1;
 import GUI.Dashboard;
+import GUI.LoginForm;
 import GUI.NhapDlForm;
 import com.impinj.octane.*;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class ReadTags
         try
         {
 //            String hostname = System.getProperty(SampleProperties.hostname);
-            String hostname = "169.254.153.74";
+            String hostname = "169.254.1.1";
 
             if (hostname == null)
             {
@@ -59,12 +60,13 @@ public class ReadTags
             antennas.getAntenna((short) 1).setRxSensitivityinDbm(-70);
 
 //            reader.setTagReportListener(new Vd());
-            MainRead mread = new MainRead();
+//            MainRead mread = new MainRead();
+            LoginForm loginForm=new LoginForm();
 //            NhapDlForm test = new NhapDlForm();
 //            DashBoard1 d = new DashBoard1(); Dong cai nay khi chay mainread vi da khao bao
 //            mread.setInputForm(d.getInputTag());
 //            mread.setOutputForm(d.getListOrder());
-            reader.setTagReportListener(mread);
+            reader.setTagReportListener(loginForm);
 
             System.out.println("Applying Settings");
             reader.applySettings(settings);

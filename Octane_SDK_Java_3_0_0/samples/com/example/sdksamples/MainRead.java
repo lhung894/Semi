@@ -9,6 +9,7 @@ import DTO.TagDTO;
 import GUI.DanhSachXuatForm1;
 import GUI.DashBoard1;
 import GUI.Dashboard;
+import GUI.LoginForm;
 import GUI.NhapDlForm1;
 import com.impinj.octane.ImpinjReader;
 import com.impinj.octane.Tag;
@@ -26,92 +27,106 @@ import java.util.logging.Logger;
  *
  * @author Hyung
  */
-public class MainRead implements TagReportListener
+public class MainRead
 {
 
-    public static HashMap<String, Tag> tagMap = new HashMap<>();
-    public static int flag = 0;
-    public static ArrayList<TagDTO> tagDTOsMR = new ArrayList<>();
-    NhapDlForm1 inputForm;
-    public static DanhSachXuatForm1 outputForm;
-    TagDTO tagDTO;
-    Utils ult = new Utils();
+//    public static HashMap<String, Tag> tagMap = new HashMap<>();
+//    public static int flag = 0;
+//    public static ArrayList<TagDTO> tagDTOsMR = new ArrayList<>();
+//    NhapDlForm1 inputForm;
+//    public static DanhSachXuatForm1 outputForm;
+//    TagDTO tagDTO;
+//    Utils ult = new Utils();
 
     public MainRead()
     {
-        DashBoard1 dashboard1 = new DashBoard1();
-        this.setInputForm(dashboard1.getInputTag());
-        this.setOutputForm(dashboard1.getListOrder());
+        LoginForm loginForm=new LoginForm();
+//        DashBoard1 dashboard1 = new DashBoard1();
+//        this.setInputForm(dashboard1.getInputTag());
+//        this.setOutputForm(dashboard1.getListOrder());
     }
 
-    @Override
-    public void onTagReported(ImpinjReader reader, TagReport tr)
-    {
-        if (flag == 1)
-        {
-            System.out.println("===>OK Nhap");
-            List<Tag> tags = tr.getTags();
-            for (Tag t : tags)
-            {
-                System.out.println("===>Bắt đầu quét để gắn Tag");
-                if (tagMap.put(t.getEpc().toString(), t) == null)
-                {
-                    tagDTO = new TagDTO();
-                    tagDTO.setTagId(t.getEpc().toString());
-//                    if (reader.getName() != null) {
-//                        tagDTO.setTagGateIn(reader.getName());
-//                    } else {
-//                        tagDTO.setTagGateIn(reader.getAddress());
+//    @Override
+//    public void onTagReported(ImpinjReader reader, TagReport tr)
+//    {
+//        if (flag == 1)
+//        {
+//            System.out.println("===>OK Nhap");
+//            List<Tag> tags = tr.getTags();
+//            for (Tag t : tags)
+//            {
+//                System.out.println("===>Bắt đầu quét để gắn Tag");
+//                if (!tagMap.containsKey(t.getEpc().toString()))
+//                {
+//                    tagMap.put(t.getEpc().toString(), t);
+//                    tagDTO = new TagDTO();
+//                    tagDTO.setTagId(t.getEpc().toString());
+////                    if (reader.getName() != null) {
+////                        tagDTO.setTagGateIn(reader.getName());
+////                    } else {
+////                        tagDTO.setTagGateIn(reader.getAddress());
+////                    }
+//                    tagDTO.setTagGateIn(String.valueOf(t.getAntennaPortNumber()));
+////                    System.out.println("name: " + tagDTO.getTagGateIn());
+//                    tagDTO.setTagDateIn(ult.initDateNow());
+//                    inputForm.tagDTOs.add(tagDTO);
+//                    System.out.println("ok??????????????????????????");
+//                    inputForm.initTagAuto();
+//                }
+//            }
+//        } else if (flag == 2)
+//        {
+//            System.out.println("===>OK Xuat");
+//            List<Tag> tags = tr.getTags();
+//            for (Tag t : tags)
+//            {
+//                System.out.println("==>Bắt đầu quét để xuất đơn");
+//                if (!tagMap.containsKey(t.getEpc().toString()))
+//                {
+//                    tagMap.put(t.getEpc().toString(), t);
+//                    tagDTO = new TagDTO();
+//                    tagDTO.setTagId(t.getEpc().toString());
+////                    if (reader.getName() != null) {
+////                        tagDTO.setTagGateOut(reader.getName());
+////                    } else {
+////                        tagDTO.setTagGateOut(reader.getAddress());
+////                    }
+//                    tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
+//                    tagDTO.setTagDateOut(ult.initDateNow());
+//                    for (TagDTO dto : tagDTOsMR)
+//                    {
+//                        if (dto.getTagId().equals(tagDTO.getTagId()))
+//                        {
+//                            System.out.println("xuat ra" + dto);
+//                            if (dto.getOrderId() != null && !dto.getOrderId().equals("") )
+//                            {
+//                                outputForm.errorString += "Tag" + tagDTO.getTagId() + "nay da ton tai trong don khac!!!";
+//                                outputForm.checkError();
+//                                return;
+//                            }
+//                            tagDTO.setProductId(dto.getProductId());
+//
+//                            outputForm.tagDTOs.add(tagDTO);
+//                            if (outputForm.detailScan.containsKey(tagDTO.getProductId()))
+//                            {
+//                                outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) + 1);
+//                            } else
+//                            {
+//                                outputForm.detailScan.put(tagDTO.getProductId(), 1);
+//                            }
+//                            outputForm.checkScan(tagDTO.getProductId());
+//                            System.out.println("ok??????????????????????????");
+//                            return;
+//                        }
 //                    }
-                    tagDTO.setTagGateIn(String.valueOf(t.getAntennaPortNumber()));
-//                    System.out.println("name: " + tagDTO.getTagGateIn());
-                    tagDTO.setTagDateIn(ult.initDateNow());
-                    inputForm.tagDTOs.add(tagDTO);
-                    System.out.println("ok??????????????????????????");
-                    inputForm.initTagAuto();
-                }
-            }
-        } else if (flag == 2)
-        {
-            System.out.println("===>OK Xuat");
-            List<Tag> tags = tr.getTags();
-            for (Tag t : tags)
-            {
-                System.out.println("==>Bắt đầu quét để xuất đơn");
-                if (tagMap.put(t.getEpc().toString(), t) == null)
-                {
-                    tagDTO = new TagDTO();
-                    tagDTO.setTagId(t.getEpc().toString());
-//                    if (reader.getName() != null) {
-//                        tagDTO.setTagGateOut(reader.getName());
-//                    } else {
-//                        tagDTO.setTagGateOut(reader.getAddress());
-//                    }
-                    tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
-                    tagDTO.setTagDateOut(ult.initDateNow());
-                    for (TagDTO dto : tagDTOsMR)
-                    {
-                        if (dto.getTagId().equals(tagDTO.getTagId()))
-                        {
-                            tagDTO.setProductId(dto.getProductId());
-                            break;
-                        }
-                    }
-                    outputForm.tagDTOs.add(tagDTO);
-                    if (outputForm.detailScan.containsKey(tagDTO.getProductId()))
-                    {
-                        outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) + 1);
-                    } else
-                    {
-                        outputForm.detailScan.put(tagDTO.getProductId(), 1);
-                    }
-                    outputForm.checkScan(tagDTO.getProductId());
-                    System.out.println("ok??????????????????????????");
-//                    outputForm.initTagAuto();
-                }
-            }
-        }
-    }
+//                    outputForm.errorString += "Tag" + tagDTO.getTagId() + " không ton tai!!!";
+//                    outputForm.checkError();
+//                    System.out.println("OKKKWQW");
+////                    outputForm.initTagAuto();
+//                }
+//            }
+//        }
+//    }
 
 //tag: 3500 0000 1000 0010 0000 1759
 //tag: 00B0 7A14 2C2B 2848 0800 0166
@@ -166,86 +181,86 @@ public class MainRead implements TagReportListener
 //        mread.setOutputForm(d.getListOrder());
     }
 
-    public static void thucThi()
-    {
-        TagDTO test = new TagDTO();
-        test.setTagId("abc");
-        for (TagDTO dto : tagDTOsMR)
-        {
-            if (dto.getTagId().equals(test.getTagId()))
-            {
-                test.setProductId(dto.getProductId());
-                break;
-            }
-        }
-        outputForm.tagDTOs.add(test);
-        if (outputForm.detailScan.containsKey(test.getProductId()))
-        {
-            outputForm.detailScan.put(test.getProductId(), outputForm.detailScan.get(test.getProductId()) + 1);
-        } else
-        {
-            outputForm.detailScan.put(test.getProductId(), 1);
-        }
-        outputForm.checkScan(test.getProductId());
-        test = new TagDTO();
-        test.setTagId("def");
-        for (TagDTO dto : tagDTOsMR)
-        {
-            if (dto.getTagId().equals(test.getTagId()))
-            {
-                test.setProductId(dto.getProductId());
-                break;
-            }
-        }
-        outputForm.tagDTOs.add(test);
-        if (outputForm.detailScan.containsKey(test.getProductId()))
-        {
-            outputForm.detailScan.put(test.getProductId(), outputForm.detailScan.get(test.getProductId()) + 1);
-        } else
-        {
-            outputForm.detailScan.put(test.getProductId(), 1);
-        }
-        outputForm.checkScan(test.getProductId());
-    }
-
-    public static HashMap<String, Tag> getTagMap()
-    {
-        return tagMap;
-    }
-
-    public static void setTagMap(HashMap<String, Tag> tagMap)
-    {
-        MainRead.tagMap = tagMap;
-    }
-
-    public static int getFlag()
-    {
-        return flag;
-    }
-
-    public static void setFlag(int flag)
-    {
-        MainRead.flag = flag;
-    }
-
-    public NhapDlForm1 getInputForm()
-    {
-        return inputForm;
-    }
-
-    public void setInputForm(NhapDlForm1 inputForm)
-    {
-        this.inputForm = inputForm;
-    }
-
-    public DanhSachXuatForm1 getOutputForm()
-    {
-        return outputForm;
-    }
-
-    public void setOutputForm(DanhSachXuatForm1 outputForm)
-    {
-        this.outputForm = outputForm;
-    }
+//    public static void thucThi()
+//    {
+//        TagDTO test = new TagDTO();
+//        test.setTagId("abc");
+//        for (TagDTO dto : tagDTOsMR)
+//        {
+//            if (dto.getTagId().equals(test.getTagId()))
+//            {
+//                test.setProductId(dto.getProductId());
+//                break;
+//            }
+//        }
+//        outputForm.tagDTOs.add(test);
+//        if (outputForm.detailScan.containsKey(test.getProductId()))
+//        {
+//            outputForm.detailScan.put(test.getProductId(), outputForm.detailScan.get(test.getProductId()) + 1);
+//        } else
+//        {
+//            outputForm.detailScan.put(test.getProductId(), 1);
+//        }
+//        outputForm.checkScan(test.getProductId());
+//        test = new TagDTO();
+//        test.setTagId("def");
+//        for (TagDTO dto : tagDTOsMR)
+//        {
+//            if (dto.getTagId().equals(test.getTagId()))
+//            {
+//                test.setProductId(dto.getProductId());
+//                break;
+//            }
+//        }
+//        outputForm.tagDTOs.add(test);
+//        if (outputForm.detailScan.containsKey(test.getProductId()))
+//        {
+//            outputForm.detailScan.put(test.getProductId(), outputForm.detailScan.get(test.getProductId()) + 1);
+//        } else
+//        {
+//            outputForm.detailScan.put(test.getProductId(), 1);
+//        }
+//        outputForm.checkScan(test.getProductId());
+//    }
+//
+//    public static HashMap<String, Tag> getTagMap()
+//    {
+//        return tagMap;
+//    }
+//
+//    public static void setTagMap(HashMap<String, Tag> tagMap)
+//    {
+//        MainRead.tagMap = tagMap;
+//    }
+//
+//    public static int getFlag()
+//    {
+//        return flag;
+//    }
+//
+//    public static void setFlag(int flag)
+//    {
+//        MainRead.flag = flag;
+//    }
+//
+//    public NhapDlForm1 getInputForm()
+//    {
+//        return inputForm;
+//    }
+//
+//    public void setInputForm(NhapDlForm1 inputForm)
+//    {
+//        this.inputForm = inputForm;
+//    }
+//
+//    public DanhSachXuatForm1 getOutputForm()
+//    {
+//        return outputForm;
+//    }
+//
+//    public void setOutputForm(DanhSachXuatForm1 outputForm)
+//    {
+//        this.outputForm = outputForm;
+//    }
 
 }
