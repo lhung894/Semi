@@ -52,6 +52,23 @@ public class LastIdDAO {
             System.out.println("DuLieuLast.close error.");
         }
     }
+    
+    public boolean updateUserId(String newUserId) {
+        conn = new Connect();
+        conn.getConnection();
+        String query = "UPDATE LastId SET"
+                + " user_id='" + newUserId + "'"
+                + " WHERE user_id='" + getUserId()+ "'";
+        if (conn.executeUpdate(query)) {
+            System.out.println("Update last UserId success.");
+            setOrderId(newUserId);
+            conn.close();
+            return true;
+        }
+        System.out.println("Update last UserId fail.");
+        conn.close();
+        return false;
+    }
 
     public boolean updateOrderId(String newOrderId) {
         conn = new Connect();

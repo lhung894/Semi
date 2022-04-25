@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import com.example.sdksamples.MainRead;
 import com.example.sdksamples.ReadTags;
 import java.util.HashMap;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -38,7 +39,7 @@ public class Dashboard extends javax.swing.JFrame {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-        this.setVisible(true);
+        this.setVisible(false);
         jPanelMenu.setVisible(true);
         jPanelUser.setVisible(false);
         jPanelInput.setVisible(false);
@@ -52,8 +53,12 @@ public class Dashboard extends javax.swing.JFrame {
         jBtnBaoCaoBack.setVisible(false);
     }
 
-    public void falseFunc1() {
-
+    public void checkRole() {
+        if (userLogin.getRole() == 1) {
+            jBtnUser.setVisible(true);
+        } else {
+            jBtnUser.setVisible(false);
+        }
     }
 
     /**
@@ -135,13 +140,13 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jBtnLogout.setText("Logout");
+        jBtnLogout.setText("Đăng xuất");
         jBtnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnLogoutActionPerformed(evt);
             }
         });
-        jPanel2.add(jBtnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 0, 80, 40));
+        jPanel2.add(jBtnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 110, 40));
 
         jLabelHello.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabelHello.setText("Xin chào, Admin");
@@ -153,7 +158,7 @@ public class Dashboard extends javax.swing.JFrame {
                 jBtnUserActionPerformed(evt);
             }
         });
-        jPanel2.add(jBtnUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 0, 110, 40));
+        jPanel2.add(jBtnUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 110, 40));
 
         jPanelMenu.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 40));
 
@@ -602,6 +607,14 @@ public class Dashboard extends javax.swing.JFrame {
 
     public void setjLabelHello(JLabel jLabelHello) {
         this.jLabelHello = jLabelHello;
+    }
+
+    public JButton getjBtnLogout() {
+        return jBtnLogout;
+    }
+
+    public void setjBtnLogout(JButton jBtnLogout) {
+        this.jBtnLogout = jBtnLogout;
     }
 
     /**

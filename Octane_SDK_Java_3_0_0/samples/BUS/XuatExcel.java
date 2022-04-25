@@ -118,10 +118,10 @@ public class XuatExcel {
             ////Style cho ng nhap
             HSSFCellStyle styleName = workbook.createCellStyle(); // Style cho Title
             styleName.setAlignment(HorizontalAlignment.LEFT);
-            styleName.setBorderTop(BorderStyle.THIN);
-            styleName.setBorderBottom(BorderStyle.THIN);
-            styleName.setBorderRight(BorderStyle.THIN);
-            styleName.setBorderLeft(BorderStyle.THIN);
+//            styleName.setBorderTop(BorderStyle.THIN);
+//            styleName.setBorderBottom(BorderStyle.THIN);
+//            styleName.setBorderRight(BorderStyle.THIN);
+//            styleName.setBorderLeft(BorderStyle.THIN);
             styleName.setVerticalAlignment(VerticalAlignment.CENTER);
             styleName.setFont(font);
 //            styleName.setFillForegroundColor((short) 29);
@@ -134,22 +134,22 @@ public class XuatExcel {
             cellNhap.setCellStyle(styleName);
             CellRangeAddress cellRangeAddress1 = new CellRangeAddress(3, 3, 1, 3);
             rowNhap.getSheet().addMergedRegion(cellRangeAddress1);
-            RegionUtil.setBorderTop(BorderStyle.THIN, cellRangeAddress1, sheet);
-            RegionUtil.setBorderBottom(BorderStyle.THIN, cellRangeAddress1, sheet);
-            RegionUtil.setBorderLeft(BorderStyle.THIN, cellRangeAddress1, sheet);
-            RegionUtil.setBorderRight(BorderStyle.THIN, cellRangeAddress1, sheet);
+            RegionUtil.setBorderTop(BorderStyle.DOUBLE, cellRangeAddress1, sheet);
+            RegionUtil.setBorderBottom(BorderStyle.DOUBLE, cellRangeAddress1, sheet);
+            RegionUtil.setBorderLeft(BorderStyle.DOUBLE, cellRangeAddress1, sheet);
+            RegionUtil.setBorderRight(BorderStyle.DOUBLE, cellRangeAddress1, sheet);
             
 //            Row rowDate = sheet.createRow(3);
 //            rowDate.setHeight((short) 600);
             HSSFCell cellDate = (HSSFCell) rowNhap.createCell(5);
             cellDate.setCellValue("NGÀY LẬP: " + ult.initDateNow());
             cellDate.setCellStyle(styleName);
-            CellRangeAddress cellRangeAddressDate = new CellRangeAddress(3, 3, 5, 6);
+            CellRangeAddress cellRangeAddressDate = new CellRangeAddress(3, 3, 5, 7);
             rowNhap.getSheet().addMergedRegion(cellRangeAddressDate);
-            RegionUtil.setBorderTop(BorderStyle.THIN, cellRangeAddressDate, sheet);
-            RegionUtil.setBorderBottom(BorderStyle.THIN, cellRangeAddressDate, sheet);
-            RegionUtil.setBorderLeft(BorderStyle.THIN, cellRangeAddressDate, sheet);
-            RegionUtil.setBorderRight(BorderStyle.THIN, cellRangeAddressDate, sheet);
+            RegionUtil.setBorderTop(BorderStyle.DOUBLE, cellRangeAddressDate, sheet);
+            RegionUtil.setBorderBottom(BorderStyle.DOUBLE, cellRangeAddressDate, sheet);
+            RegionUtil.setBorderLeft(BorderStyle.DOUBLE, cellRangeAddressDate, sheet);
+            RegionUtil.setBorderRight(BorderStyle.DOUBLE, cellRangeAddressDate, sheet);
 
             /// Style header
             HSSFCellStyle styleHeader = workbook.createCellStyle();

@@ -4,6 +4,7 @@
  */
 package com.example.sdksamples;
 
+import BUS.UserBUS;
 import BUS.Utils;
 import DTO.TagDTO;
 import GUI.DanhSachXuatForm;
@@ -54,7 +55,7 @@ public class MainRead implements TagReportListener {
 //                    System.out.println("name: " + tagDTO.getTagGateIn());
                     tagDTO.setTagDateIn(ult.initDateNow());
                     inputForm.tagDTOs.add(tagDTO);
-                    System.out.println("ok??????????????????????????");
+//                    System.out.println("ok??????????????????????????");
                     inputForm.initTagAuto();
                 }
             }
@@ -74,6 +75,11 @@ public class MainRead implements TagReportListener {
                     tagDTO.setTagDateOut(ult.initDateNow());
                     for (TagDTO dto : tagDTOsMR) {
                         if (dto.getTagId().equals(tagDTO.getTagId())) {
+                            if (dto.getOrderId() != null && !dto.getOrderId().equals("")) {
+                                outputForm.errorScan += "Tag " + tagDTO.getTagId() + " thuộc đơn hàng khác!";
+                                outputForm.checkError();
+                                return;
+                            }
                             tagDTO.setProductId(dto.getProductId());
                             ////////
                             outputForm.tagDTOs.add(tagDTO);
@@ -86,10 +92,10 @@ public class MainRead implements TagReportListener {
                             return;
                         }
                     }
-                    outputForm.errorScan += "Tag " + tagDTO.getTagId() +" không tồn tại trong kho.";
+                    outputForm.errorScan += "Tag " + tagDTO.getTagId() + " không tồn tại trong kho!";
                     outputForm.checkError();
                     ////////
-                    System.out.println("ok??????????????????????????");
+//                    System.out.println("ok??????????????????????????");
 //                    outputForm.initTagAuto();
                 }
             }
@@ -142,10 +148,14 @@ public class MainRead implements TagReportListener {
 //            }
 //        }
 //        System.out.println("h: " + h);
+        UserBUS userBUS = new UserBUS();
         MainRead mread = new MainRead();
         Dashboard d = new Dashboard();
         mread.setInputForm(d.getInputTag());
         mread.setOutputForm(d.getListOrder());
+        d.userLogin = userBUS.checkLogin("admin", "admin");
+        d.setVisible(true);
+        d.getjBtnLogout().setEnabled(false);
     }
 
     public static void thucThi() {

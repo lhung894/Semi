@@ -54,6 +54,8 @@ public class UserDAO {
         String name = "";
         if (userDTO.getFullName().contains("'")){
             name = userDTO.getFullName().replace("'", "''");
+        } else {
+            name = userDTO.getFullName();
         }
         String query = "INSERT INTO User_App"
                 + " VALUES ('" + userDTO.getUserId()
@@ -80,6 +82,8 @@ public class UserDAO {
         String name = "";
         if (userDTO.getFullName().contains("'")){
             name = userDTO.getFullName().replace("'", "''");
+        } else {
+            name = userDTO.getFullName();
         }
         String query = "UPDATE User_App"
                 + " SET username='" + userDTO.getUserName()+ "'";

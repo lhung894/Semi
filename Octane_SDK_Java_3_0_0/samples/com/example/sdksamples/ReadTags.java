@@ -89,6 +89,7 @@ public class ReadTags {
     public static void visibleDashboard() {
         d.setVisible(true);
         d.setHello();
+        d.checkRole();
     }
     
     public static void visibleLogin() {

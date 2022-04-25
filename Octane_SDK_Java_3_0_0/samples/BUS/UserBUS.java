@@ -5,6 +5,7 @@
 package BUS;
 
 import static BUS.HashPass.MD5Hash;
+import DAO.LastIdDAO;
 import DAO.UserDAO;
 import DTO.UserDTO;
 import java.util.ArrayList;
@@ -14,14 +15,16 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class UserBUS {
+
     UserDAO userDAO = new UserDAO();
     Utils ult = new Utils();
+    LastIdDAO lastIdDAO = new LastIdDAO();
 
     public ArrayList<UserDTO> getList() {
         return userDAO.getList();
     }
-    
-    public UserDTO checkLogin (String userName, String passWord) {
+
+    public UserDTO checkLogin(String userName, String passWord) {
         String passHash = MD5Hash(passWord);
         ArrayList<UserDTO> list = userDAO.getList();
         for (UserDTO u : list) {
@@ -35,15 +38,18 @@ public class UserBUS {
     public boolean insertUser(UserDTO userDTO) {
         userDTO.setUserId(ult.initUserId());
         userDTO.setPassWord(MD5Hash(userDTO.getPassWord()));
-        System.out.println("user: " + userDTO);
+//        System.out.println("user: " + userDTO);
         if (userDAO.insertUser(userDTO)) {
+            String temp[] = userDTO.getUserId().split("_");
+            System.out.println("temp[1] Order: " + temp[1]);
+            lastIdDAO.updateOrderId(temp[1]);
             System.out.println("insert success UserBUS");
             return true;
         }
         System.out.println("insert fail UserBUS");
         return false;
     }
-    
+
     public boolean updateUser(UserDTO userDTO, boolean checkPw) {
         if (checkPw) {
             userDTO.setPassWord(MD5Hash(userDTO.getPassWord()));
@@ -55,7 +61,7 @@ public class UserBUS {
         System.out.println("insert fail UserBUS");
         return false;
     }
-    
+
     public boolean updateStatusUser(String userId, int role) {
         if (userDAO.updateStatusUser(userId, role)) {
             System.out.println("update status success UserBUS");
@@ -64,7 +70,7 @@ public class UserBUS {
         System.out.println("update status fail UserBUS");
         return false;
     }
-    
+
     public boolean removeUser(String userId) {
         if (userDAO.removeUser(userId)) {
             System.out.println("remove success UserBUS");
