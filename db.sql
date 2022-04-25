@@ -1,4 +1,4 @@
-use master
+﻿use master
 go
 
 create database PRODUCT
@@ -13,7 +13,8 @@ create table User_App (
 	password nvarchar(60),
 	full_name nvarchar(100),
 	phone_num nvarchar(20),
-	mail nvarchar(40)
+	mail nvarchar(40),
+	role int
 )
 
 create table Product (
@@ -92,13 +93,13 @@ values ('PRO_1','product 1',0,'detail product 1'),
 ('PRO_7','product 7',0,'detail product 7');
 
 insert into User_App
-values ('USER_1','admin','21232f297a57a5a743894a0e4a801fc3','Duong Kiet','0909090909','mail@gmail.com')
+values ('USER_1','admin','21232f297a57a5a743894a0e4a801fc3','Duong Kiet','0909090909','mail@gmail.com',1)
 
 insert into LastId
 values ('1','7','0','0','0','0');
 
 insert into User_App
-values ('USER_2','user','21232f297a57a5a743894a0e4a801fc3','ABC','0909090909','mail@gmail.com')
+values ('USER_4','user4','21232f297a57a5a743894a0e4a801fc3',N'Lê " '' . Dưỡng','0909090909','mail@gmail.com',2)
 
 insert into Tag
 values ('TAG_1','PRO_2','',null,'',null);

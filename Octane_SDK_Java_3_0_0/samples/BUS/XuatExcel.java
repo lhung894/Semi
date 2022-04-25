@@ -47,6 +47,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 public class XuatExcel {
 
     FileDialog fd = new FileDialog(new JFrame(), "Xuất excel", FileDialog.SAVE);
+    Utils ult = new Utils();
 
     private String getFile() {
         fd.setFile("donxuat.xls");
@@ -72,7 +73,7 @@ public class XuatExcel {
 
     // Xuất file Excel 
     @SuppressWarnings("empty-statement")
-    public void xuatFileExcelDonHang(ArrayList<BaoCaoDTO> baoCaoDTOs, String dateFrom, String dateTo) {
+    public void xuatFileExcelDonHang(ArrayList<BaoCaoDTO> baoCaoDTOs, String dateFrom, String dateTo, String fullname) {
         fd.setTitle("Xuất đơn hàng ra excel");
         String url = getFile();
         if (url == null) {
@@ -105,7 +106,7 @@ public class XuatExcel {
             Row rowTitle = sheet.createRow(1);
             rowTitle.setHeight((short) 800);
             HSSFCell cellTitleCell = (HSSFCell) rowTitle.createCell(1);
-            cellTitleCell.setCellValue("BÁO CÁO DANH SÁCH ĐƠN XUẤT KHO");
+            cellTitleCell.setCellValue("BÁO CÁO DANH SÁCH ĐƠN XUẤT KHO TỪ " + dateFrom + " ĐẾN " + dateTo);
             cellTitleCell.setCellStyle(styleTitle);
             CellRangeAddress cellRangeAddress = new CellRangeAddress(1, 1, 1, 13);
             rowTitle.getSheet().addMergedRegion(cellRangeAddress);
@@ -123,13 +124,13 @@ public class XuatExcel {
             styleName.setBorderLeft(BorderStyle.THIN);
             styleName.setVerticalAlignment(VerticalAlignment.CENTER);
             styleName.setFont(font);
-            styleName.setFillForegroundColor((short) 29);
-            styleName.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//            styleName.setFillForegroundColor((short) 29);
+//            styleName.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             Row rowNhap = sheet.createRow(3);
             rowNhap.setHeight((short) 600);
             HSSFCell cellNhap = (HSSFCell) rowNhap.createCell(1);
-            cellNhap.setCellValue("NGƯỜI LẬP BÁO CÁO: DƯƠNG NHƯ KIỆT");
+            cellNhap.setCellValue("NGƯỜI LẬP BÁO CÁO: " + fullname);
             cellNhap.setCellStyle(styleName);
             CellRangeAddress cellRangeAddress1 = new CellRangeAddress(3, 3, 1, 3);
             rowNhap.getSheet().addMergedRegion(cellRangeAddress1);
@@ -141,7 +142,7 @@ public class XuatExcel {
 //            Row rowDate = sheet.createRow(3);
 //            rowDate.setHeight((short) 600);
             HSSFCell cellDate = (HSSFCell) rowNhap.createCell(5);
-            cellDate.setCellValue("TỪ " + dateFrom + " ĐẾN " + dateTo);
+            cellDate.setCellValue("NGÀY LẬP: " + ult.initDateNow());
             cellDate.setCellStyle(styleName);
             CellRangeAddress cellRangeAddressDate = new CellRangeAddress(3, 3, 5, 6);
             rowNhap.getSheet().addMergedRegion(cellRangeAddressDate);
@@ -220,7 +221,7 @@ public class XuatExcel {
             style2.setBorderLeft(BorderStyle.THIN);
             style2.setAlignment(HorizontalAlignment.CENTER);
             style2.setVerticalAlignment(VerticalAlignment.CENTER);
-            style2.setFillForegroundColor((short) 41);
+            style2.setFillForegroundColor((short) 42);
             style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             for (int i = 1; i <= 14; ++i) {

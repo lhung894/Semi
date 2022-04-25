@@ -8,7 +8,10 @@ import BUS.UserBUS;
 import com.example.sdksamples.ReadTags;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
@@ -43,6 +46,7 @@ public class LoginForm extends javax.swing.JFrame {
         jTxtUsername = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jTxtPassword = new javax.swing.JPasswordField();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -68,13 +72,26 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("USERNAME");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 80, 30));
+
+        jTxtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtUsernameKeyPressed(evt);
+            }
+        });
         jPanel1.add(jTxtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 180, 30));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PHẦN MỀM NHẬP XUẤT KHO");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 250, 40));
+
+        jTxtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtPasswordKeyPressed(evt);
+            }
+        });
         jPanel1.add(jTxtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 180, 30));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 72, 320, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,6 +126,36 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Login fail!");
         }
     }//GEN-LAST:event_jBtnLoginActionPerformed
+
+    private void jTxtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtUsernameKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jBtnLogin.doClick();
+        }
+    }//GEN-LAST:event_jTxtUsernameKeyPressed
+
+    private void jTxtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtPasswordKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jBtnLogin.doClick();
+        }
+    }//GEN-LAST:event_jTxtPasswordKeyPressed
+
+    public JPasswordField getjTxtPassword() {
+        return jTxtPassword;
+    }
+
+    public void setjTxtPassword(JPasswordField jTxtPassword) {
+        this.jTxtPassword = jTxtPassword;
+    }
+
+    public JTextField getjTxtUsername() {
+        return jTxtUsername;
+    }
+
+    public void setjTxtUsername(JTextField jTxtUsername) {
+        this.jTxtUsername = jTxtUsername;
+    }
 
     /**
      * @param args the command line arguments
@@ -151,6 +198,7 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPasswordField jTxtPassword;
     private javax.swing.JTextField jTxtUsername;
     // End of variables declaration//GEN-END:variables

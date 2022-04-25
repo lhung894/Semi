@@ -174,6 +174,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 245));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
@@ -335,7 +336,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu để xuất!");
             return;
         }
-        xuatExcel.xuatFileExcelDonHang(baoCaoBUS.initBaoCao(ordersFind), dateFrom, dateTo);
+        xuatExcel.xuatFileExcelDonHang(baoCaoBUS.initBaoCao(ordersFind), dateFrom, dateTo, Dashboard.userLogin.getFullName());
 //        JOptionPane.showMessageDialog(this, "Xuất báo cáo!");
     }//GEN-LAST:event_jBtnXuatActionPerformed
 

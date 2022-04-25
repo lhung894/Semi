@@ -446,6 +446,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         MainRead.tagDTOsMR = tagBUS.getList();
         detailScan.clear();
 //        MainRead.thucThi();
+        jBtnXoa.setEnabled(false);
         jBtnHuy.setEnabled(true);
         jBtnQuet.setEnabled(false);
         jBtnXuat.setEnabled(true);

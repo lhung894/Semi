@@ -18,6 +18,18 @@ public class Utils {
     public Utils() {
 //        maDLCuoi = new LastIdDAO();
     }
+    
+    ////////////////Tạo order ID
+    public String initUserId() {
+        maDLCuoi = new LastIdDAO();
+        String temp = maDLCuoi.getUserId();
+//        System.out.println("temp order: " + temp);
+        int ma = Integer.parseInt(temp);
+        ma++;
+        String init = "USER_";
+        init += String.valueOf(ma);
+        return init;
+    }
 
     ////////////////Tạo order ID
     public String initOrderId() {

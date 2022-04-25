@@ -93,6 +93,8 @@ public class ReadTags {
     
     public static void visibleLogin() {
         l.setVisible(true);
+        l.getjTxtUsername().setText("");
+        l.getjTxtPassword().setText("");
     }
 }
 
