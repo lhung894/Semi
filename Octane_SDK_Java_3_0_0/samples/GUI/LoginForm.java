@@ -112,18 +112,28 @@ public class LoginForm extends javax.swing.JFrame {
     private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLoginActionPerformed
         // TODO add your handling code here:
         if (jTxtUsername.getText().equals("") || jTxtPassword.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Username và password không được bỏ trống!");
+            JOptionPane.showMessageDialog(this, "Username and password cannot be left blank!");
             return;
         }
         Dashboard.userLogin = userBUS.checkLogin(jTxtUsername.getText(), jTxtPassword.getText());
         if (Dashboard.userLogin != null) {
+            if (Dashboard.userLogin.getRole() < 0) {
+                JOptionPane.showMessageDialog(this, "Login fail! User was blocked.");
+                Dashboard.userLogin = null;
+                return;
+            }
+            if (Dashboard.userLogin.getRole() == 0) {
+                JOptionPane.showMessageDialog(this, "Login fail! User was removed.");
+                Dashboard.userLogin = null;
+                return;
+            }
             JOptionPane.showMessageDialog(this, "Login success!");
             this.setVisible(false);
             ReadTags.visibleDashboard();
 //            ReadTags rt = new ReadTags();
 //            rt.main();
         } else {
-            JOptionPane.showMessageDialog(this, "Login fail!");
+            JOptionPane.showMessageDialog(this, "Login fail! Username or password incorrect.");
         }
     }//GEN-LAST:event_jBtnLoginActionPerformed
 
