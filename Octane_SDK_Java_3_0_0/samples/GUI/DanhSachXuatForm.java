@@ -465,39 +465,43 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 
     private void jBtnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnXoaActionPerformed
         // TODO add your handling code here:
-        if (orderId.equals("")) {
-            JOptionPane.showMessageDialog(this, "Order Id null!");
-            return;
-        }
-        ArrayList<ProductDTO> tempUpdate = new ArrayList<>();
-        ProductDTO productDTO;
-        for (OrderDetailDTO detail : details) {
-            if (detail.getOrderId().equals(orderId)) {
-                productDTO = new ProductDTO();
-                productDTO.setProductId(detail.getProductId());
-                for (ProductDTO product : products) {
-                    if (product.getProductId().equals(detail.getProductId())) {
-                        productDTO.setProductQuantity(detail.getOrderQuantity() + product.getProductQuantity());
-                    }
-                }
-                tempUpdate.add(productDTO);
-//                details.add(new OrderDetailDTO(detail.getOrderDetailId(), orderId, detail.getProductId(), detail.getOrderQuantity()));
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn muốn xóa đơn?",
+                "Xác nhận", JOptionPane.OK_CANCEL_OPTION);
+        if (confirm == JOptionPane.OK_OPTION) {
+            if (orderId.equals("")) {
+                JOptionPane.showMessageDialog(this, "Order Id null!");
+                return;
             }
+            ArrayList<ProductDTO> tempUpdate = new ArrayList<>();
+            ProductDTO productDTO;
+            for (OrderDetailDTO detail : details) {
+                if (detail.getOrderId().equals(orderId)) {
+                    productDTO = new ProductDTO();
+                    productDTO.setProductId(detail.getProductId());
+                    for (ProductDTO product : products) {
+                        if (product.getProductId().equals(detail.getProductId())) {
+                            productDTO.setProductQuantity(detail.getOrderQuantity() + product.getProductQuantity());
+                        }
+                    }
+                    tempUpdate.add(productDTO);
+//                details.add(new OrderDetailDTO(detail.getOrderDetailId(), orderId, detail.getProductId(), detail.getOrderQuantity()));
+                }
+            }
+            if (!orderDetailBUS.deleteDetail(orderId)) {
+                JOptionPane.showMessageDialog(this, "Xóa chi tiết đơn thất bại!");
+                return;
+            }
+            if (!orderBUS.deleteOrder(orderId)) {
+                JOptionPane.showMessageDialog(this, "Xóa đơn thất bại!");
+                return;
+            }
+            if (!productBUS.updateProducts(tempUpdate)) {
+                JOptionPane.showMessageDialog(this, "Cập nhật sản phẩm thất bại!");
+            }
+            tbModelOrder.removeRow(rowOrder);
+            JOptionPane.showMessageDialog(this, "Xóa đơn thành công!");
+            clear();
         }
-        if (!orderDetailBUS.deleteDetail(orderId)) {
-            JOptionPane.showMessageDialog(this, "Xóa chi tiết đơn thất bại!");
-            return;
-        }
-        if (!orderBUS.deleteOrder(orderId)) {
-            JOptionPane.showMessageDialog(this, "Xóa đơn thất bại!");
-            return;
-        }
-        if (!productBUS.updateProducts(tempUpdate)) {
-            JOptionPane.showMessageDialog(this, "Cập nhật sản phẩm thất bại!");
-        }
-        tbModelOrder.removeRow(rowOrder);
-        JOptionPane.showMessageDialog(this, "Xóa đơn thành công!");
-        clear();
     }//GEN-LAST:event_jBtnXoaActionPerformed
 
     /**
