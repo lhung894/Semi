@@ -54,7 +54,7 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="XU&#x1ea4;T B&#xc1;O C&#xc1;O"/>
+            <Property name="text" type="java.lang.String" value="T&#xcc;M KI&#x1ebe;M V&#xc0; B&#xc1;O C&#xc1;O"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Constraints>

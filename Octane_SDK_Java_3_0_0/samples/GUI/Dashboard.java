@@ -121,7 +121,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
         jPanelMenu.add(jBtnCreateOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 400, 240));
 
-        jBtnOrder.setText("ĐƠN XUẤT");
+        jBtnOrder.setText("QUẢN LÝ ĐƠN XUẤT");
         jBtnOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnOrderActionPerformed(evt);
@@ -129,7 +129,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
         jPanelMenu.add(jBtnOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 400, 240));
 
-        jBtnBaoCao.setText("BÁO CÁO");
+        jBtnBaoCao.setText("TÌM KIẾM VÀ BÁO CÁO");
         jBtnBaoCao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnBaoCaoActionPerformed(evt);

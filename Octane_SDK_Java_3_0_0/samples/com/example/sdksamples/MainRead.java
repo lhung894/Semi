@@ -155,6 +155,8 @@ public class MainRead implements TagReportListener {
         mread.setOutputForm(d.getListOrder());
         d.userLogin = userBUS.checkLogin("admin", "admin");
         d.setVisible(true);
+        d.setHello();
+        d.checkRole();
         d.getjBtnLogout().setEnabled(false);
     }
 

@@ -90,7 +90,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="jBtnOrder">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&#x110;&#x1a0;N XU&#x1ea4;T"/>
+                <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; &#x110;&#x1a0;N XU&#x1ea4;T"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnOrderActionPerformed"/>
@@ -103,7 +103,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="jBtnBaoCao">
               <Properties>
-                <Property name="text" type="java.lang.String" value="B&#xc1;O C&#xc1;O"/>
+                <Property name="text" type="java.lang.String" value="T&#xcc;M KI&#x1ebe;M V&#xc0; B&#xc1;O C&#xc1;O"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnBaoCaoActionPerformed"/>

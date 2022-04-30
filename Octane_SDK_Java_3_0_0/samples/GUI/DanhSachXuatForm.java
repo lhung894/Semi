@@ -209,7 +209,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("DANH SÁCH ĐƠN XUẤT");
+        jLabel1.setText("QUẢN LÝ ĐƠN XUẤT");
         jLabel1.setToolTipText("");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(286, 13, 243, 40));
 
