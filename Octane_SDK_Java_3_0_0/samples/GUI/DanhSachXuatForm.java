@@ -45,6 +45,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     public static HashMap<String, Integer> detailScan = new HashMap<>();
     ArrayList<OrderDetailDTO> details;
     ArrayList<ProductDTO> products;
+    ArrayList<String> productsNot;
 
     /**
      * Creates new form DanhSachXuatForm
@@ -59,6 +60,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 
     public void clear() {
         tbModelDetail.setRowCount(0);
+        jBtnRevert.setEnabled(false);
         jBtnQuet.setEnabled(false);
         jBtnHuy.setEnabled(false);
         jBtnXuat.setEnabled(false);
@@ -113,7 +115,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
                 if (tbModelOrder.getValueAt(rowOrder, 2).equals("Hoàn tất")) {
                     row.add("ok");
                 } else {
-                    row.add("");
+                    row.add("lack " + detail.getOrderQuantity());
                 }
                 row.add(detail.getOrderDetailId());
                 row.add(detail.getProductId());
@@ -138,14 +140,14 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     public void checkError() {
         if (!errorScan.equals("")) {
             JOptionPane.showMessageDialog(this, errorScan);
-            jBtnXuat.setEnabled(false);
+//            jBtnXuat.setEnabled(false);
             errorScan = "";
         }
     }
 
     public void checkScan(String product_id) {
 //        String error = "";
-        int quantity, count = 0;
+        int quantity, count = 0, quantityOrder;
         for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
             if (product_id.equals(tbModelDetail.getValueAt(i, 2))) {
                 count++;
@@ -153,27 +155,63 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         }
         if (count == 0) {
             JOptionPane.showMessageDialog(this, "Sản phẩm " + product_id + " không thuộc đơn hàng!");
-            jBtnXuat.setEnabled(false);
+            productsNot.add(product_id);
+//            jBtnXuat.setEnabled(false);
             return;
         }
         for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
             if (detailScan.containsKey(tbModelDetail.getValueAt(i, 2))) {
                 quantity = detailScan.get(tbModelDetail.getValueAt(i, 2));
-                if (quantity == Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4)))) {
+                quantityOrder = Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4)));
+                if (quantity == quantityOrder) {
                     tbModelDetail.setValueAt("ok", i, 0);
                     java.awt.Toolkit.getDefaultToolkit().beep();
-                } else if (quantity > Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4)))) {
-                    tbModelDetail.setValueAt("redundant", i, 0);
-                    int beepCount = 1;
-                    for (int b = 0; b < beepCount; ++b) {
-                        // Ring the bell again using the Toolkit 
-                        java.awt.Toolkit.getDefaultToolkit().beep();
-                        try {
-                            Thread.sleep(600); // introduce delay
-                        } catch (InterruptedException e) {
-                        }
-                        java.awt.Toolkit.getDefaultToolkit().beep();
-                    }
+                } else if (quantity > quantityOrder) {
+                    tbModelDetail.setValueAt("redundant " + (quantity - quantityOrder), i, 0);
+//                    int beepCount = 1;
+//                    for (int b = 0; b < beepCount; ++b) {
+//                        // Ring the bell again using the Toolkit 
+//                        java.awt.Toolkit.getDefaultToolkit().beep();
+//                        try {
+//                            Thread.sleep(600); // introduce delay
+//                        } catch (InterruptedException e) {
+//                        }
+//                        java.awt.Toolkit.getDefaultToolkit().beep();
+//                    }
+                } else if (quantity < quantityOrder) {
+                    tbModelDetail.setValueAt("lack " + (quantityOrder - quantity), i, 0);
+                }
+            }
+        }
+    }
+    
+    public void checkScanRevert(String product_id, String tagId) {
+//        String error = "";
+        int quantity, count = 0, quantityOrder;
+        for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
+            if (product_id.equals(tbModelDetail.getValueAt(i, 2))) {
+                count++;
+            }
+        }
+        if (count == 0) {
+            if (productsNot.contains(product_id)) {
+               productsNot.remove(product_id);
+            }
+            if (tagDTOs.contains(tagId)) {
+                tagDTOs.remove(tagId);
+            }
+            return;
+        }
+        for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
+            if (detailScan.containsKey(tbModelDetail.getValueAt(i, 2))) {
+                quantity = detailScan.get(tbModelDetail.getValueAt(i, 2));
+                quantityOrder = Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4)));
+                if (quantity == quantityOrder) {
+                    tbModelDetail.setValueAt("ok", i, 0);
+                } else if (quantity > quantityOrder) {
+                    tbModelDetail.setValueAt("redundant " + (quantity - quantityOrder), i, 0);
+                } else if (quantity < quantityOrder) {
+                    tbModelDetail.setValueAt("lack " + (quantityOrder - quantity), i, 0);
                 }
             }
         }
@@ -200,6 +238,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         jBtnQuet = new javax.swing.JButton();
         jBtnHuy = new javax.swing.JButton();
         jBtnXoa = new javax.swing.JButton();
+        jBtnRevert = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -307,7 +346,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
                 jBtnXuatActionPerformed(evt);
             }
         });
-        jPanel1.add(jBtnXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, -1, -1));
+        jPanel1.add(jBtnXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 430, -1, -1));
 
         jBtnQuet.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jBtnQuet.setText("QUÉT HÀNG XUẤT");
@@ -335,6 +374,15 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jBtnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 120, -1));
+
+        jBtnRevert.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jBtnRevert.setText("REVERT");
+        jBtnRevert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnRevertActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jBtnRevert, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 430, 120, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -403,14 +451,18 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
             if (tbModelDetail.getValueAt(i, 0).equals("ok")) {
                 count++;
-            } else if (tbModelDetail.getValueAt(i, 0).equals("redundant")) {
+            } else if (tbModelDetail.getValueAt(i, 0).toString().contains("redundant")) {
                 error += "Sản phẩm " + tbModelDetail.getValueAt(i, 2) + " bị dư\n";
             } else {
                 error += "Sản phẩm " + tbModelDetail.getValueAt(i, 2) + " chưa hoàn tất\n";
             }
         }
+        for (String s : productsNot) {
+            error += "Sản phẩm " + s + " không thuộc đơn hàng!\n";
+        }
         if (!error.equals("")) {
             JOptionPane.showMessageDialog(this, error);
+            jBtnRevert.setEnabled(true);
             return;
         }
         if (count == tbModelDetail.getRowCount()) {
@@ -421,6 +473,8 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
                 if (tagBUS.updateTagsOut(tagDTOs)) { // cập nhật date và gate out cho tag
                     tbModelOrder.setValueAt("Hoàn tất", rowOrder, 2);
                     JOptionPane.showMessageDialog(this, "Xuất đơn thành công!");
+                    MainRead.flag = 0;
+                    MainRead.tagMap.clear();
                     clear();
 //                    orderId = "";
 //                    jBtnHuy.setEnabled(false);
@@ -450,6 +504,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         jBtnHuy.setEnabled(true);
         jBtnQuet.setEnabled(false);
         jBtnXuat.setEnabled(true);
+        jBtnRevert.setEnabled(false);
     }//GEN-LAST:event_jBtnQuetActionPerformed
 
     private void jBtnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnHuyActionPerformed
@@ -504,6 +559,17 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnXoaActionPerformed
 
+    private void jBtnRevertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRevertActionPerformed
+        // TODO add your handling code here:
+        MainRead.flag = 3;
+        MainRead.tagMap.clear();
+        jBtnXoa.setEnabled(false);
+        jBtnHuy.setEnabled(true);
+        jBtnQuet.setEnabled(true);
+        jBtnXuat.setEnabled(true);
+        jBtnRevert.setEnabled(true);
+    }//GEN-LAST:event_jBtnRevertActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -550,6 +616,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnHuy;
     private javax.swing.JButton jBtnQuet;
+    private javax.swing.JButton jBtnRevert;
     private javax.swing.JButton jBtnXoa;
     private javax.swing.JButton jBtnXuat;
     private javax.swing.JLabel jLabel1;

@@ -99,6 +99,44 @@ public class MainRead implements TagReportListener {
 //                    outputForm.initTagAuto();
                 }
             }
+        } else if (flag == 3) {
+            List<Tag> tags = tr.getTags();
+            for (Tag t : tags) {
+                if (!tagMap.containsKey(t.getEpc().toString())) {
+                    tagMap.put(t.getEpc().toString(), t);
+                    tagDTO = new TagDTO();
+                    tagDTO.setTagId(t.getEpc().toString());
+//                    if (reader.getName() != null) {
+//                        tagDTO.setTagGateOut(reader.getName());
+//                    } else {
+//                        tagDTO.setTagGateOut(reader.getAddress());
+//                    }
+                    tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
+                    tagDTO.setTagDateOut(ult.initDateNow());
+                    for (TagDTO dto : tagDTOsMR) {
+                        if (dto.getTagId().equals(tagDTO.getTagId())) {
+//                            if (dto.getOrderId() != null && !dto.getOrderId().equals("")) {
+//                                outputForm.errorScan += "Tag " + tagDTO.getTagId() + " thuộc đơn hàng khác!";
+//                                outputForm.checkError();
+//                                return;
+//                            }
+                            tagDTO.setProductId(dto.getProductId());
+                            ////////
+//                            outputForm.tagDTOs.add(tagDTO);
+                            if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
+                                outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) - 1);
+                            }
+                            outputForm.checkScanRevert(tagDTO.getProductId(), tagDTO.getTagId());
+                            return;
+                        }
+                    }
+                    outputForm.errorScan += "Tag " + tagDTO.getTagId() + " không tồn tại trong kho!";
+                    outputForm.checkError();
+                    ////////
+//                    System.out.println("ok??????????????????????????");
+//                    outputForm.initTagAuto();
+                }
+            }
         }
     }
 
