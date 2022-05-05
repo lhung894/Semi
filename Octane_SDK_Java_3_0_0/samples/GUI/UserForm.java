@@ -25,7 +25,7 @@ public class UserForm extends javax.swing.JFrame {
 
     DefaultTableModel tbModelUser;
     int rowUser = -2;
-    String userId = "";
+    String userId = "", userName = "";
     int role = 0;
     UserBUS userBUS = new UserBUS();
     ArrayList<UserDTO> userDTOs = new ArrayList<>();
@@ -42,6 +42,7 @@ public class UserForm extends javax.swing.JFrame {
 
     public void clear() {
         userId = "";
+        userName = "";
         rowUser = -2;
         jTextUsername.setText("");
         jTextFullname.setText("");
@@ -287,7 +288,7 @@ public class UserForm extends javax.swing.JFrame {
         jTableUser.getColumn (tableCol.elementAt (1)).setPreferredWidth (150);
         jTableUser.getColumn (tableCol.elementAt (2)).setPreferredWidth (150);
         jTableUser.getColumn (tableCol.elementAt (3)).setPreferredWidth (120);
-        jTableUser.getColumn (tableCol.elementAt (4)).setPreferredWidth (120);
+        jTableUser.getColumn (tableCol.elementAt (4)).setPreferredWidth (150);
         jTableUser.getColumn (tableCol.elementAt (5)).setPreferredWidth (100);
         jTableUser.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(jTableUser);
@@ -356,8 +357,8 @@ public class UserForm extends javax.swing.JFrame {
         String check = validation();
         if (check.equals("")) { //validation
             for (UserDTO a : userDTOs) {
-                if (a.getUserName().equals(jTextUsername.getText())) {
-                    JOptionPane.showMessageDialog(this, "Thêm user thất bại! Username đã tồn tại!");
+                if (a.getUserName().equals(jTextUsername.getText()) && !a.getUserName().equals(userName)) {
+                    JOptionPane.showMessageDialog(this, "Sửa user thất bại! Username đã tồn tại!");
                     return;
                 }
             }
@@ -365,7 +366,7 @@ public class UserForm extends javax.swing.JFrame {
             if (jCheckBoxMkMoi.isSelected()) {
                 checkPw = true;
             }
-            UserDTO userDTO = new UserDTO("", (String) jTextUsername.getText(), jPasswordField.getText(),
+            UserDTO userDTO = new UserDTO((String) tbModelUser.getValueAt(rowUser, 0), (String) jTextUsername.getText(), jPasswordField.getText(),
                     (String) jTextFullname.getText(), (String) jTextPhoneNum.getText(), (String) jTextMail.getText(), 2);
             if (userBUS.updateUser(userDTO, checkPw)) {
                 suaVector(tbModelUser, rowUser, userDTO);
@@ -402,7 +403,8 @@ public class UserForm extends javax.swing.JFrame {
         if (row != -1) {
             rowUser = row;
             userId = (String) jTableUser.getValueAt(row, 0);
-            jTextUsername.setText((String) jTableUser.getValueAt(row, 1));
+            userName = (String) jTableUser.getValueAt(row, 1);
+            jTextUsername.setText(userName);
             jTextFullname.setText((String) jTableUser.getValueAt(row, 2));
             jTextPhoneNum.setText((String) jTableUser.getValueAt(row, 3));
             jTextMail.setText((String) jTableUser.getValueAt(row, 4));
@@ -464,10 +466,10 @@ public class UserForm extends javax.swing.JFrame {
 
     private void jBtnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnXoaActionPerformed
         // TODO add your handling code here:
-        int confirm = JOptionPane.showConfirmDialog(this, "Bạn muốn xóa user?",
-                "Xác nhận", JOptionPane.OK_CANCEL_OPTION);
-        if (confirm == JOptionPane.OK_OPTION) {
-            if (userId != null || !userId.equals("")) {
+        if (userId != null || !userId.equals("")) {
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn muốn xóa user?",
+                    "Xác nhận", JOptionPane.OK_CANCEL_OPTION);
+            if (confirm == JOptionPane.OK_OPTION) {
                 if (userBUS.removeUser(userId)) {
                     xoaVector(tbModelUser, rowUser);
                     JOptionPane.showMessageDialog(this, "Xóa user thành công!");
@@ -477,7 +479,6 @@ public class UserForm extends javax.swing.JFrame {
                 }
             }
         }
-
     }//GEN-LAST:event_jBtnXoaActionPerformed
 
     private void jBtnUnblockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUnblockActionPerformed

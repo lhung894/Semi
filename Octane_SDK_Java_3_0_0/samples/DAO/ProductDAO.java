@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author User
  */
 public class ProductDAO {
+
     Connect conn;
 
     public ProductDAO() {
@@ -44,7 +45,7 @@ public class ProductDAO {
         }
         return productDTOs;
     }
-    
+
     public boolean updateProductQuantity(ProductDTO productDTO) {
         conn = new Connect();
         conn.getConnection();
@@ -60,15 +61,15 @@ public class ProductDAO {
         System.out.println("ProductDAO update fail.");
         return false;
     }
-    
+
     public boolean updateProductsQuantity(ArrayList<ProductDTO> productDTOs) {
         conn = new Connect();
         conn.getConnection();
-        String sql = ""; 
+        String sql = "";
         for (ProductDTO product : productDTOs) {
             sql += "UPDATE Product SET"
-                + " product_quantity=" + product.getProductQuantity()
-                + " WHERE product_id='" + product.getProductId() + "';";
+                    + " product_quantity=" + product.getProductQuantity()
+                    + " WHERE product_id='" + product.getProductId() + "';";
         }
         if (conn.executeUpdate(sql)) {
             conn.close();
@@ -77,6 +78,56 @@ public class ProductDAO {
         }
         conn.close();
         System.out.println("ProductDAO update fail.");
+        return false;
+    }
+
+    public boolean insertProduct(ProductDTO productDTO) {
+        conn = new Connect();
+        conn.getConnection();
+        String query = "INSERT INTO Product"
+                + " VALUES ('" + productDTO.getProductId() + "'"
+                + ",'" + productDTO.getProductName() + "'"
+                + "," + productDTO.getProductQuantity()
+                + ",'" + productDTO.getProductDetail() + "')";
+        if (conn.executeUpdate(query)) {
+            conn.close();
+            System.out.println("ProductDAO insert success.");
+            return true;
+        }
+        conn.close();
+        System.out.println("ProductDAO insert fail.");
+        return false;
+    }
+
+    public boolean updateProduct(ProductDTO productDTO) {
+        conn = new Connect();
+        conn.getConnection();
+        String sql = "UPDATE Product SET"
+                + " product_name='" + productDTO.getProductName() + "'"
+                + ", product_detail='" + productDTO.getProductDetail()+ "'"
+                + " WHERE product_id='" + productDTO.getProductId() + "';";
+        if (conn.executeUpdate(sql)) {
+            conn.close();
+            System.out.println("ProductDAO update success.");
+            return true;
+        }
+        conn.close();
+        System.out.println("ProductDAO update fail.");
+        return false;
+    }
+    
+    public boolean deleteProduct(String productId) {
+        conn = new Connect();
+        conn.getConnection();
+        String sql = "DELETE FROM Product"
+                + " WHERE product_id='" + productId + "';";
+        if (conn.executeUpdate(sql)) {
+            conn.close();
+            System.out.println("ProductDAO delete success.");
+            return true;
+        }
+        conn.close();
+        System.out.println("ProductDAO delete fail.");
         return false;
     }
 }

@@ -19,7 +19,7 @@ public class Utils {
 //        maDLCuoi = new LastIdDAO();
     }
     
-    ////////////////Tạo order ID
+    ////////////////Tạo user ID
     public String initUserId() {
         maDLCuoi = new LastIdDAO();
         String temp = maDLCuoi.getUserId();
@@ -27,6 +27,18 @@ public class Utils {
         int ma = Integer.parseInt(temp);
         ma++;
         String init = "USER_";
+        init += String.valueOf(ma);
+        return init;
+    }
+    
+    ////////////////Tạo product ID
+    public String initProductId() {
+        maDLCuoi = new LastIdDAO();
+        String temp = maDLCuoi.getProductId();
+//        System.out.println("temp order: " + temp);
+        int ma = Integer.parseInt(temp);
+        ma++;
+        String init = "PRO_";
         init += String.valueOf(ma);
         return init;
     }

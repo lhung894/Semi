@@ -69,6 +69,23 @@ public class LastIdDAO {
         conn.close();
         return false;
     }
+    
+    public boolean updateProductId(String newProductId) {
+        conn = new Connect();
+        conn.getConnection();
+        String query = "UPDATE LastId SET"
+                + " product_id='" + newProductId + "'"
+                + " WHERE product_id='" + getProductId()+ "'";
+        if (conn.executeUpdate(query)) {
+            System.out.println("Update last ProductId success.");
+            setProductId(newProductId);
+            conn.close();
+            return true;
+        }
+        System.out.println("Update last ProductId fail.");
+        conn.close();
+        return false;
+    }
 
     public boolean updateOrderId(String newOrderId) {
         conn = new Connect();

@@ -55,10 +55,10 @@ public class UserBUS {
             userDTO.setPassWord(MD5Hash(userDTO.getPassWord()));
         }
         if (userDAO.updateUser(userDTO, checkPw)) {
-            System.out.println("insert success UserBUS");
+            System.out.println("update success UserBUS");
             return true;
         }
-        System.out.println("insert fail UserBUS");
+        System.out.println("update fail UserBUS");
         return false;
     }
 

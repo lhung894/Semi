@@ -366,7 +366,7 @@ public class NhapDlForm extends javax.swing.JFrame {
             ProductDTO productDTO = new ProductDTO();
             productDTO.setProductId((String) tbModelProduct.getValueAt(rowProduct, 0));
             productDTO.setProductQuantity((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1);
-            if (productBUS.updateProduct(productDTO)) {
+            if (productBUS.updateProductQuantity(productDTO)) {
                 jTableProduct.setValueAt((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1, rowProduct, 2);
                 removeRowTag();
                 JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thành công!");

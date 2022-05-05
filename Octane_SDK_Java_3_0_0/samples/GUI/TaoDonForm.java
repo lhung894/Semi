@@ -323,7 +323,7 @@ public class TaoDonForm extends javax.swing.JFrame {
                     }
                 }
             }
-            if (orderDetailBUS.insertOrderDetail(orDetails) && productBUS.updateProducts(products)) {
+            if (orderDetailBUS.insertOrderDetail(orDetails) && productBUS.updateProductsQuantity(products)) {
                 JOptionPane.showMessageDialog(this, "Tạo đơn xuất thành công!");
                 tbModelOrder.setRowCount(0);
                 clear();

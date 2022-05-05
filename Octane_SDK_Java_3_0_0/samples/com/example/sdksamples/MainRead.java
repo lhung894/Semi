@@ -231,6 +231,111 @@ public class MainRead implements TagReportListener {
         outputForm.checkScan(test.getProductId());
     }
 
+    public static void flagIf2(String epc) {
+        TagDTO tagDTO;
+        Utils ult = new Utils();
+        Tag t = new Tag();
+        if (!tagMap.containsKey(epc)) {
+            tagMap.put(epc, t);
+            tagDTO = new TagDTO();
+            tagDTO.setTagId(epc);
+            tagDTO.setTagGateOut("1");
+            tagDTO.setTagDateOut(ult.initDateNow());
+            for (TagDTO dto : tagDTOsMR) {
+                if (dto.getTagId().equals(tagDTO.getTagId())) {
+                    if (dto.getOrderId() != null && !dto.getOrderId().equals("")) {
+                        outputForm.errorScan += "Tag " + tagDTO.getTagId() + " thuộc đơn hàng khác!";
+                        outputForm.checkError();
+                        return;
+                    }
+                    tagDTO.setProductId(dto.getProductId());
+                    ////////
+                    outputForm.tagDTOs.add(tagDTO);
+                    if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
+                        outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) + 1);
+                    } else {
+                        outputForm.detailScan.put(tagDTO.getProductId(), 1);
+                    }
+                    outputForm.checkScan(tagDTO.getProductId());
+                    return;
+                }
+            }
+            outputForm.errorScan += "Tag " + tagDTO.getTagId() + " không tồn tại trong kho!";
+            outputForm.checkError();
+        }
+    }
+
+    public static void flagIf3(String epc) {
+        TagDTO tagDTO;
+        Utils ult = new Utils();
+        Tag t = new Tag();
+        if (!tagMap.containsKey(epc)) {
+            tagMap.put(epc, t);
+            tagDTO = new TagDTO();
+            tagDTO.setTagId(epc);
+            tagDTO.setTagGateOut("1");
+            tagDTO.setTagDateOut(ult.initDateNow());
+            for (TagDTO dto : tagDTOsMR) {
+                if (dto.getTagId().equals(tagDTO.getTagId())) {
+                    tagDTO.setProductId(dto.getProductId());
+                    if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
+                        outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) - 1);
+                    }
+                    outputForm.checkScanRevert(tagDTO.getProductId(), tagDTO.getTagId());
+                    return;
+                }
+            }
+            outputForm.errorScan += "Tag " + tagDTO.getTagId() + " không tồn tại trong kho!";
+            outputForm.checkError();
+        }
+    }
+
+    public static void testScan(int flag, int stepIf2, int stepIf3) {
+        if (flag == 2) {
+            switch (stepIf2) {
+                case 1 -> {
+                    flagIf2("E200 3412 0140 FC00 0129 063E"); //PRO3 ok
+                }
+                case 2 -> {
+                    flagIf2("300F 4F57 3AD0 01C0 8369 A249"); //PRO6 ok
+                }
+                case 3 -> {
+                    flagIf2("0300 0000 0000 0000 0000 0005"); //PRO4
+                }
+                case 4 -> {
+                    flagIf2("0300 0000 0000 0000 0000 0006"); //PRO4 ok
+                }
+                case 5 -> {
+                    flagIf2("0300 0000 0000 0000 0000 0001"); //PRO4 redundant
+                }
+                case 6 -> {
+                    flagIf2("E200 1026 8110 0159 1490 7999"); //PRO6 error
+                }
+            }
+        } else if (flag == 3) {
+            switch (stepIf3) {
+                case 1 -> {
+                    flagIf3("E200 1026 8110 0159 1490 7999"); //PRO6
+                }
+                case 2 -> {
+                    flagIf3("0300 0000 0000 0000 0000 0006"); //PRO4
+                }
+                case 3 -> {
+                    flagIf3("0300 0000 0000 0000 0000 0005"); //PRO4
+                }
+                case 4 -> {
+                    flagIf3("300F 4F57 3AD0 01C0 8369 A249"); //PRO3
+                }
+                case 5 -> {
+                    flagIf3("0300 0000 0000 0000 0000 0001"); //PRO4
+                }
+                case 6 -> {
+                    flagIf3("E200 3412 0140 FC00 0129 063E"); //PRO3
+                }
+            }
+        }
+    }
+
     public static HashMap<String, Tag> getTagMap() {
         return tagMap;
     }
