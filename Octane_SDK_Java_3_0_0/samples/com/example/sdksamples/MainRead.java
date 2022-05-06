@@ -39,103 +39,92 @@ public class MainRead implements TagReportListener {
 
     @Override
     public void onTagReported(ImpinjReader reader, TagReport tr) {
-        if (flag == 1) {
-            List<Tag> tags = tr.getTags();
-            for (Tag t : tags) {
-                if (!tagMap.containsKey(t.getEpc().toString())) {
-                    tagMap.put(t.getEpc().toString(), t);
-                    tagDTO = new TagDTO();
-                    tagDTO.setTagId(t.getEpc().toString());
+        switch (flag) {
+            case 1 -> {
+                List<Tag> tags = tr.getTags();
+                for (Tag t : tags) {
+                    if (!tagMap.containsKey(t.getEpc().toString())) {
+                        tagMap.put(t.getEpc().toString(), t);
+                        tagDTO = new TagDTO();
+                        tagDTO.setTagId(t.getEpc().toString());
 //                    if (reader.getName() != null) {
 //                        tagDTO.setTagGateIn(reader.getName());
 //                    } else {
 //                        tagDTO.setTagGateIn(reader.getAddress());
 //                    }
-                    tagDTO.setTagGateIn(String.valueOf(t.getAntennaPortNumber()));
+                        tagDTO.setTagGateIn(String.valueOf(t.getAntennaPortNumber()));
 //                    System.out.println("name: " + tagDTO.getTagGateIn());
-                    tagDTO.setTagDateIn(ult.initDateNow());
-                    inputForm.tagDTOs.add(tagDTO);
+                        tagDTO.setTagDateIn(ult.initDateNow());
+                        inputForm.tagDTOs.add(tagDTO);
 //                    System.out.println("ok??????????????????????????");
-                    inputForm.initTagAuto();
+                        inputForm.initTagAuto();
+                    }
                 }
             }
-        } else if (flag == 2) {
-            List<Tag> tags = tr.getTags();
-            for (Tag t : tags) {
-                if (!tagMap.containsKey(t.getEpc().toString())) {
-                    tagMap.put(t.getEpc().toString(), t);
-                    tagDTO = new TagDTO();
-                    tagDTO.setTagId(t.getEpc().toString());
-//                    if (reader.getName() != null) {
-//                        tagDTO.setTagGateOut(reader.getName());
-//                    } else {
-//                        tagDTO.setTagGateOut(reader.getAddress());
-//                    }
-                    tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
-                    tagDTO.setTagDateOut(ult.initDateNow());
-                    for (TagDTO dto : tagDTOsMR) {
-                        if (dto.getTagId().equals(tagDTO.getTagId())) {
-                            if (dto.getOrderId() != null && !dto.getOrderId().equals("")) {
-                                outputForm.errorScan += "Tag " + tagDTO.getTagId() + " thuộc đơn hàng khác!";
-                                outputForm.checkError();
+            case 2 -> {
+                List<Tag> tags = tr.getTags();
+                for (Tag t : tags) {
+                    if (!tagMap.containsKey(t.getEpc().toString())) {
+                        tagMap.put(t.getEpc().toString(), t);
+                        tagDTO = new TagDTO();
+                        tagDTO.setTagId(t.getEpc().toString());
+                        tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
+                        tagDTO.setTagDateOut(ult.initDateNow());
+                        for (TagDTO dto : tagDTOsMR) {
+                            if (dto.getTagId().equals(tagDTO.getTagId())) {
+                                if (dto.getOrderId() != null && !dto.getOrderId().equals("")) {
+                                    outputForm.errorScan += "Tag " + tagDTO.getTagId() + " thuộc đơn hàng khác!";
+                                    outputForm.checkError();
+                                    return;
+                                }
+                                tagDTO.setProductId(dto.getProductId());
+                                ////////
+                                outputForm.tagDTOs.add(tagDTO);
+                                if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
+                                    outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) + 1);
+                                } else {
+                                    outputForm.detailScan.put(tagDTO.getProductId(), 1);
+                                }
+                                outputForm.checkScan(tagDTO.getProductId());
                                 return;
                             }
-                            tagDTO.setProductId(dto.getProductId());
-                            ////////
-                            outputForm.tagDTOs.add(tagDTO);
-                            if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
-                                outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) + 1);
-                            } else {
-                                outputForm.detailScan.put(tagDTO.getProductId(), 1);
-                            }
-                            outputForm.checkScan(tagDTO.getProductId());
-                            return;
                         }
+                        outputForm.errorScan += "Tag " + tagDTO.getTagId() + " không tồn tại trong kho!";
+                        outputForm.checkError();
                     }
-                    outputForm.errorScan += "Tag " + tagDTO.getTagId() + " không tồn tại trong kho!";
-                    outputForm.checkError();
-                    ////////
-//                    System.out.println("ok??????????????????????????");
-//                    outputForm.initTagAuto();
                 }
             }
-        } else if (flag == 3) {
-            List<Tag> tags = tr.getTags();
-            for (Tag t : tags) {
-                if (!tagMap.containsKey(t.getEpc().toString())) {
-                    tagMap.put(t.getEpc().toString(), t);
-                    tagDTO = new TagDTO();
-                    tagDTO.setTagId(t.getEpc().toString());
-//                    if (reader.getName() != null) {
-//                        tagDTO.setTagGateOut(reader.getName());
-//                    } else {
-//                        tagDTO.setTagGateOut(reader.getAddress());
-//                    }
-                    tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
-                    tagDTO.setTagDateOut(ult.initDateNow());
-                    for (TagDTO dto : tagDTOsMR) {
-                        if (dto.getTagId().equals(tagDTO.getTagId())) {
-//                            if (dto.getOrderId() != null && !dto.getOrderId().equals("")) {
-//                                outputForm.errorScan += "Tag " + tagDTO.getTagId() + " thuộc đơn hàng khác!";
-//                                outputForm.checkError();
-//                                return;
-//                            }
-                            tagDTO.setProductId(dto.getProductId());
-                            ////////
-//                            outputForm.tagDTOs.add(tagDTO);
-                            if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
-                                outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) - 1);
+            case 3 -> {
+                List<Tag> tags = tr.getTags();
+                for (Tag t : tags) {
+                    if (tagMap.containsKey(t.getEpc().toString())) {
+                        tagMap.remove(t.getEpc().toString());
+                        tagDTO = new TagDTO();
+                        tagDTO.setTagId(t.getEpc().toString());
+                        tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
+                        tagDTO.setTagDateOut(ult.initDateNow());
+                        for (TagDTO dto : tagDTOsMR) {
+                            if (dto.getTagId().equals(tagDTO.getTagId())) {
+                                if (dto.getOrderId() != null && !dto.getOrderId().equals("")) {
+                                    outputForm.errorScan += "Tag " + tagDTO.getTagId() + " thuộc đơn hàng khác!";
+                                    outputForm.checkError();
+                                    return;
+                                }
+                                tagDTO.setProductId(dto.getProductId());
+                                outputForm.tagDTOs.remove(tagDTO);
+                                if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
+                                    outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) - 1);
+                                }
+                                outputForm.checkScanRevert(tagDTO.getProductId(), tagDTO.getTagId());
+                                return;
                             }
-                            outputForm.checkScanRevert(tagDTO.getProductId(), tagDTO.getTagId());
-                            return;
                         }
+                        outputForm.errorScan += "Tag " + tagDTO.getTagId() + " không tồn tại trong kho!";
+                        outputForm.checkError();
                     }
-                    outputForm.errorScan += "Tag " + tagDTO.getTagId() + " không tồn tại trong kho!";
-                    outputForm.checkError();
-                    ////////
-//                    System.out.println("ok??????????????????????????");
-//                    outputForm.initTagAuto();
                 }
+            }
+            default -> {
             }
         }
     }
@@ -195,7 +184,7 @@ public class MainRead implements TagReportListener {
         d.setVisible(true);
         d.setHello();
         d.checkRole();
-        d.getjBtnLogout().setEnabled(false);
+//        d.getjBtnLogout().setEnabled(false);
     }
 
     public static void thucThi() {

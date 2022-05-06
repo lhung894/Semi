@@ -141,8 +141,9 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 
     public void checkError() {
         if (!errorScan.equals("")) {
+            MainRead.flag = 0;
             JOptionPane.showMessageDialog(this, errorScan);
-//            jBtnXuat.setEnabled(false);
+            jBtnXuat.setEnabled(false);
             errorScan = "";
         }
     }
@@ -156,6 +157,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             }
         }
         if (count == 0) {
+            MainRead.flag = 0;
             JOptionPane.showMessageDialog(this, "Sản phẩm " + product_id + " không thuộc đơn hàng!");
             jBtnRevert.setEnabled(true);
             productsNot.add(product_id);
@@ -169,10 +171,13 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
                 if (quantity == quantityOrder) {
                     tbModelDetail.setValueAt("ok", i, 0);
                     java.awt.Toolkit.getDefaultToolkit().beep();
+                    break;
                 } else if (quantity > quantityOrder) {
                     tbModelDetail.setValueAt("redundant " + (quantity - quantityOrder), i, 0);
+                    MainRead.flag = 0;
                     JOptionPane.showMessageDialog(this, "Sản phẩm " + product_id + " bị dư " + (quantity - quantityOrder) + "!");
                     jBtnRevert.setEnabled(true);
+                    break;
 //                    int beepCount = 1;
 //                    for (int b = 0; b < beepCount; ++b) {
 //                        // Ring the bell again using the Toolkit 
@@ -185,6 +190,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 //                    }
                 } else if (quantity < quantityOrder) {
                     tbModelDetail.setValueAt("lack " + (quantityOrder - quantity), i, 0);
+                    break;
                 }
             }
         }
@@ -204,9 +210,6 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             if (productsNot.contains(product_id)) {
                productsNot.remove(product_id);
             }
-            if (tagDTOs.contains(tagId)) {
-                tagDTOs.remove(tagId);
-            }
             return;
         }
         System.out.println("vo day 2");
@@ -216,10 +219,13 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
                 quantityOrder = Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4)));
                 if (quantity == quantityOrder) {
                     tbModelDetail.setValueAt("ok", i, 0);
+                    break;
                 } else if (quantity > quantityOrder) {
                     tbModelDetail.setValueAt("redundant " + (quantity - quantityOrder), i, 0);
+                    break;
                 } else if (quantity < quantityOrder) {
                     tbModelDetail.setValueAt("lack " + (quantityOrder - quantity), i, 0);
+                    break;
                 }
             }
         }
@@ -504,12 +510,8 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Order Id null!");
             return;
         }
-//        isScanning = true;
         jTableOrder.setRowSelectionAllowed(false);
         MainRead.flag = 2;
-        MainRead.tagMap.clear();
-        MainRead.tagDTOsMR = tagBUS.getList();
-        detailScan.clear();
 //        MainRead.thucThi();
         jBtnXoa.setEnabled(false);
         jBtnHuy.setEnabled(true);
@@ -526,6 +528,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 //        isScanning = false;
         MainRead.flag = 0;
         MainRead.tagMap.clear();
+        detailScan.clear();
         jTableOrder.clearSelection();
         clear();
         count2 = 0;
@@ -576,7 +579,8 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     private void jBtnRevertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRevertActionPerformed
         // TODO add your handling code here:
         MainRead.flag = 3;
-        MainRead.tagMap.clear();
+//        MainRead.tagMap.clear();
+//        isScanning = false;
         flag = 3;
         jBtnXoa.setEnabled(false);
         jBtnHuy.setEnabled(true);
