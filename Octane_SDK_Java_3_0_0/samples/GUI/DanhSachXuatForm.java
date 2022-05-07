@@ -79,7 +79,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         }
         errorScan = "";
 //        jTableOrder.setRowSelectionAllowed(true);
-//        jTableOrder.setEnabled(true);
+        jTableOrder.setEnabled(true);
     }
 
     public void tableModelOrder(DefaultTableModel model) {
@@ -513,7 +513,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             return;
         }
 //        jTableOrder.setRowSelectionAllowed(false);
-//        jTableOrder.setEnabled(false);
+        jTableOrder.setEnabled(false);
         MainRead.flag = 2;
         MainRead.tagDTOsMR = tagBUS.getList();
 //        MainRead.thucThi();

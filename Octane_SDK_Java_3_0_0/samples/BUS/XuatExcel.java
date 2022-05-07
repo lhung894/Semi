@@ -88,6 +88,7 @@ public class XuatExcel {
             
             HSSFFont font = workbook.createFont();
             font.setBold(true);
+            font.setFontHeight((short) 220);
 
             HSSFCellStyle styleTitle = workbook.createCellStyle(); // Style cho Title
             HSSFFont fontTitle = workbook.createFont();
@@ -160,7 +161,7 @@ public class XuatExcel {
             styleHeader.setAlignment(HorizontalAlignment.CENTER);
             styleHeader.setVerticalAlignment(VerticalAlignment.CENTER);
             styleHeader.setFont(font);
-            styleHeader.setFillForegroundColor((short) 50);
+            styleHeader.setFillForegroundColor((short) 11);
             styleHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             Row row = sheet.createRow(5);
