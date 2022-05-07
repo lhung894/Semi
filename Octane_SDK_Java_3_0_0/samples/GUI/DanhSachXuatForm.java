@@ -38,7 +38,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     OrderBUS orderBUS = new OrderBUS();
     OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
     int rowOrder = -2, rowDetail = -2;
-//    boolean isScanning = false;
+    boolean isScanning = false;
     String orderId = "";
     public static String errorScan = "";
     public static ArrayList<TagDTO> tagDTOs = new ArrayList<>();
@@ -57,7 +57,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         this.setVisible(false);
         jTableOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        jBtnTest.setVisible(false);
+        jBtnTest.setVisible(false);
     }
 
     public void clear() {
@@ -69,7 +69,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         jBtnXoa.setEnabled(false);
         rowOrder = -2;
         rowDetail = -2;
-//        isScanning = false;
+        isScanning = false;
         orderId = "";
         if (tagDTOs != null || !tagDTOs.isEmpty()) {
             tagDTOs.clear();
@@ -78,7 +78,8 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             detailScan.clear();
         }
         errorScan = "";
-        jTableOrder.setRowSelectionAllowed(true);
+//        jTableOrder.setRowSelectionAllowed(true);
+//        jTableOrder.setEnabled(true);
     }
 
     public void tableModelOrder(DefaultTableModel model) {
@@ -426,10 +427,9 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 
     private void jTableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrderMouseClicked
         // TODO add your handling code here:
-//        if (isScanning) {
-//            jTableOrder.setRowSelectionAllowed(false);
-//            return;
-//        }
+        if (isScanning) {
+            return;
+        }
         int row = jTableOrder.getSelectedRow();
         if (row == rowOrder) {
             jTableOrder.clearSelection();
@@ -512,10 +512,12 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Order Id null!");
             return;
         }
-        jTableOrder.setRowSelectionAllowed(false);
+//        jTableOrder.setRowSelectionAllowed(false);
+//        jTableOrder.setEnabled(false);
         MainRead.flag = 2;
         MainRead.tagDTOsMR = tagBUS.getList();
 //        MainRead.thucThi();
+        isScanning = true;
         jBtnXoa.setEnabled(false);
         jBtnHuy.setEnabled(true);
         jBtnQuet.setEnabled(false);
