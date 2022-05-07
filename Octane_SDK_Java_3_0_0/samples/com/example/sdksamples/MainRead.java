@@ -238,6 +238,7 @@ public class MainRead implements TagReportListener {
                         return;
                     }
                     tagDTO.setProductId(dto.getProductId());
+                    System.out.println("tag: " + tagDTO);
                     ////////
                     outputForm.tagDTOs.add(tagDTO);
                     if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
@@ -258,15 +259,21 @@ public class MainRead implements TagReportListener {
         TagDTO tagDTO;
         Utils ult = new Utils();
         Tag t = new Tag();
-        if (!tagMap.containsKey(epc)) {
-            tagMap.put(epc, t);
+        if (tagMap.containsKey(epc)) {
+            tagMap.remove(epc);
             tagDTO = new TagDTO();
             tagDTO.setTagId(epc);
             tagDTO.setTagGateOut("1");
             tagDTO.setTagDateOut(ult.initDateNow());
             for (TagDTO dto : tagDTOsMR) {
                 if (dto.getTagId().equals(tagDTO.getTagId())) {
+                    if (dto.getOrderId() != null && !dto.getOrderId().equals("")) {
+                        outputForm.errorScan += "Tag " + tagDTO.getTagId() + " thuộc đơn hàng khác!";
+                        outputForm.checkError();
+                        return;
+                    }
                     tagDTO.setProductId(dto.getProductId());
+                    outputForm.tagDTOs.remove(tagDTO);
                     if (outputForm.detailScan.containsKey(tagDTO.getProductId())) {
                         outputForm.detailScan.put(tagDTO.getProductId(), outputForm.detailScan.get(tagDTO.getProductId()) - 1);
                     }
@@ -283,43 +290,37 @@ public class MainRead implements TagReportListener {
         if (flag == 2) {
             switch (stepIf2) {
                 case 1 -> {
-                    flagIf2("E200 3412 0140 FC00 0129 063E"); //PRO3 ok
+                    flagIf2("mno"); //PRO3 ok
                 }
                 case 2 -> {
-                    flagIf2("300F 4F57 3AD0 01C0 8369 A249"); //PRO6 ok
+                    flagIf2("abc"); //PRO5 lack
                 }
                 case 3 -> {
-                    flagIf2("0300 0000 0000 0000 0000 0005"); //PRO4
+                    flagIf2("def"); //PRO2 ok
                 }
                 case 4 -> {
-                    flagIf2("0300 0000 0000 0000 0000 0006"); //PRO4 ok
+                    flagIf2("35E0 1700 4FF4 3406 0000 0673"); //PRO2 redundant
                 }
                 case 5 -> {
-                    flagIf2("0300 0000 0000 0000 0000 0001"); //PRO4 redundant
+                    flagIf2("3039 6062 83B9 5D80 0012 9F61"); //PRO1 error
                 }
                 case 6 -> {
-                    flagIf2("E200 1026 8110 0159 1490 7999"); //PRO6 error
+                    flagIf2("klj"); //PRO5 ok
+                }
+                case 7 -> {
+                    flagIf2("def"); //PRO2 ok
                 }
             }
         } else if (flag == 3) {
             switch (stepIf3) {
                 case 1 -> {
-                    flagIf3("E200 1026 8110 0159 1490 7999"); //PRO6
+                    flagIf3("35E0 1700 4FF4 3406 0000 0673"); //back PRO2
                 }
                 case 2 -> {
-                    flagIf3("0300 0000 0000 0000 0000 0006"); //PRO4
+                    flagIf3("3039 6062 83B9 5D80 0012 9F61"); //back PRO1
                 }
                 case 3 -> {
-                    flagIf3("0300 0000 0000 0000 0000 0005"); //PRO4
-                }
-                case 4 -> {
-                    flagIf3("300F 4F57 3AD0 01C0 8369 A249"); //PRO3
-                }
-                case 5 -> {
-                    flagIf3("0300 0000 0000 0000 0000 0001"); //PRO4
-                }
-                case 6 -> {
-                    flagIf3("E200 3412 0140 FC00 0129 063E"); //PRO3
+                    flagIf3("def"); //lack PRO2
                 }
             }
         }

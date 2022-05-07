@@ -57,7 +57,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         this.setVisible(false);
         jTableOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jBtnTest.setVisible(false);
+//        jBtnTest.setVisible(false);
     }
 
     public void clear() {
@@ -157,6 +157,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             }
         }
         if (count == 0) {
+            flag = 0;
             MainRead.flag = 0;
             JOptionPane.showMessageDialog(this, "Sản phẩm " + product_id + " không thuộc đơn hàng!");
             jBtnRevert.setEnabled(true);
@@ -171,13 +172,14 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
                 if (quantity == quantityOrder) {
                     tbModelDetail.setValueAt("ok", i, 0);
                     java.awt.Toolkit.getDefaultToolkit().beep();
-                    break;
+//                    break;
                 } else if (quantity > quantityOrder) {
                     tbModelDetail.setValueAt("redundant " + (quantity - quantityOrder), i, 0);
+                    flag = 0;
                     MainRead.flag = 0;
-                    JOptionPane.showMessageDialog(this, "Sản phẩm " + product_id + " bị dư " + (quantity - quantityOrder) + "!");
+                    JOptionPane.showMessageDialog(this, "Sản phẩm " + (String) tbModelDetail.getValueAt(i, 2) + " bị dư " + (quantity - quantityOrder) + "!");
                     jBtnRevert.setEnabled(true);
-                    break;
+//                    break;
 //                    int beepCount = 1;
 //                    for (int b = 0; b < beepCount; ++b) {
 //                        // Ring the bell again using the Toolkit 
@@ -190,7 +192,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 //                    }
                 } else if (quantity < quantityOrder) {
                     tbModelDetail.setValueAt("lack " + (quantityOrder - quantity), i, 0);
-                    break;
+//                    break;
                 }
             }
         }
@@ -199,33 +201,33 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
     public void checkScanRevert(String product_id, String tagId) {
 //        String error = "";
         int quantity, count = 0, quantityOrder;
-        System.out.println("proid: " + product_id);
+//        System.out.println("proid: " + product_id);
         for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
             if (product_id.equals(tbModelDetail.getValueAt(i, 2))) {
                 count++;
             }
         }
         if (count == 0) {
-            System.out.println("vo day 1");
+//            System.out.println("vo day 1");
             if (productsNot.contains(product_id)) {
                productsNot.remove(product_id);
             }
             return;
         }
-        System.out.println("vo day 2");
+//        System.out.println("vo day 2");
         for (int i = 0; i < tbModelDetail.getRowCount(); i++) {
             if (detailScan.containsKey(tbModelDetail.getValueAt(i, 2))) {
                 quantity = detailScan.get(tbModelDetail.getValueAt(i, 2));
                 quantityOrder = Integer.parseInt(String.valueOf(tbModelDetail.getValueAt(i, 4)));
                 if (quantity == quantityOrder) {
                     tbModelDetail.setValueAt("ok", i, 0);
-                    break;
+//                    break;
                 } else if (quantity > quantityOrder) {
                     tbModelDetail.setValueAt("redundant " + (quantity - quantityOrder), i, 0);
-                    break;
+//                    break;
                 } else if (quantity < quantityOrder) {
                     tbModelDetail.setValueAt("lack " + (quantityOrder - quantity), i, 0);
-                    break;
+//                    break;
                 }
             }
         }
@@ -512,6 +514,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
         }
         jTableOrder.setRowSelectionAllowed(false);
         MainRead.flag = 2;
+        MainRead.tagDTOsMR = tagBUS.getList();
 //        MainRead.thucThi();
         jBtnXoa.setEnabled(false);
         jBtnHuy.setEnabled(true);
@@ -595,6 +598,8 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
             count2++;
         } else if (flag == 3) {
             count3++;
+        } else if (flag == 0) {
+            JOptionPane.showMessageDialog(this, "Nothing to do! Please choose action.");
         }
         MainRead.testScan(flag, count2, count3);
     }//GEN-LAST:event_jBtnTestActionPerformed
