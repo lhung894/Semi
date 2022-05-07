@@ -41,6 +41,7 @@ public class MainRead implements TagReportListener {
     public void onTagReported(ImpinjReader reader, TagReport tr) {
         switch (flag) {
             case 1 -> {
+                // nhập tag
                 List<Tag> tags = tr.getTags();
                 for (Tag t : tags) {
                     if (!tagMap.containsKey(t.getEpc().toString())) {
@@ -62,6 +63,7 @@ public class MainRead implements TagReportListener {
                 }
             }
             case 2 -> {
+                // xuất hàng
                 List<Tag> tags = tr.getTags();
                 for (Tag t : tags) {
                     if (!tagMap.containsKey(t.getEpc().toString())) {
@@ -95,6 +97,7 @@ public class MainRead implements TagReportListener {
                 }
             }
             case 3 -> {
+                // revert hàng
                 List<Tag> tags = tr.getTags();
                 for (Tag t : tags) {
                     if (tagMap.containsKey(t.getEpc().toString())) {

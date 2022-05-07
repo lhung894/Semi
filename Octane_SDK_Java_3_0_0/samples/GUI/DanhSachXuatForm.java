@@ -118,7 +118,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
                 if (tbModelOrder.getValueAt(rowOrder, 2).equals("Hoàn tất")) {
                     row.add("ok");
                 } else {
-                    row.add("lack " + detail.getOrderQuantity());
+                    row.add("missing " + detail.getOrderQuantity());
                 }
                 row.add(detail.getOrderDetailId());
                 row.add(detail.getProductId());
@@ -192,7 +192,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
 //                        java.awt.Toolkit.getDefaultToolkit().beep();
 //                    }
                 } else if (quantity < quantityOrder) {
-                    tbModelDetail.setValueAt("lack " + (quantityOrder - quantity), i, 0);
+                    tbModelDetail.setValueAt("missing " + (quantityOrder - quantity), i, 0);
 //                    break;
                 }
             }
@@ -227,7 +227,7 @@ public class DanhSachXuatForm extends javax.swing.JFrame {
                     tbModelDetail.setValueAt("redundant " + (quantity - quantityOrder), i, 0);
 //                    break;
                 } else if (quantity < quantityOrder) {
-                    tbModelDetail.setValueAt("lack " + (quantityOrder - quantity), i, 0);
+                    tbModelDetail.setValueAt("missing " + (quantityOrder - quantity), i, 0);
 //                    break;
                 }
             }

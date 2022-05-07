@@ -230,7 +230,7 @@ public class NhapDlForm extends javax.swing.JFrame {
         Vector tableColProduct = new Vector();
         tableColProduct.add("Product ID");
         tableColProduct.add("Product Name");
-        tableColProduct.add("Quantity");
+        tableColProduct.add("Remaining");
         tableColProduct.add("Detail");
 
         tbModelProduct = new DefaultTableModel (tableColProduct,0){

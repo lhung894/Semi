@@ -345,7 +345,7 @@ public class BaoCaoForm extends javax.swing.JFrame {
         dateFrom = ((JTextField) jDateFrom.getDateEditor().getUiComponent()).getText();
         dateTo = ((JTextField) jDateTo.getDateEditor().getUiComponent()).getText();
         if (dateFrom.equals("") || dateTo.equals("")) {
-            JOptionPane.showMessageDialog(this, "Ngày \"đến\" / ngày \"từ\" không được bỏ trống!");
+            JOptionPane.showMessageDialog(this, "Ngày \"từ\" / ngày \"đến\" không được bỏ trống!");
             return;
         }
         try {
