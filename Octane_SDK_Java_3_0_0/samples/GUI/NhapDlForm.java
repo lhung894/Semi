@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import BUS.DocExcel;
 import BUS.ProductBUS;
 import BUS.TagBUS;
 import DTO.ProductDTO;
@@ -29,6 +30,7 @@ public class NhapDlForm extends javax.swing.JFrame {
     DefaultTableModel tbModelTag, tbModelProduct;
     Set<String> tags;
     ProductBUS productBUS = new ProductBUS();
+    ArrayList<ProductDTO> productDTOs = new ArrayList<>();
     TagBUS tagBUS = new TagBUS();
     int rowTag = -2, rowProduct = -2;
     boolean selectedTag = false, selectedProduct = false;
@@ -46,6 +48,8 @@ public class NhapDlForm extends javax.swing.JFrame {
         this.setVisible(false);
         initTableTag();
         initTableProduct();
+        jTableTag.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTableProduct.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jBtnAdd.setEnabled(false);
         jBtnRefresh.setVisible(false);
     }
@@ -55,10 +59,13 @@ public class NhapDlForm extends javax.swing.JFrame {
         this.tags = tags;
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-        this.setVisible(true);
+        this.setVisible(false);
         initTableTagSet();
         initTableProduct();
+        jTableTag.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTableProduct.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jBtnAdd.setEnabled(false);
+        jBtnRefresh.setVisible(false);
     }
 
     public void clear() {
@@ -81,7 +88,6 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableTag.setRowSorter(null);
         jTableTag.setAutoCreateRowSorter(true);
         jTableTag.setModel(tbModelTag);
-        jTableTag.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     public void initTableTag() {
@@ -90,7 +96,6 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableTag.setRowSorter(null);
         jTableTag.setAutoCreateRowSorter(true);
         jTableTag.setModel(tbModelTag);
-        jTableTag.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     public void initTagAuto() {
@@ -100,12 +105,12 @@ public class NhapDlForm extends javax.swing.JFrame {
 
     public void initTableProduct() {
         clear();
+        productDTOs = productBUS.getList();
         tbModelProduct.setRowCount(0);
         tableModelProduct(tbModelProduct);
 //        jTableProduct.setRowSorter(null);
 //        jTableProduct.setAutoCreateRowSorter(true);
         jTableProduct.setModel(tbModelProduct);
-        jTableProduct.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     public void tableModelTagSet(DefaultTableModel model) {
@@ -129,7 +134,7 @@ public class NhapDlForm extends javax.swing.JFrame {
 
     public void tableModelProduct(DefaultTableModel model) {
         productBUS = new ProductBUS();
-        for (ProductDTO product : productBUS.getList()) {
+        for (ProductDTO product : productDTOs) {
             Vector row = new Vector();
             row.add(product.getProductId());
             row.add(product.getProductName());
@@ -139,10 +144,10 @@ public class NhapDlForm extends javax.swing.JFrame {
         }
     }
 
-    public void removeRowTag() {
+    public void removeRowTag(String id) {
         for (int i = 0; i < tbModelTag.getRowCount(); i++) {
-            if (idTag.equals(tbModelTag.getValueAt(i, 0))) {
-                System.out.println("remove");
+            if (id.equals(tbModelTag.getValueAt(i, 0))) {
+                System.out.println("remove: " + id + " / " + (String) tbModelTag.getValueAt(i, 0));
                 tbModelTag.removeRow(i);
                 break;
             }
@@ -168,6 +173,7 @@ public class NhapDlForm extends javax.swing.JFrame {
         jTableProduct = new javax.swing.JTable();
         jBtnAdd = new javax.swing.JButton();
         jBtnRefresh = new javax.swing.JButton();
+        jBtnRefresh1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -286,6 +292,14 @@ public class NhapDlForm extends javax.swing.JFrame {
         });
         jPanel1.add(jBtnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 80, 31));
 
+        jBtnRefresh1.setText("Import Excel");
+        jBtnRefresh1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnRefresh1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jBtnRefresh1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 80, 110, 31));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -304,14 +318,14 @@ public class NhapDlForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = jTableTag.getSelectedRow();
         System.out.println("row: " + row);
-        if (row == rowTag) {
-            jTableTag.clearSelection();
-            selectedTag = false;
-            idTag = "";
-            jBtnAdd.setEnabled(false);
-            rowTag = -2;
-            return;
-        }
+//        if (row == rowTag) {
+//            jTableTag.clearSelection();
+//            selectedTag = false;
+//            idTag = "";
+//            jBtnAdd.setEnabled(false);
+//            rowTag = -2;
+//            return;
+//        }
         if (row != -1) {
             selectedTag = true;
             rowTag = row;
@@ -350,53 +364,109 @@ public class NhapDlForm extends javax.swing.JFrame {
 
     private void jBtnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddActionPerformed
         // TODO add your handling code here:
-        TagDTO tagDTO = new TagDTO(idTag, idProduct, "", null, "", null, ""),
-                tagTemp = new TagDTO();
-        for (TagDTO t : tagDTOs) {
-            if (t.getTagId().equals(idTag)) {
-                tagDTO.setTagGateIn(t.getTagGateIn());
-                tagDTO.setTagDateIn(t.getTagDateIn());
-                tagTemp = t;
-                break;
-            }
-        }
-        System.out.println("tagDTO: " + tagDTO);
-        System.out.println("tagTemp: " + tagTemp);
-        if (tagBUS.insertTag(tagDTO)) {
-            ProductDTO productDTO = new ProductDTO();
-            productDTO.setProductId((String) tbModelProduct.getValueAt(rowProduct, 0));
-            productDTO.setProductQuantity((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1);
-            if (productBUS.updateProductQuantity(productDTO)) {
-                jTableProduct.setValueAt((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1, rowProduct, 2);
-                removeRowTag();
-                JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thành công!");
-                jTableTag.clearSelection();
-                jTableProduct.clearSelection();
-                rowProduct = -2;
-                rowTag = -2;
-                selectedTag = false;
-                selectedProduct = false;
-                jBtnAdd.setEnabled(false);
-                if (tagDTOs.remove(tagTemp)) {
-                    System.out.println("remove ok");
-                } else {
-                    System.out.println("remove fail");
-                }
-//                System.out.println("tag after remove: " + tagDTOs);
-//                for (TagDTO t : tagDTOs) {
-//                    if (t.getTagId().equals(idTag)) {
-//                        if (tagDTOs.remove(t)) {
-//                            System.out.println("remove ok");
-//                        } else {
-//                            System.out.println("remove fail");
-//                        }
-//                        break;
-//                    }
-//                }
-            }
+        // MULTIPLE ADD
+        if (jTableTag.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this, "Empty selection tag!");
         } else {
-            JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thất bại!");
+            String noti = "";
+            ArrayList<String> a = new ArrayList<>();
+            for (int i = 0; i <= jTableTag.getRowCount(); i++) {
+                if (jTableTag.getSelectionModel().isSelectedIndex(i)) {
+                    idTag = (String) jTableTag.getValueAt(i, 0);
+                    TagDTO tagDTO = new TagDTO(idTag, idProduct, "", null, "", null, ""),
+                            tagTemp = new TagDTO();
+                    for (TagDTO t : tagDTOs) {
+                        if (t.getTagId().equals(idTag)) {
+                            tagDTO.setTagGateIn(t.getTagGateIn());
+                            tagDTO.setTagDateIn(t.getTagDateIn());
+                            tagTemp = t;
+                            break;
+                        }
+                    }
+//                    System.out.println("tagDTO: " + tagDTO);
+//                    System.out.println("tagTemp: " + tagTemp);
+                    if (true) { // tagBUS.insertTag(tagDTO)
+                        ProductDTO productDTO = new ProductDTO();
+                        productDTO.setProductId((String) tbModelProduct.getValueAt(rowProduct, 0));
+                        productDTO.setProductQuantity((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1);
+                        if (true) { // productBUS.updateProductQuantity(productDTO)
+                            jTableProduct.setValueAt((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1, rowProduct, 2);
+                            a.add(idTag);
+                            noti += "Tag " + idTag + " gán cho sản phẩm thành công.\n";
+                            if (tagDTOs.remove(tagTemp)) {
+                                System.out.println("remove ok");
+                            } else {
+                                System.out.println("remove fail");
+                            }
+                        }
+                    } else {
+                        noti += "Tag " + idTag + " gán cho sản phẩm thất bại.\n";
+                    }
+                }
+            }
+            for (String id : a) {
+                removeRowTag(id);
+            }
+            tableModelTag(tbModelTag);
+            System.out.println("a: " + a);
+            JOptionPane.showMessageDialog(this, noti);
+            jTableTag.clearSelection();
+            jTableProduct.clearSelection();
+            rowProduct = -2;
+            rowTag = -2;
+            selectedTag = false;
+            selectedProduct = false;
+            jBtnAdd.setEnabled(false);
         }
+
+        // SINGLE ADD
+//        TagDTO tagDTO = new TagDTO(idTag, idProduct, "", null, "", null, ""),
+//                tagTemp = new TagDTO();
+//        for (TagDTO t : tagDTOs) {
+//            if (t.getTagId().equals(idTag)) {
+//                tagDTO.setTagGateIn(t.getTagGateIn());
+//                tagDTO.setTagDateIn(t.getTagDateIn());
+//                tagTemp = t;
+//                break;
+//            }
+//        }
+//        System.out.println("tagDTO: " + tagDTO);
+//        System.out.println("tagTemp: " + tagTemp);
+//        if (tagBUS.insertTag(tagDTO)) {
+//            ProductDTO productDTO = new ProductDTO();
+//            productDTO.setProductId((String) tbModelProduct.getValueAt(rowProduct, 0));
+//            productDTO.setProductQuantity((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1);
+//            if (productBUS.updateProductQuantity(productDTO)) {
+//                jTableProduct.setValueAt((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1, rowProduct, 2);
+//                removeRowTag();
+//                JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thành công!");
+//                jTableTag.clearSelection();
+//                jTableProduct.clearSelection();
+//                rowProduct = -2;
+//                rowTag = -2;
+//                selectedTag = false;
+//                selectedProduct = false;
+//                jBtnAdd.setEnabled(false);
+//                if (tagDTOs.remove(tagTemp)) {
+//                    System.out.println("remove ok");
+//                } else {
+//                    System.out.println("remove fail");
+//                }
+////                System.out.println("tag after remove: " + tagDTOs);
+////                for (TagDTO t : tagDTOs) {
+////                    if (t.getTagId().equals(idTag)) {
+////                        if (tagDTOs.remove(t)) {
+////                            System.out.println("remove ok");
+////                        } else {
+////                            System.out.println("remove fail");
+////                        }
+////                        break;
+////                    }
+////                }
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Gán tag cho sản phẩm thất bại!");
+//        }
     }//GEN-LAST:event_jBtnAddActionPerformed
 
     private void jBtnRefreshActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnRefreshActionPerformed
@@ -404,6 +474,19 @@ public class NhapDlForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         initTagAuto();
     }//GEN-LAST:event_jBtnRefreshActionPerformed
+
+    private void jBtnRefresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRefresh1ActionPerformed
+        // TODO add your handling code here:
+        DocExcel readE = new DocExcel();
+        String noti = readE.docFileExcelTag(tagDTOs, productDTOs);
+        if (!noti.equals("")) {
+            JOptionPane.showMessageDialog(this, noti);
+            productDTOs = productBUS.getList();
+            tbModelProduct.setRowCount(0);
+            tableModelProduct(tbModelProduct);
+            jTableProduct.setModel(tbModelProduct);
+        }
+    }//GEN-LAST:event_jBtnRefresh1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -451,6 +534,7 @@ public class NhapDlForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAdd;
     private javax.swing.JButton jBtnRefresh;
+    private javax.swing.JButton jBtnRefresh1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

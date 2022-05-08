@@ -8,7 +8,6 @@ import BUS.OrderBUS;
 import BUS.OrderDetailBUS;
 import BUS.ProductBUS;
 import BUS.TagBUS;
-import BUS.Utils;
 import DTO.OrderDTO;
 import DTO.OrderDetailDTO;
 import DTO.ProductDTO;
@@ -21,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import com.example.sdksamples.MainRead;
-import java.awt.Color;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 

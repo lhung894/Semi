@@ -9,7 +9,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import com.example.sdksamples.MainRead;
 import com.example.sdksamples.ReadTags;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,6 +35,26 @@ public class Dashboard extends javax.swing.JFrame {
      * Creates new form Dashboard
      */
     public Dashboard() {
+//        List<String> tagsString = new ArrayList<String>();
+//        tagsString.add("3500 0000 1000 0010 0000 1759");
+//        tagsString.add("00B0 7A14 2C2B 2848 0800 0166");
+//        tagsString.add("35E0 1700 4FF4 3406 0000 0673");
+//        tagsString.add("300F 4F57 3AD0 01C0 8369 A28F");
+//        tagsString.add("3008 33B2 DDD9 0140 0000 0009");
+//        tagsString.add("3008 33B2 DDD9 0140 0000 0009");
+//        tagsString.add("3008 33B2 DDD9 0140 0000 0009");
+//        tagsString.add("3500 0000 1000 0010 0000 1476");
+//        tagsString.add("0000 0000 0000 0000 0000 1314");
+//        tagsString.add("300F 4F57 3AD0 01C0 8369 A241");
+//        tagsString.add("300F 4F57 3AD0 01C0 8369 A230");
+//        tagsString.add("300F 4F57 3AD0 01C0 8369 A230");
+//        tagsString.add("3039 6062 83B9 5D80 0012 9F61");
+//        tagsString.add("300F 4F57 3AD0 01C0 8369 A245");
+//        tagsString.add("3008 33B2 DDD9 06C0 0000 0000");
+//        tagsString.add("300F 4F57 3AD0 01C0 8369 A249");
+//        tagsString.add("3008 33B2 DDD9 0140 0000 002D");
+//        Set<String> temp = new HashSet<String>(tagsString);
+//        NhapDlForm test = new NhapDlForm(temp);
         userForm = new UserForm();
         inputTag = new NhapDlForm();
         createOrder = new TaoDonForm();
@@ -64,7 +87,7 @@ public class Dashboard extends javax.swing.JFrame {
             jBtnUser.setVisible(false);
         }
     }
-    
+
     public void setVisibleMenu() {
         jPanelMenu.setVisible(true);
         jPanelInput.setVisible(false);
@@ -496,6 +519,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanelProduct.setVisible(false);
         jBtnProductBack.setVisible(false);
         inputTag.initTableProduct();
+//        inputTag.initTableTagSet();
         MainRead.flag = 1;
         MainRead.tagMap.clear();
     }//GEN-LAST:event_jBtnInputActionPerformed
@@ -641,10 +665,10 @@ public class Dashboard extends javax.swing.JFrame {
         setVisibleMenu();
     }//GEN-LAST:event_jBtnProductBackActionPerformed
 
-    public void setHello () {
+    public void setHello() {
         jLabelHello.setText("Xin chào, " + userLogin.getFullName());
     }
-    
+
     public NhapDlForm getInputTag() {
         return inputTag;
     }

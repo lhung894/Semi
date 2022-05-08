@@ -1,5 +1,9 @@
 package BUS;
 
+import javazoom.jl.player.Player;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.util.Scanner;
 import DAO.LastIdDAO;
 import DTO.OrderDetailDTO;
 import java.text.ParseException;
@@ -10,6 +14,9 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+//import java.io.File;
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
 
 public class Utils {
 
@@ -18,7 +25,7 @@ public class Utils {
     public Utils() {
 //        maDLCuoi = new LastIdDAO();
     }
-    
+
     ////////////////Tạo user ID
     public String initUserId() {
         maDLCuoi = new LastIdDAO();
@@ -30,7 +37,7 @@ public class Utils {
         init += String.valueOf(ma);
         return init;
     }
-    
+
     ////////////////Tạo product ID
     public String initProductId() {
         maDLCuoi = new LastIdDAO();
@@ -245,6 +252,23 @@ public class Utils {
         }
     }
 
+    public void play() {
+        String mp3FileToPlay = "./warning-sound.mp3";
+        Player jlPlayer;
+        try {
+            FileInputStream fileInputStream = new FileInputStream(mp3FileToPlay);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+            jlPlayer = new Player(bufferedInputStream);
+            try {
+                jlPlayer.play();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } catch (Exception e) {
+            System.out.println("Problem playing mp3 file " + mp3FileToPlay);
+            System.out.println(e.getMessage());
+        }
+    }
 }
 
 class main {
@@ -255,18 +279,16 @@ class main {
 //        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
 //        Date tgBD = simpleDateFormat.parse("12/17/2021");
 //        Date tgKT = simpleDateFormat1.parse("2021-12-14");
-//        if (tgBD.before(tgKT))
-//        {
+//        if (tgBD.before(tgKT)) {
 //            System.out.println("dsds");
-//        } else
-//        {
+//        } else {
 //            System.out.println("No");
 //        }
 //        System.out.println(ut.totalDays("2020-06-02"));
 //        DiaDiemBUS diaDiemBUS = new DiaDiemBUS();
 //        String maDD = diaDiemBUS.CapPhat(new LastIdDAO().getMaDiaDiemLast());
 //        diaDiemBUS.themDiaDiem(maDD, "dsfsdgfds");
-        //diaDiemBUS.xoaDiaDiem("DD000002");
+//        diaDiemBUS.xoaDiaDiem("DD000002");
 //        String ngString = "1988-12-17";
 //        int hientai = Calendar.getInstance().get(Calendar.YEAR);
 //        int year = Integer.parseInt(ngString.substring(0, 4));
@@ -275,32 +297,44 @@ class main {
 //        String aString = "056200008901";
 //        String bString = "^(0\\d{11})$";
 //        boolean flag4 = Pattern.matches(bString, aString);
-//        if (!flag4)
-//        {
+//        if (!flag4) {
 //            System.out.println("Email không hợp lệ!\n");
 //
-//        } else
-//        {
+//        } else {
 //            System.out.println("hop le");
 //        }
-
-        System.out.println("now: " + ult.initDateNow());
-        int beepCount = 1;
-        for (int i = 0; i < beepCount; ++i) {
-            System.out.println("Beep : " + i);
-            // Ring the bell again using the Toolkit 
-            java.awt.Toolkit.getDefaultToolkit().beep();
-            try {
-                Thread.sleep(600); // introduce delay
-            } catch (InterruptedException e) {
-            }
-            java.awt.Toolkit.getDefaultToolkit().beep();
-            try {
-                Thread.sleep(1000); // introduce delay
-            } catch (InterruptedException e) {
-            }
-        }
-        System.out.println("now: " + ult.initDateNow());
-        System.out.println("now: " + ult.initDateNow());
+//
+//        System.out.println("now: " + ult.initDateNow());
+//        int beepCount = 1;
+//        for (int i = 0; i < beepCount; ++i) {
+//            System.out.println("Beep : " + i);
+//            // Ring the bell again using the Toolkit 
+//            java.awt.Toolkit.getDefaultToolkit().beep();
+//            try {
+//                Thread.sleep(600); // introduce delay
+//            } catch (InterruptedException e) {
+//            }
+//            java.awt.Toolkit.getDefaultToolkit().beep();
+//            try {
+//                Thread.sleep(1000); // introduce delay
+//            } catch (InterruptedException e) {
+//            }
+//        }
+//        System.out.println("now: " + ult.initDateNow());
+//        System.out.println("now: " + ult.initDateNow());
+//        String bip = "bip.mp3";
+//        Media hit = new Media(new File(bip).toURI().toString());
+//        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+//        mediaPlayer.play();
+//        ult.play();
+//        try {
+//            java.applet.AudioClip clip
+//                    = java.applet.Applet.newAudioClip(
+//                            new java.net.URL(
+//            "file://C:/Users/User/Documents/GitHub/Semi/warning-sound.mp3"));
+//            clip.play();
+//        } catch (java.net.MalformedURLException murle) {
+//            System.out.println(murle);
+//        }
     }
 }

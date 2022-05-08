@@ -53,7 +53,7 @@ public class MainRead implements TagReportListener {
 //                    } else {
 //                        tagDTO.setTagGateIn(reader.getAddress());
 //                    }
-                        tagDTO.setTagGateIn(String.valueOf(t.getAntennaPortNumber()));
+                        tagDTO.setTagGateIn("Antenna " + String.valueOf(t.getAntennaPortNumber()));
 //                    System.out.println("name: " + tagDTO.getTagGateIn());
                         tagDTO.setTagDateIn(ult.initDateNow());
                         inputForm.tagDTOs.add(tagDTO);
@@ -70,7 +70,7 @@ public class MainRead implements TagReportListener {
                         tagMap.put(t.getEpc().toString(), t);
                         tagDTO = new TagDTO();
                         tagDTO.setTagId(t.getEpc().toString());
-                        tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
+                        tagDTO.setTagGateOut("Antenna " + String.valueOf(t.getAntennaPortNumber()));
                         tagDTO.setTagDateOut(ult.initDateNow());
                         for (TagDTO dto : tagDTOsMR) {
                             if (dto.getTagId().equals(tagDTO.getTagId())) {
@@ -104,7 +104,7 @@ public class MainRead implements TagReportListener {
                         tagMap.remove(t.getEpc().toString());
                         tagDTO = new TagDTO();
                         tagDTO.setTagId(t.getEpc().toString());
-                        tagDTO.setTagGateOut(String.valueOf(t.getAntennaPortNumber()));
+                        tagDTO.setTagGateOut("Antenna " + String.valueOf(t.getAntennaPortNumber()));
                         tagDTO.setTagDateOut(ult.initDateNow());
                         for (TagDTO dto : tagDTOsMR) {
                             if (dto.getTagId().equals(tagDTO.getTagId())) {
