@@ -368,7 +368,7 @@ public class NhapDlForm extends javax.swing.JFrame {
         if (jTableTag.getSelectionModel().isSelectionEmpty()) {
             JOptionPane.showMessageDialog(this, "Empty selection tag!");
         } else {
-            String noti = "";
+            String noti = "", success = "", fail = "";
             ArrayList<String> a = new ArrayList<>();
             for (int i = 0; i <= jTableTag.getRowCount(); i++) {
                 if (jTableTag.getSelectionModel().isSelectedIndex(i)) {
@@ -385,14 +385,14 @@ public class NhapDlForm extends javax.swing.JFrame {
                     }
 //                    System.out.println("tagDTO: " + tagDTO);
 //                    System.out.println("tagTemp: " + tagTemp);
-                    if (true) { // tagBUS.insertTag(tagDTO)
+                    if (tagBUS.insertTag(tagDTO)) { // tagBUS.insertTag(tagDTO)
                         ProductDTO productDTO = new ProductDTO();
                         productDTO.setProductId((String) tbModelProduct.getValueAt(rowProduct, 0));
                         productDTO.setProductQuantity((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1);
-                        if (true) { // productBUS.updateProductQuantity(productDTO)
+                        if (productBUS.updateProductQuantity(productDTO)) { // productBUS.updateProductQuantity(productDTO)
                             jTableProduct.setValueAt((Integer) tbModelProduct.getValueAt(rowProduct, 2) + 1, rowProduct, 2);
                             a.add(idTag);
-                            noti += "Tag " + idTag + " gán cho sản phẩm thành công.\n";
+                            success += idTag + "\n";
                             if (tagDTOs.remove(tagTemp)) {
                                 System.out.println("remove ok");
                             } else {
@@ -400,7 +400,7 @@ public class NhapDlForm extends javax.swing.JFrame {
                             }
                         }
                     } else {
-                        noti += "Tag " + idTag + " gán cho sản phẩm thất bại.\n";
+                        fail += idTag + "\n";
                     }
                 }
             }
@@ -409,6 +409,12 @@ public class NhapDlForm extends javax.swing.JFrame {
             }
             tableModelTag(tbModelTag);
             System.out.println("a: " + a);
+            if (!success.equals("")) {
+                noti += "- Import thành công tag:\n" + success;
+            }
+            if (!fail.equals("")) {
+                noti += "- Import thất bại, đã tồn tại tag:\n" + fail;
+            }
             JOptionPane.showMessageDialog(this, noti);
             jTableTag.clearSelection();
             jTableProduct.clearSelection();

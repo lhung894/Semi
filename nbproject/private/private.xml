@@ -5,12 +5,12 @@
         <group>
             <file>file:/C:/Users/User/Documents/GitHub/Semi/Octane_SDK_Java_3_0_0/samples/DAO/Connect.java</file>
             <file>file:/C:/Users/User/Documents/GitHub/Semi/Octane_SDK_Java_3_0_0/samples/com/example/sdksamples/ReadTags.java</file>
-            <file>file:/C:/Users/User/Documents/GitHub/Semi/Octane_SDK_Java_3_0_0/samples/GUI/LoginForm.java</file>
             <file>file:/C:/Users/User/Documents/GitHub/Semi/Octane_SDK_Java_3_0_0/samples/GUI/DanhSachXuatForm.java</file>
             <file>file:/C:/Users/User/Documents/GitHub/Semi/Octane_SDK_Java_3_0_0/samples/GUI/Dashboard.java</file>
             <file>file:/C:/Users/User/Documents/GitHub/Semi/Octane_SDK_Java_3_0_0/samples/com/example/sdksamples/MainRead.java</file>
+            <file>file:/C:/Users/User/Documents/GitHub/Semi/Octane_SDK_Java_3_0_0/samples/BUS/Utils.java</file>
             <file>file:/C:/Users/User/Documents/GitHub/Semi/Octane_SDK_Java_3_0_0/samples/GUI/NhapDlForm.java</file>
-            <file>file:/C:/Users/User/Documents/GitHub/Semi/Octane_SDK_Java_3_0_0/samples/GUI/BaoCaoForm.java</file>
+            <file>file:/C:/Users/User/Documents/GitHub/Semi/Octane_SDK_Java_3_0_0/samples/BUS/DocExcel.java</file>
         </group>
     </open-files>
 </project-private>
