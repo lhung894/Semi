@@ -5,17 +5,13 @@
 package GUI;
 
 import BUS.BaoCaoBUS;
-import com.toedter.calendar.JDateChooser;
-import BUS.OrderBUS;
-import BUS.OrderDetailBUS;
-import BUS.ProductBUS;
-import BUS.TagBUS;
-import BUS.Utils;
+import BUS.DonHangBUS;
+import BUS.ChiTietDonBUS;
+import BUS.SanPhamBUS;
 import BUS.XuatExcel;
-import DTO.OrderDTO;
-import DTO.OrderDetailDTO;
-import DTO.ProductDTO;
-import DTO.TagDTO;
+import DTO.DonHangDTO;
+import DTO.ChiTietDonHangDTO;
+import DTO.SanPhamDTO;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -23,56 +19,52 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import com.example.sdksamples.MainRead;
-import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
  *
- * @author User
+ * @author Hyung
  */
 public class BaoCaoForm1 extends javax.swing.JFrame
 {
 
-    DefaultTableModel tbModelOrder, tbModelDetail;
-//    Set<String> tags;
-    ProductBUS productBUS = new ProductBUS();
-    OrderBUS orderBUS = new OrderBUS();
-    OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
+    int rowDon = -2, rowChiTietDon = -2;
+    String orderId = "";
+    DefaultTableModel tbModelDon, tbModelChiTietDon;
+    DonHangBUS donBUS = new DonHangBUS();
+    ChiTietDonBUS chitietDonBUS = new ChiTietDonBUS();
+    SanPhamBUS sanPhamBUS = new SanPhamBUS();
     BaoCaoBUS baoCaoBUS = new BaoCaoBUS();
     XuatExcel xuatExcel = new XuatExcel();
-    int rowOrder = -2, rowDetail = -2;
-    String orderId = "";
-    ArrayList<OrderDTO> orders, ordersFind = new ArrayList<>();
-    ArrayList<OrderDetailDTO> details;
-    ArrayList<ProductDTO> products;
 
-    /**
-     * Creates new form BaoCaoForm
-     */
+    ArrayList<DonHangDTO> donList = new ArrayList<>();
+    ArrayList<DonHangDTO> donListFind = new ArrayList<>();
+    ArrayList<ChiTietDonHangDTO> chitietDonList;
+    ArrayList<SanPhamDTO> sanPhamList;
+
+
     public BaoCaoForm1()
     {
         initComponents();
         this.setVisible(false);
-        jTableOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jTableDetail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableDon.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableChiTietDon.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    public void tableModelOrder(DefaultTableModel model, ArrayList<OrderDTO> orderDTOs)
+    public void createTableModelDon(DefaultTableModel model, ArrayList<DonHangDTO> donDTOs)
     {
-        for (OrderDTO order : orderDTOs)
+        for (DonHangDTO don : donDTOs)
         {
             Vector row = new Vector();
-            row.add(order.getOrderId());
-            row.add(order.getOrderDate());
-            if (order.getStatus() == 2)
+            row.add(don.getOrderId());
+            row.add(don.getOrderDate());
+            if (don.getStatus() == 2)
             {
                 row.add("Đang Chờ....");
-            } else if (order.getStatus() == 3)
+            } else if (don.getStatus() == 3)
             {
                 row.add("Hoàn thành");
             }
@@ -80,71 +72,67 @@ public class BaoCaoForm1 extends javax.swing.JFrame
         }
     }
 
-    public void initTableOrder()
+    public void createTableDon()
     {
-//        orderDetailBUS = new OrderDetailBUS();
         jDateFrom.setCalendar(null);
         jDateTo.setCalendar(null);
-        tbModelOrder.setRowCount(0);
-        tbModelDetail.setRowCount(0);
+        tbModelDon.setRowCount(0);
+        tbModelChiTietDon.setRowCount(0);
 
-        orders = orderBUS.getList();
-        details = orderDetailBUS.getList();
-//        productBUS = new ProductBUS();
-        products = productBUS.getList();
-//        tableModelOrder(tbModelOrder, orders);
-        jTableOrder.setRowSorter(null);
-        jTableOrder.setAutoCreateRowSorter(true);
-        jTableOrder.setModel(tbModelOrder);
+        donList = donBUS.getList();
+        chitietDonList = chitietDonBUS.getList();
+        sanPhamList = sanPhamBUS.getList();
+        jTableDon.setRowSorter(null);
+        jTableDon.setAutoCreateRowSorter(true);
+        jTableDon.setModel(tbModelDon);
     }
 
-    public void tableModelDetail(DefaultTableModel model)
+    public void createTableModelChiTietDon(DefaultTableModel model)
     {
         Vector row;
-        for (OrderDetailDTO detail : details)
+        for (ChiTietDonHangDTO chitietDon : chitietDonList)
         {
-            if (detail.getOrderId().equals(orderId))
+            if (chitietDon.getOrderId().equals(orderId))
             {
                 row = new Vector();
-                if (tbModelOrder.getValueAt(rowOrder, 2).equals("Hoàn thành"))
+                if (tbModelDon.getValueAt(rowDon, 2).equals("Hoàn thành"))
                 {
                     row.add("OK");
                 } else
                 {
                     row.add("");
                 }
-                row.add(detail.getOrderDetailId());
-                row.add(detail.getProductId());
-                for (ProductDTO product : products)
+                row.add(chitietDon.getOrderDetailId());
+                row.add(chitietDon.getProductId());
+                for (SanPhamDTO sanPham : sanPhamList)
                 {
-                    if (product.getProductId().equals(detail.getProductId()))
+                    if (sanPham.getProductId().equals(chitietDon.getProductId()))
                     {
-                        row.add(product.getProductName());
+                        row.add(sanPham.getProductName());
                     }
                 }
-                row.add(detail.getOrderQuantity());
+                row.add(chitietDon.getOrderQuantity());
                 model.addRow(row);
-//                details.add(new OrderDetailDTO(detail.getOrderDetailId(), orderId, detail.getProductId(), detail.getOrderQuantity()));
             }
         }
     }
 
-    public void initTableDetail()
+    public void createTableChiTietDon()
     {
-        tbModelDetail.setRowCount(0);
-        tableModelDetail(tbModelDetail);
-        jTableDetail.setModel(tbModelDetail);
+        tbModelChiTietDon.setRowCount(0);
+        createTableModelChiTietDon(tbModelChiTietDon);
+        jTableChiTietDon.setModel(tbModelChiTietDon);
     }
-
+    
     public void timKiemByDate(Date from, Date to)
     {
-        if (ordersFind != null)
+        if (donListFind != null)
         {
-            ordersFind.clear();
+            donListFind.clear();
         }
-        tbModelOrder.setRowCount(0);
+        tbModelDon.setRowCount(0);
         Date orderDate = null;
-        for (OrderDTO order : orders)
+        for (DonHangDTO order : donList)
         {
             try
             {
@@ -157,12 +145,12 @@ public class BaoCaoForm1 extends javax.swing.JFrame
             }
             if (orderDate.after(from) && orderDate.before(to) || orderDate.equals(from) || orderDate.equals(to))
             {
-                ordersFind.add(order);
+                donListFind.add(order);
             }
         }
-        if (ordersFind != null)
+        if (donListFind != null)
         {
-            tableModelOrder(tbModelOrder, ordersFind);
+            createTableModelDon(tbModelDon, donListFind);
         }
     }
 
@@ -186,9 +174,9 @@ public class BaoCaoForm1 extends javax.swing.JFrame
         jDateTo = new com.toedter.calendar.JDateChooser();
         jDateFrom = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableOrder = new javax.swing.JTable();
+        jTableDon = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableDetail = new javax.swing.JTable();
+        jTableChiTietDon = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
@@ -269,7 +257,7 @@ public class BaoCaoForm1 extends javax.swing.JFrame
         tableCol.add("Ngày tạo");
         tableCol.add("Trạng Thái");
 
-        tbModelOrder = new DefaultTableModel (tableCol,0)
+        tbModelDon = new DefaultTableModel (tableCol,0)
         {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex)
@@ -277,32 +265,32 @@ public class BaoCaoForm1 extends javax.swing.JFrame
                 return false;
             }
         };
-        jTableOrder.setModel (tbModelOrder);
-        jTableOrder.setShowGrid(true);
-        jTableOrder.setFocusable(false);
-        jTableOrder.setIntercellSpacing(new Dimension(0,0));
-        jTableOrder.setRowHeight(25);
-        jTableOrder.getTableHeader().setOpaque(false);
-        jTableOrder.setFillsViewportHeight(true);
-        //        jTableOrder.getTableHeader().setBackground(new Color(145,209,242));
-        //        jTableOrder.getTableHeader().setForeground(new Color(51, 51, 51));
-        jTableOrder.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
-        //        jTableOrder.setSelectionBackground(new Color(76,121,255));
-        jTableOrder.setAutoCreateRowSorter(true);
-        jTableOrder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTableOrder.setGridColor(new java.awt.Color(83, 86, 88));
-        jTableOrder.addMouseListener(new java.awt.event.MouseAdapter()
+        jTableDon.setModel (tbModelDon);
+        jTableDon.setShowGrid(true);
+        jTableDon.setFocusable(false);
+        jTableDon.setIntercellSpacing(new Dimension(0,0));
+        jTableDon.setRowHeight(25);
+        jTableDon.getTableHeader().setOpaque(false);
+        jTableDon.setFillsViewportHeight(true);
+        //        jTableDon.getTableHeader().setBackground(new Color(145,209,242));
+        //        jTableDon.getTableHeader().setForeground(new Color(51, 51, 51));
+        jTableDon.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
+        //        jTableDon.setSelectionBackground(new Color(76,121,255));
+        jTableDon.setAutoCreateRowSorter(true);
+        jTableDon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableDon.setGridColor(new java.awt.Color(83, 86, 88));
+        jTableDon.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                jTableOrderMouseClicked(evt);
+                jTableDonMouseClicked(evt);
             }
         });
-        jTableOrder.getColumn (tableCol.elementAt (0)).setPreferredWidth (150);
-        jTableOrder.getColumn (tableCol.elementAt (1)).setPreferredWidth (150);
-        jTableOrder.getColumn (tableCol.elementAt (2)).setPreferredWidth (150);
-        jTableOrder.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jScrollPane1.setViewportView(jTableOrder);
+        jTableDon.getColumn (tableCol.elementAt (0)).setPreferredWidth (150);
+        jTableDon.getColumn (tableCol.elementAt (1)).setPreferredWidth (150);
+        jTableDon.getColumn (tableCol.elementAt (2)).setPreferredWidth (150);
+        jTableDon.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jScrollPane1.setViewportView(jTableDon);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 440, 440));
 
@@ -313,7 +301,7 @@ public class BaoCaoForm1 extends javax.swing.JFrame
         tableColDetail.add("Tên Sản Phẩm");
         tableColDetail.add("Số Lượng");
 
-        tbModelDetail = new DefaultTableModel (tableColDetail,0)
+        tbModelChiTietDon = new DefaultTableModel (tableColDetail,0)
         {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex)
@@ -321,33 +309,33 @@ public class BaoCaoForm1 extends javax.swing.JFrame
                 return false;
             }
         };
-        jTableDetail.setModel (tbModelDetail);
-        jTableDetail.setShowGrid(true);
-        jTableDetail.setFocusable(false);
-        jTableDetail.setIntercellSpacing(new Dimension(0,0));
-        jTableDetail.setRowHeight(25);
-        jTableDetail.getTableHeader().setOpaque(false);
-        jTableDetail.setFillsViewportHeight(true);
-        //        jTableOrder.getTableHeader().setBackground(new Color(145,209,242));
-        //        jTableOrder.getTableHeader().setForeground(new Color(51, 51, 51));
-        jTableDetail.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
-        //        jTableOrder.setSelectionBackground(new Color(76,121,255));
-        jTableDetail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTableDetail.setGridColor(new java.awt.Color(83, 86, 88));
-        jTableDetail.addMouseListener(new java.awt.event.MouseAdapter()
+        jTableChiTietDon.setModel (tbModelChiTietDon);
+        jTableChiTietDon.setShowGrid(true);
+        jTableChiTietDon.setFocusable(false);
+        jTableChiTietDon.setIntercellSpacing(new Dimension(0,0));
+        jTableChiTietDon.setRowHeight(25);
+        jTableChiTietDon.getTableHeader().setOpaque(false);
+        jTableChiTietDon.setFillsViewportHeight(true);
+        //        jTableDon.getTableHeader().setBackground(new Color(145,209,242));
+        //        jTableDon.getTableHeader().setForeground(new Color(51, 51, 51));
+        jTableChiTietDon.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
+        //        jTableDon.setSelectionBackground(new Color(76,121,255));
+        jTableChiTietDon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableChiTietDon.setGridColor(new java.awt.Color(83, 86, 88));
+        jTableChiTietDon.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                jTableDetailMouseClicked(evt);
+                jTableChiTietDonMouseClicked(evt);
             }
         });
-        jTableDetail.getColumn (tableColDetail.elementAt (0)).setPreferredWidth (110);
-        jTableDetail.getColumn (tableColDetail.elementAt (1)).setPreferredWidth (110);
-        jTableDetail.getColumn (tableColDetail.elementAt (2)).setPreferredWidth (110);
-        jTableDetail.getColumn (tableColDetail.elementAt (3)).setPreferredWidth (150);
-        jTableDetail.getColumn (tableColDetail.elementAt (4)).setPreferredWidth (110);
-        jTableDetail.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
-        jScrollPane2.setViewportView(jTableDetail);
+        jTableChiTietDon.getColumn (tableColDetail.elementAt (0)).setPreferredWidth (110);
+        jTableChiTietDon.getColumn (tableColDetail.elementAt (1)).setPreferredWidth (110);
+        jTableChiTietDon.getColumn (tableColDetail.elementAt (2)).setPreferredWidth (110);
+        jTableChiTietDon.getColumn (tableColDetail.elementAt (3)).setPreferredWidth (150);
+        jTableChiTietDon.getColumn (tableColDetail.elementAt (4)).setPreferredWidth (110);
+        jTableChiTietDon.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
+        jScrollPane2.setViewportView(jTableChiTietDon);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 190, 460, 440));
 
@@ -375,34 +363,35 @@ public class BaoCaoForm1 extends javax.swing.JFrame
 
     private void jBtnXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnXuatActionPerformed
         // TODO add your handling code here:
-        if (jTableOrder.getRowCount() < 1)
+        if (jTableDon.getRowCount() < 1)
         {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu để xuất!");
             return;
         }
-        xuatExcel.xuatFileExcelDonHang(baoCaoBUS.initBaoCao(ordersFind));
-//        JOptionPane.showMessageDialog(this, "Xuất báo cáo!");
+        xuatExcel.xuatFileExcelDonHang(baoCaoBUS.createBaoCao(donListFind));
     }//GEN-LAST:event_jBtnXuatActionPerformed
 
     private void jBtnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTimKiemActionPerformed
         // TODO add your handling code here:
-        String dateFrom = ((JTextField) jDateFrom.getDateEditor().getUiComponent()).getText(),
-                dateTo = ((JTextField) jDateTo.getDateEditor().getUiComponent()).getText();
-        if (dateFrom.equals("") || dateTo.equals(""))
+        String d1 = ((JTextField) jDateFrom.getDateEditor().getUiComponent()).getText();
+        String d2 = ((JTextField) jDateTo.getDateEditor().getUiComponent()).getText();
+
+        if (d1.equals("") || d2.equals(""))
         {
-            JOptionPane.showMessageDialog(this, "Ngày \"đến\" / ngày \"từ\" không được bỏ trống!");
+            JOptionPane.showMessageDialog(this, "Các trường Ngày không được bỏ trống!!!");
             return;
         }
+
         try
         {
-            Date dateF = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom),
-                    dateT = new SimpleDateFormat("yyyy-MM-dd").parse(dateTo);
-            if (dateF.after(dateT))
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(d1);
+            Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(d2);
+            if (date1.after(date2))
             {
-                JOptionPane.showMessageDialog(this, "Ngày \"đến\" không được ở sau ngày \"từ\"!");
+                JOptionPane.showMessageDialog(this, "Ngày đến không được sau ngày từ!!!");
                 return;
             }
-            timKiemByDate(dateF, dateT);
+            timKiemByDate(date1, date2);
         } catch (Exception e)
         {
             System.out.println("e: " + e);
@@ -413,91 +402,36 @@ public class BaoCaoForm1 extends javax.swing.JFrame
 
     private void jBtnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRefreshActionPerformed
         // TODO add your handling code here:
-        initTableOrder();
         jDateFrom.setCalendar(null);
         jDateTo.setCalendar(null);
-        tbModelDetail.setRowCount(0);
+        createTableDon();
+        tbModelChiTietDon.setRowCount(0);
     }//GEN-LAST:event_jBtnRefreshActionPerformed
 
-    private void jTableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrderMouseClicked
+    private void jTableDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDonMouseClicked
         // TODO add your handling code here:
-        int row = jTableOrder.getSelectedRow();
-        if (row == rowOrder)
-        {
-            jTableOrder.clearSelection();
-            rowOrder = -2;
-            orderId = "";
-            tbModelDetail.setRowCount(0);
-            return;
-        }
+        int row = jTableDon.getSelectedRow();
+
         if (row != -1)
         {
-            rowOrder = row;
-            orderId = (String) jTableOrder.getValueAt(row, 0);
-            initTableDetail();
+            rowDon = row;
+            orderId = (String) jTableDon.getValueAt(row, 0);
+            createTableChiTietDon();
         }
-    }//GEN-LAST:event_jTableOrderMouseClicked
 
-    private void jTableDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDetailMouseClicked
+
+    }//GEN-LAST:event_jTableDonMouseClicked
+
+    private void jTableChiTietDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableChiTietDonMouseClicked
         // TODO add your handling code here:
-        int row = jTableDetail.getSelectedRow();
-        if (row == rowDetail)
-        {
-            jTableDetail.clearSelection();
-            rowDetail = -2;
-            return;
-        }
+        int row = jTableChiTietDon.getSelectedRow();
+
         if (row != -1)
         {
-            rowDetail = row;
+            rowChiTietDon = row;
         }
-    }//GEN-LAST:event_jTableDetailMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
-    {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex)
-        {
-            java.util.logging.Logger.getLogger(BaoCaoForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
-            java.util.logging.Logger.getLogger(BaoCaoForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
-            java.util.logging.Logger.getLogger(BaoCaoForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(BaoCaoForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                new BaoCaoForm1().setVisible(true);
-            }
-        });
-    }
+    }//GEN-LAST:event_jTableChiTietDonMouseClicked
 
     public JPanel getjPanel1()
     {
@@ -523,7 +457,7 @@ public class BaoCaoForm1 extends javax.swing.JFrame
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableDetail;
-    private javax.swing.JTable jTableOrder;
+    private javax.swing.JTable jTableChiTietDon;
+    private javax.swing.JTable jTableDon;
     // End of variables declaration//GEN-END:variables
 }

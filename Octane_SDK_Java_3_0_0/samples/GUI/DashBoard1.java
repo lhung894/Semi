@@ -4,25 +4,14 @@
  * and open the template in the editor.
  */
 package GUI;
-//
-//import DAO.*;
-//import DTO.*;
 
-import DAO.*;
-import DTO.*;
-import com.example.sdksamples.MainRead;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.geom.RoundRectangle2D;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-//import ui.nhanvienForm;
 
 /**
  *
@@ -32,22 +21,20 @@ public class DashBoard1 extends javax.swing.JFrame
 {
 
     private boolean check = true;
-    private NhapDlForm1 inputTag;
-    private TaoDonForm1 createOrder;
-    private DanhSachXuatForm1 listOrder;
+    private GanTagForm1 ganTagForm;
+    private TaoDonForm1 taoDonForm;
+    private QuetDonForm1 quetDonForm;
     private BaoCaoForm1 baoCaoForm;
-    private LoginForm loginForm;
+    private LoginForm1 loginForm;
 
-    /**
-     * Creates new form DashBoard
-     */
-    public DashBoard1(LoginForm login)
+    public DashBoard1(LoginForm1 login)
     {
-        inputTag = new NhapDlForm1();
-        createOrder = new TaoDonForm1();
-        listOrder = new DanhSachXuatForm1();
+        ganTagForm = new GanTagForm1();
+        taoDonForm = new TaoDonForm1();
+        quetDonForm = new QuetDonForm1();
         baoCaoForm = new BaoCaoForm1();
         this.loginForm = login;
+        
         setUndecorated(true);
         initComponents();
         setVisible(false);
@@ -92,9 +79,9 @@ public class DashBoard1 extends javax.swing.JFrame
         baoCaoPanel = new javax.swing.JPanel();
         baoCaoLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jCreateOrder = new javax.swing.JPanel();
-        jInput = new javax.swing.JPanel();
-        jOrder = new javax.swing.JPanel();
+        jTaoDon = new javax.swing.JPanel();
+        jGanTag = new javax.swing.JPanel();
+        jQuetDon = new javax.swing.JPanel();
         jBaoCao = new javax.swing.JPanel();
         jPanelTrinhDo = new javax.swing.JPanel();
         jPanelCaThi = new javax.swing.JPanel();
@@ -320,7 +307,7 @@ public class DashBoard1 extends javax.swing.JFrame
         ganTagLabel.setFont(new java.awt.Font("DialogInput", 1, 19)); // NOI18N
         ganTagLabel.setForeground(new java.awt.Color(208, 245, 253));
         ganTagLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-tag-window-32.png"))); // NOI18N
-        ganTagLabel.setText("NHẬP TAG");
+        ganTagLabel.setText("GẮN TAG");
         ganTagLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(230, 233, 237)));
         ganTagLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ganTagLabel.addMouseListener(new java.awt.event.MouseAdapter()
@@ -497,14 +484,14 @@ public class DashBoard1 extends javax.swing.JFrame
         jPanel2.setBackground(new java.awt.Color(134, 162, 154));
         jPanel2.setEnabled(false);
 
-        jCreateOrder.setLayout(new javax.swing.BoxLayout(jCreateOrder, javax.swing.BoxLayout.LINE_AXIS));
-        jCreateOrder.setVisible (false);
+        jTaoDon.setLayout(new javax.swing.BoxLayout(jTaoDon, javax.swing.BoxLayout.LINE_AXIS));
+        jTaoDon.setVisible (false);
 
-        jInput.setLayout(new javax.swing.BoxLayout(jInput, javax.swing.BoxLayout.LINE_AXIS));
-        jInput.setVisible (false);
+        jGanTag.setLayout(new javax.swing.BoxLayout(jGanTag, javax.swing.BoxLayout.LINE_AXIS));
+        jGanTag.setVisible (false);
 
-        jOrder.setLayout(new javax.swing.BoxLayout(jOrder, javax.swing.BoxLayout.LINE_AXIS));
-        jOrder.setVisible (false);
+        jQuetDon.setLayout(new javax.swing.BoxLayout(jQuetDon, javax.swing.BoxLayout.LINE_AXIS));
+        jQuetDon.setVisible (false);
 
         jBaoCao.setLayout(new javax.swing.BoxLayout(jBaoCao, javax.swing.BoxLayout.LINE_AXIS));
         jBaoCao.setVisible (false);
@@ -532,9 +519,9 @@ public class DashBoard1 extends javax.swing.JFrame
                 .addComponent(jPanelCaThi, javax.swing.GroupLayout.PREFERRED_SIZE, 992, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCreateOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jGanTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jQuetDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTaoDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelTrinhDo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -552,9 +539,9 @@ public class DashBoard1 extends javax.swing.JFrame
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCreateOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jGanTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jQuetDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTaoDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanelTrinhDo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(650, 655, Short.MAX_VALUE))
@@ -570,11 +557,11 @@ public class DashBoard1 extends javax.swing.JFrame
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        jCreateOrder.add(createOrder.getjPanel1());
+        jTaoDon.add(taoDonForm.getjPanel1());
         //jPanel10.add(pb);
-        jInput.add(inputTag.getjPanel1());
+        jGanTag.add(ganTagForm.getjPanel1());
         //jPanel7.add(da);
-        jOrder.add(listOrder.getjPanel1());
+        jQuetDon.add(quetDonForm.getjPanel1());
         //jPanel8.add (hd);
         jBaoCao.add(baoCaoForm.getjPanel1());
         //jPanel9.add(bcc);
@@ -697,7 +684,7 @@ public class DashBoard1 extends javax.swing.JFrame
                 "Xác Nhận", JOptionPane.OK_CANCEL_OPTION);
         if (confirm == JOptionPane.OK_OPTION)
         {
-            LoginForm.flag=0;
+            LoginForm1.flag = 0;
             this.setVisible(false);
             loginForm.setVisible(true);
         }
@@ -716,11 +703,11 @@ public class DashBoard1 extends javax.swing.JFrame
     private void quetDonXuatLabelMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_quetDonXuatLabelMouseClicked
     {//GEN-HEADEREND:event_quetDonXuatLabelMouseClicked
 
-        jCreateOrder.setVisible(false);
-        jInput.setVisible(false);
-        jOrder.setVisible(true);
+        jTaoDon.setVisible(false);
+        jGanTag.setVisible(false);
+        jQuetDon.setVisible(true);
         jBaoCao.setVisible(false);
-        listOrder.initTableOrder();
+        quetDonForm.createTableDon();
     }//GEN-LAST:event_quetDonXuatLabelMouseClicked
 
     private void quetDonXuatLabelMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_quetDonXuatLabelMouseEntered
@@ -736,31 +723,35 @@ public class DashBoard1 extends javax.swing.JFrame
     private void baoCaoLabelMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_baoCaoLabelMouseClicked
     {//GEN-HEADEREND:event_baoCaoLabelMouseClicked
 
-        jCreateOrder.setVisible(false);
-        jInput.setVisible(false);
-        jOrder.setVisible(false);
+        jTaoDon.setVisible(false);
+        jGanTag.setVisible(false);
+        jQuetDon.setVisible(false);
         jBaoCao.setVisible(true);
-        baoCaoForm.initTableOrder();
-        LoginForm.flag = 0;
-        LoginForm.tagMap.clear();
+        baoCaoForm.createTableDon();
+        LoginForm1.flag = 0;
+        LoginForm1.tagMap.clear();
     }//GEN-LAST:event_baoCaoLabelMouseClicked
 
-    public NhapDlForm1 getInputTag() {
-        return inputTag;
+    public GanTagForm1 getGanTagForm()
+    {
+        return ganTagForm;
     }
 
-    public void setInputTag(NhapDlForm1 inputTag) {
-        this.inputTag = inputTag;
+    public void setGanTagForm(GanTagForm1 ganTagForm)
+    {
+        this.ganTagForm = ganTagForm;
     }
 
-    public DanhSachXuatForm1 getListOrder() {
-        return listOrder;
+    public QuetDonForm1 getQuetDonForm()
+    {
+        return quetDonForm;
     }
 
-    public void setListOrder(DanhSachXuatForm1 listOrder) {
-        this.listOrder = listOrder;
+    public void setQuetDonForm(QuetDonForm1 quetDonForm)
+    {
+        this.quetDonForm = quetDonForm;
     }
-    
+
     private void baoCaoLabelMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_baoCaoLabelMouseEntered
     {//GEN-HEADEREND:event_baoCaoLabelMouseEntered
         changecolor(baoCaoPanel, new Color(107, 138, 164));
@@ -781,26 +772,26 @@ public class DashBoard1 extends javax.swing.JFrame
 
     private void ganTagLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ganTagLabelMouseClicked
 
-        jInput.setVisible(true);
-        jOrder.setVisible(false);
-        jCreateOrder.setVisible(false);
+        jGanTag.setVisible(true);
+        jQuetDon.setVisible(false);
+        jTaoDon.setVisible(false);
         jBaoCao.setVisible(false);
-        inputTag.initTableProduct();
-        
-        LoginForm.flag = 1;
-        LoginForm.tagMap.clear();
+        ganTagForm.createTableSanPham();
+
+        LoginForm1.flag = 1;
+        LoginForm1.tagMap.clear();
     }//GEN-LAST:event_ganTagLabelMouseClicked
 
     private void taoDonXuatLabelMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_taoDonXuatLabelMouseClicked
     {//GEN-HEADEREND:event_taoDonXuatLabelMouseClicked
 
-        jOrder.setVisible(false);
-        jCreateOrder.setVisible(true);
-        jInput.setVisible(false);
+        jQuetDon.setVisible(false);
+        jTaoDon.setVisible(true);
+        jGanTag.setVisible(false);
         jBaoCao.setVisible(false);
-        createOrder.initTable();
-        LoginForm.flag = 0;
-        LoginForm.tagMap.clear();
+        taoDonForm.createTableSanPham();
+        LoginForm1.flag = 0;
+        LoginForm1.tagMap.clear();
     }//GEN-LAST:event_taoDonXuatLabelMouseClicked
 
     private void taoDonXuatLabelMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_taoDonXuatLabelMouseEntered
@@ -824,7 +815,6 @@ public class DashBoard1 extends javax.swing.JFrame
 //    {
 //        this.jLabel5 = jLabel5;
 //    }
-
     public JLabel getBtnHidemenu()
     {
         return btnHidemenu;
@@ -874,7 +864,6 @@ public class DashBoard1 extends javax.swing.JFrame
     {
         this.quetDonXuatLabel = pbLabel;
     }
-
 
     public JLabel getjLabelClosed()
     {
@@ -938,32 +927,32 @@ public class DashBoard1 extends javax.swing.JFrame
 
     public JPanel getjCreateOrder()
     {
-        return jCreateOrder;
+        return jTaoDon;
     }
 
     public void setjCreateOrder(JPanel jCreateOrder)
     {
-        this.jCreateOrder = jCreateOrder;
+        this.jTaoDon = jCreateOrder;
     }
 
     public JPanel getjInput()
     {
-        return jInput;
+        return jGanTag;
     }
 
     public void setjInput(JPanel jInput)
     {
-        this.jInput = jInput;
+        this.jGanTag = jInput;
     }
 
     public JPanel getjOrder()
     {
-        return jOrder;
+        return jQuetDon;
     }
 
     public void setjOrder(JPanel jOrder)
     {
-        this.jOrder = jOrder;
+        this.jQuetDon = jOrder;
     }
 
     public JLabel getjLabel1()
@@ -975,9 +964,6 @@ public class DashBoard1 extends javax.swing.JFrame
     {
         this.jLabel1 = jLabel1;
     }
-    
-    
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -989,8 +975,7 @@ public class DashBoard1 extends javax.swing.JFrame
     private javax.swing.JPanel ganTagPanel;
     private javax.swing.JPanel hidemenu;
     private javax.swing.JPanel jBaoCao;
-    private javax.swing.JPanel jCreateOrder;
-    private javax.swing.JPanel jInput;
+    private javax.swing.JPanel jGanTag;
     private javax.swing.JLabel jLabel1;
     public static javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -998,7 +983,6 @@ public class DashBoard1 extends javax.swing.JFrame
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelClosed;
     private javax.swing.JLabel jLabelMini;
-    private javax.swing.JPanel jOrder;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1006,6 +990,8 @@ public class DashBoard1 extends javax.swing.JFrame
     private javax.swing.JPanel jPanelCaThi;
     private javax.swing.JPanel jPanelKetQua;
     private javax.swing.JPanel jPanelTrinhDo;
+    private javax.swing.JPanel jQuetDon;
+    private javax.swing.JPanel jTaoDon;
     private keeptoo.KGradientPanel kGradientPanel1;
     private keeptoo.KGradientPanel kGradientPanel2;
     private javax.swing.JPanel linehideMenu;
@@ -1018,9 +1004,4 @@ public class DashBoard1 extends javax.swing.JFrame
     private javax.swing.JPanel taoDonXuatPanel;
     // End of variables declaration//GEN-END:variables
 
-//    public static void main (String[] args)
-//    {
-//        DashBoard l=new DashBoard ();
-//        l.setVisible (true);
-//    }
 }

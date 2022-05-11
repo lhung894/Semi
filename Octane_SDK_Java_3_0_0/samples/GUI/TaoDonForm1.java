@@ -4,14 +4,14 @@
  */
 package GUI;
 
-import BUS.OrderBUS;
-import BUS.OrderDetailBUS;
-import BUS.ProductBUS;
-import BUS.TagBUS;
+import BUS.DonHangBUS;
+import BUS.ChiTietDonBUS;
+import BUS.SanPhamBUS;
+import BUS.RFIDTagBUS;
 import BUS.Utils;
-import DTO.OrderDTO;
-import DTO.OrderDetailDTO;
-import DTO.ProductDTO;
+import DTO.DonHangDTO;
+import DTO.ChiTietDonHangDTO;
+import DTO.SanPhamDTO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -28,17 +28,16 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author User
+ * @author Hyung
  */
 public class TaoDonForm1 extends javax.swing.JFrame
 {
 
-    DefaultTableModel tbModelOrder, tbModelProduct;
-//    Set<String> tags;
-    ProductBUS productBUS;
-    TagBUS tagBUS = new TagBUS();
-    OrderBUS orderBUS = new OrderBUS();
-    OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
+    DefaultTableModel tbModelDon, tbModelSanPham;
+    SanPhamBUS sanPhamBUS;
+    RFIDTagBUS tagBUS = new RFIDTagBUS();
+    DonHangBUS orderBUS = new DonHangBUS();
+    ChiTietDonBUS orderDetailBUS = new ChiTietDonBUS();
     Utils ult = new Utils();
     int rowOrder = -2, rowProduct = -2;
 
@@ -51,17 +50,17 @@ public class TaoDonForm1 extends javax.swing.JFrame
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.setVisible(false);
-        initTable();
+        createTableSanPham();
         clear();
     }
 
     public void clear()
     {
-        jBtnToOrder.setEnabled(false);
-        jBtnCreate.setEnabled(false);
-        jBtnDel.setEnabled(false);
-        jTableOrder.clearSelection();
-        jTableProduct.clearSelection();
+        jBtnOK.setEnabled(false);
+        jBtnTaoDon.setEnabled(false);
+        jBtnXoa.setEnabled(false);
+        jTableDon.clearSelection();
+        jTableSanPham.clearSelection();
         jTxtQuantity.setEditable(false);
         jTxtQuantity.setText("");
         jTxtQuantity.setBackground(new Color(200, 200, 200));
@@ -69,32 +68,32 @@ public class TaoDonForm1 extends javax.swing.JFrame
         rowOrder = -2;
     }
 
-    public void tableModelProduct(DefaultTableModel model)
+    public void createTableModelSanPham(DefaultTableModel model)
     {
-        productBUS = new ProductBUS();
-        for (ProductDTO product : productBUS.getList())
+        sanPhamBUS = new SanPhamBUS();
+        for (SanPhamDTO sanPham : sanPhamBUS.getList())
         {
             Vector row = new Vector();
-            row.add(product.getProductId());
-            row.add(product.getProductName());
-            row.add(product.getProductQuantity());
-            row.add(product.getProductDetail());
+            row.add(sanPham.getProductId());
+            row.add(sanPham.getProductName());
+            row.add(sanPham.getProductQuantity());
+            row.add(sanPham.getProductDetail());
             model.addRow(row);
         }
     }
 
-    public void initTable()
+    public void createTableSanPham()
     {
-        tbModelProduct.setRowCount(0);
-        tableModelProduct(tbModelProduct);
-        tbModelOrder.setRowCount(0);
-        jTableProduct.setRowSorter(null);
-        jTableProduct.setAutoCreateRowSorter(true);
-        jTableProduct.setModel(tbModelProduct);
-        jTableProduct.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jBtnCreate.setEnabled(false);
-        jBtnDel.setEnabled(false);
-        jBtnToOrder.setEnabled(false);
+        tbModelSanPham.setRowCount(0);
+        tbModelDon.setRowCount(0);
+        createTableModelSanPham(tbModelSanPham);
+        jTableSanPham.setRowSorter(null);
+        jTableSanPham.setAutoCreateRowSorter(true);
+        jTableSanPham.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableSanPham.setModel(tbModelSanPham);
+        jBtnTaoDon.setEnabled(false);
+        jBtnXoa.setEnabled(false);
+        jBtnOK.setEnabled(false);
     }
 
     /**
@@ -111,13 +110,13 @@ public class TaoDonForm1 extends javax.swing.JFrame
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableOrder = new javax.swing.JTable();
+        jTableDon = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableProduct = new javax.swing.JTable();
-        jBtnCreate = new javax.swing.JButton();
-        jBtnDel = new javax.swing.JButton();
-        jBtnToOrder = new javax.swing.JButton();
+        jTableSanPham = new javax.swing.JTable();
+        jBtnTaoDon = new javax.swing.JButton();
+        jBtnXoa = new javax.swing.JButton();
+        jBtnOK = new javax.swing.JButton();
         jTxtQuantity = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
@@ -144,7 +143,7 @@ public class TaoDonForm1 extends javax.swing.JFrame
         tableCol.add("ID Sản Phẩm");
         tableCol.add("Số Lượng");
 
-        tbModelOrder = new DefaultTableModel (tableCol,0)
+        tbModelDon = new DefaultTableModel (tableCol,0)
         {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex)
@@ -152,30 +151,30 @@ public class TaoDonForm1 extends javax.swing.JFrame
                 return false;
             }
         };
-        jTableOrder.setModel (tbModelOrder);
-        jTableOrder.setShowGrid(true);
-        jTableOrder.setFocusable(false);
-        jTableOrder.setIntercellSpacing(new Dimension(0,0));
-        jTableOrder.setRowHeight(25);
-        jTableOrder.getTableHeader().setOpaque(false);
-        jTableOrder.setFillsViewportHeight(true);
-        //        jTableOrder.getTableHeader().setBackground(new Color(145,209,242));
-        //        jTableOrder.getTableHeader().setForeground(new Color(51, 51, 51));
-        jTableOrder.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
-        //        jTableOrder.setSelectionBackground(new Color(76,121,255));
-        jTableOrder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTableOrder.setGridColor(new java.awt.Color(83, 86, 88));
-        jTableOrder.addMouseListener(new java.awt.event.MouseAdapter()
+        jTableDon.setModel (tbModelDon);
+        jTableDon.setShowGrid(true);
+        jTableDon.setFocusable(false);
+        jTableDon.setIntercellSpacing(new Dimension(0,0));
+        jTableDon.setRowHeight(25);
+        jTableDon.getTableHeader().setOpaque(false);
+        jTableDon.setFillsViewportHeight(true);
+        //        jTableDon.getTableHeader().setBackground(new Color(145,209,242));
+        //        jTableDon.getTableHeader().setForeground(new Color(51, 51, 51));
+        jTableDon.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
+        //        jTableDon.setSelectionBackground(new Color(76,121,255));
+        jTableDon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableDon.setGridColor(new java.awt.Color(83, 86, 88));
+        jTableDon.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                jTableOrderMouseClicked(evt);
+                jTableDonMouseClicked(evt);
             }
         });
-        jTableOrder.getColumn (tableCol.elementAt (0)).setPreferredWidth (150);
-        jTableOrder.getColumn (tableCol.elementAt (1)).setPreferredWidth (150);
-        jTableOrder.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jScrollPane1.setViewportView(jTableOrder);
+        jTableDon.getColumn (tableCol.elementAt (0)).setPreferredWidth (150);
+        jTableDon.getColumn (tableCol.elementAt (1)).setPreferredWidth (150);
+        jTableDon.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jScrollPane1.setViewportView(jTableDon);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 380, 460));
 
@@ -190,7 +189,7 @@ public class TaoDonForm1 extends javax.swing.JFrame
         tableColProduct.add("SL Còn Lại");
         tableColProduct.add("Chi Tiết Sản Phẩm");
 
-        tbModelProduct = new DefaultTableModel (tableColProduct,0)
+        tbModelSanPham = new DefaultTableModel (tableColProduct,0)
         {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex)
@@ -198,76 +197,76 @@ public class TaoDonForm1 extends javax.swing.JFrame
                 return false;
             }
         };
-        jTableProduct.setModel (tbModelProduct);
-        jTableProduct.setShowGrid(true);
-        jTableProduct.setFocusable(false);
-        jTableProduct.setIntercellSpacing(new Dimension(0,0));
-        jTableProduct.setRowHeight(25);
-        jTableProduct.getTableHeader().setOpaque(false);
-        jTableProduct.setFillsViewportHeight(true);
-        //        jTableOrder.getTableHeader().setBackground(new Color(145,209,242));
-        //        jTableOrder.getTableHeader().setForeground(new Color(51, 51, 51));
-        jTableProduct.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
-        //        jTableOrder.setSelectionBackground(new Color(76,121,255));
-        jTableProduct.setAutoCreateRowSorter(true);
-        jTableProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTableProduct.setGridColor(new java.awt.Color(83, 86, 88));
-        jTableProduct.addMouseListener(new java.awt.event.MouseAdapter()
+        jTableSanPham.setModel (tbModelSanPham);
+        jTableSanPham.setShowGrid(true);
+        jTableSanPham.setFocusable(false);
+        jTableSanPham.setIntercellSpacing(new Dimension(0,0));
+        jTableSanPham.setRowHeight(25);
+        jTableSanPham.getTableHeader().setOpaque(false);
+        jTableSanPham.setFillsViewportHeight(true);
+        //        jTableDon.getTableHeader().setBackground(new Color(145,209,242));
+        //        jTableDon.getTableHeader().setForeground(new Color(51, 51, 51));
+        jTableSanPham.getTableHeader().setFont (new Font("Dialog", Font.BOLD, 13));
+        //        jTableDon.setSelectionBackground(new Color(76,121,255));
+        jTableSanPham.setAutoCreateRowSorter(true);
+        jTableSanPham.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableSanPham.setGridColor(new java.awt.Color(83, 86, 88));
+        jTableSanPham.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                jTableProductMouseClicked(evt);
+                jTableSanPhamMouseClicked(evt);
             }
         });
-        jTableProduct.getColumn (tableColProduct.elementAt (0)).setPreferredWidth (100);
-        jTableProduct.getColumn (tableColProduct.elementAt (1)).setPreferredWidth (200);
-        jTableProduct.getColumn (tableColProduct.elementAt (2)).setPreferredWidth (100);
-        jTableProduct.getColumn (tableColProduct.elementAt (3)).setPreferredWidth (300);
-        jTableProduct.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
-        jScrollPane2.setViewportView(jTableProduct);
+        jTableSanPham.getColumn (tableColProduct.elementAt (0)).setPreferredWidth (100);
+        jTableSanPham.getColumn (tableColProduct.elementAt (1)).setPreferredWidth (200);
+        jTableSanPham.getColumn (tableColProduct.elementAt (2)).setPreferredWidth (100);
+        jTableSanPham.getColumn (tableColProduct.elementAt (3)).setPreferredWidth (300);
+        jTableSanPham.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);
+        jScrollPane2.setViewportView(jTableSanPham);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 520, 460));
 
-        jBtnCreate.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnCreate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jBtnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-create-32.png"))); // NOI18N
-        jBtnCreate.setBorder(null);
-        jBtnCreate.setPreferredSize(new java.awt.Dimension(38, 38));
-        jBtnCreate.addActionListener(new java.awt.event.ActionListener()
+        jBtnTaoDon.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnTaoDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jBtnTaoDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-create-32.png"))); // NOI18N
+        jBtnTaoDon.setBorder(null);
+        jBtnTaoDon.setPreferredSize(new java.awt.Dimension(38, 38));
+        jBtnTaoDon.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jBtnCreateActionPerformed(evt);
+                jBtnTaoDonActionPerformed(evt);
             }
         });
-        jPanel1.add(jBtnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 592, -1, -1));
+        jPanel1.add(jBtnTaoDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 592, -1, -1));
 
-        jBtnDel.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnDel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jBtnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_delete_32.png"))); // NOI18N
-        jBtnDel.setBorder(null);
-        jBtnDel.addActionListener(new java.awt.event.ActionListener()
+        jBtnXoa.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jBtnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_delete_32.png"))); // NOI18N
+        jBtnXoa.setBorder(null);
+        jBtnXoa.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jBtnDelActionPerformed(evt);
+                jBtnXoaActionPerformed(evt);
             }
         });
-        jPanel1.add(jBtnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 595, -1, -1));
+        jPanel1.add(jBtnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 595, -1, -1));
 
-        jBtnToOrder.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnToOrder.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jBtnToOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_checked_32.png"))); // NOI18N
-        jBtnToOrder.setBorder(null);
-        jBtnToOrder.setPreferredSize(new java.awt.Dimension(38, 38));
-        jBtnToOrder.addActionListener(new java.awt.event.ActionListener()
+        jBtnOK.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnOK.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jBtnOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_checked_32.png"))); // NOI18N
+        jBtnOK.setBorder(null);
+        jBtnOK.setPreferredSize(new java.awt.Dimension(38, 38));
+        jBtnOK.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jBtnToOrderActionPerformed(evt);
+                jBtnOKActionPerformed(evt);
             }
         });
-        jPanel1.add(jBtnToOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 590, -1, -1));
+        jPanel1.add(jBtnOK, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 590, -1, -1));
         jPanel1.add(jTxtQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 590, 100, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -289,207 +288,148 @@ public class TaoDonForm1 extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrderMouseClicked
+    private void jTableDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDonMouseClicked
         // TODO add your handling code here:
-        int row = jTableOrder.getSelectedRow();
-//        System.out.println("row: " + row);
-        if (row == rowOrder)
-        {
-            jTableOrder.clearSelection();
-            jBtnDel.setEnabled(false);
-            rowOrder = -2;
-            return;
-        }
+        int row = jTableDon.getSelectedRow();
+
         if (row != -1)
         {
             rowOrder = row;
-            jBtnDel.setEnabled(true);
-//            System.out.println("click: " + jTableOrder.getValueAt(rowOrder, 0));
+            jBtnXoa.setEnabled(true);
         }
-    }//GEN-LAST:event_jTableOrderMouseClicked
 
-    private void jTableProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductMouseClicked
+    }//GEN-LAST:event_jTableDonMouseClicked
+
+    private void jTableSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSanPhamMouseClicked
         // TODO add your handling code here:
-        int row = jTableProduct.getSelectedRow();
-//        System.out.println("row: " + row);
-        if (row == rowProduct)
-        {
-            jTableProduct.clearSelection();
-            jBtnToOrder.setEnabled(false);
-            rowProduct = -2;
-            jTxtQuantity.setEditable(false);
-            jTxtQuantity.setText("");
-            jTxtQuantity.setBackground(new Color(200, 200, 200));
-            return;
-        }
+        int row = jTableSanPham.getSelectedRow();
+
         if (row != -1)
         {
             rowProduct = row;
-            jBtnToOrder.setEnabled(true);
+            jBtnOK.setEnabled(true);
             jTxtQuantity.setEditable(true);
             jTxtQuantity.setText("1");
             jTxtQuantity.setBackground(new Color(255, 255, 255));
         }
-    }//GEN-LAST:event_jTableProductMouseClicked
 
-    private void jBtnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCreateActionPerformed
+    }//GEN-LAST:event_jTableSanPhamMouseClicked
+
+    private void jBtnTaoDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTaoDonActionPerformed
         // TODO add your handling code here:
-        OrderDTO order = new OrderDTO();
-        order.setOrderId(ult.initOrderId());
-        order.setOrderDate(ult.initDateNow());
-        order.setStatus(2);
-//        System.out.println("date: " + order.getOrderDate());
-//        System.out.println("Order: " + order);
-        if (orderBUS.insertOrder(order))
+        DonHangDTO donHang = new DonHangDTO();
+        donHang.setOrderId(ult.createOrderId());
+        donHang.setOrderDate(ult.createDateNow());
+        donHang.setStatus(2);
+
+        if (orderBUS.insertOrder(donHang))
         {
-            ArrayList<OrderDetailDTO> orDetails = new ArrayList<>();
-            OrderDetailDTO orDetail;
-            ArrayList<ProductDTO> products = new ArrayList<>();
-            ProductDTO product;
-            for (int i = 0; i < tbModelOrder.getRowCount(); i++)
+            ArrayList<ChiTietDonHangDTO> chitietDonList = new ArrayList<>();
+            ArrayList<SanPhamDTO> sanPhamList = new ArrayList<>();
+            ChiTietDonHangDTO chitietDon;
+            SanPhamDTO sanPham;
+            for (int i = 0; i < tbModelDon.getRowCount(); i++)
             {
-                orDetail = new OrderDetailDTO();
-                orDetail.setOrderId(order.getOrderId());
-                orDetail.setProductId((String) tbModelOrder.getValueAt(i, 0));
-                orDetail.setOrderQuantity(Integer.parseInt(String.valueOf(tbModelOrder.getValueAt(i, 1))));
-                orDetails.add(orDetail);
-                for (int j = 0; j < tbModelProduct.getRowCount(); j++)
+                chitietDon = new ChiTietDonHangDTO();
+                chitietDon.setOrderId(donHang.getOrderId());
+                chitietDon.setProductId((String) tbModelDon.getValueAt(i, 0));
+                chitietDon.setOrderQuantity(Integer.parseInt(String.valueOf(tbModelDon.getValueAt(i, 1))));
+                chitietDonList.add(chitietDon);
+
+                for (int j = 0; j < tbModelSanPham.getRowCount(); j++)
                 {
-                    if (tbModelOrder.getValueAt(i, 0).equals(tbModelProduct.getValueAt(j, 0)))
+                    if (tbModelDon.getValueAt(i, 0).equals(tbModelSanPham.getValueAt(j, 0)))
                     {
-                        product = new ProductDTO();
-                        product.setProductId((String) tbModelProduct.getValueAt(j, 0));
-                        product.setProductQuantity(Integer.parseInt(String.valueOf(tbModelProduct.getValueAt(j, 2))));
-                        products.add(product);
+                        sanPham = new SanPhamDTO();
+                        sanPham.setProductId((String) tbModelSanPham.getValueAt(j, 0));
+                        sanPham.setProductQuantity(Integer.parseInt(String.valueOf(tbModelSanPham.getValueAt(j, 2))));
+                        sanPhamList.add(sanPham);
                     }
                 }
             }
-            if (orderDetailBUS.insertOrderDetail(orDetails) && productBUS.updateProducts(products))
+
+            if (orderDetailBUS.insertOrderDetail(chitietDonList) && sanPhamBUS.updateProducts(sanPhamList))
             {
-                JOptionPane.showMessageDialog(this, "Tạo đơn xuất thành công!");
-                tbModelOrder.setRowCount(0);
+                JOptionPane.showMessageDialog(this, "Tạo đơn xuất ok!!!");
+                tbModelDon.setRowCount(0);
                 clear();
                 return;
             }
-            System.out.println("Order: " + order);
-            System.out.println("OrderDetail: " + orDetails);
         }
-        JOptionPane.showMessageDialog(this, "Tạo đơn thất bại!");
-    }//GEN-LAST:event_jBtnCreateActionPerformed
 
-    private void jBtnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDelActionPerformed
+        JOptionPane.showMessageDialog(this, "Tạo đơn thất bại!!!!!");
+    }//GEN-LAST:event_jBtnTaoDonActionPerformed
+
+    private void jBtnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnXoaActionPerformed
         // TODO add your handling code here:
-        for (int i = 0; i < tbModelProduct.getRowCount(); i++)
+        for (int i = 0; i < tbModelSanPham.getRowCount(); i++)
         {
-            if (tbModelOrder.getValueAt(rowOrder, 0).equals(tbModelProduct.getValueAt(i, 0)))
+            if (tbModelDon.getValueAt(rowOrder, 0).equals(tbModelSanPham.getValueAt(i, 0)))
             {
-                tbModelProduct.setValueAt(Integer.parseInt(String.valueOf(tbModelProduct.getValueAt(i, 2)))
-                        + Integer.parseInt(String.valueOf(tbModelOrder.getValueAt(rowOrder, 1))), i, 2);
-//                jBtnCreate.setEnabled(true);
-                tbModelOrder.removeRow(rowOrder);
-                jTableOrder.clearSelection();
+                tbModelSanPham.setValueAt(Integer.parseInt(String.valueOf(tbModelSanPham.getValueAt(i, 2))) + Integer.parseInt(String.valueOf(tbModelDon.getValueAt(rowOrder, 1))), i, 2);
+                tbModelDon.removeRow(rowOrder);
+                jTableDon.clearSelection();
                 rowOrder = -2;
-                jBtnDel.setEnabled(false);
-                if (tbModelOrder.getRowCount() == 0)
+                jBtnXoa.setEnabled(false);
+
+                if (tbModelDon.getRowCount() == 0)
                 {
-                    jBtnCreate.setEnabled(false);
+                    jBtnTaoDon.setEnabled(false);
                 }
+
                 return;
             }
         }
-    }//GEN-LAST:event_jBtnDelActionPerformed
+    }//GEN-LAST:event_jBtnXoaActionPerformed
 
-    private void jBtnToOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnToOrderActionPerformed
+    private void jBtnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOKActionPerformed
         // TODO add your handling code here:
         if (jTxtQuantity.getText().equals("") || jTxtQuantity.getText().equals(null))
         {
-            JOptionPane.showMessageDialog(this, "Hãy nhập vào số lượng!");
+            JOptionPane.showMessageDialog(this, "Nhập số lượng!!!");
         } else
         {
             try
             {
                 int quantity = Integer.parseInt(jTxtQuantity.getText());
-                if (quantity < 1)
+
+                if (quantity > (Integer) tbModelSanPham.getValueAt(rowProduct, 2))
                 {
-                    JOptionPane.showMessageDialog(this, "Hãy nhập số lượng lớn hơn 0!");
+                    JOptionPane.showMessageDialog(this, "Vượt quá số lượng hiện có!!!");
                     return;
                 }
-                if (quantity > (Integer) tbModelProduct.getValueAt(rowProduct, 2))
+
+                if (quantity <= 0)
                 {
-                    JOptionPane.showMessageDialog(this, "Vượt quá số lượng hiện có!");
+                    JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0!!!!");
                     return;
                 }
-//                System.out.println("tbModelOrder.getRowCount(): " + tbModelOrder.getRowCount());
-                for (int i = 0; i < tbModelOrder.getRowCount(); i++)
+
+                for (int i = 0; i < tbModelDon.getRowCount(); i++)
                 {
-                    if (tbModelProduct.getValueAt(rowProduct, 0).equals(tbModelOrder.getValueAt(i, 0)))
+                    if (tbModelSanPham.getValueAt(rowProduct, 0).equals(tbModelDon.getValueAt(i, 0)))
                     {
-                        tbModelOrder.setValueAt(Integer.parseInt(String.valueOf(tbModelOrder.getValueAt(i, 1))) + quantity, i, 1);
-                        tbModelProduct.setValueAt((Integer) tbModelProduct.getValueAt(rowProduct, 2) - quantity, rowProduct, 2);
-                        jBtnCreate.setEnabled(true);
-                        jBtnDel.setEnabled(false);
+                        tbModelDon.setValueAt(Integer.parseInt(String.valueOf(tbModelDon.getValueAt(i, 1))) + quantity, i, 1);
+                        tbModelSanPham.setValueAt((Integer) tbModelSanPham.getValueAt(rowProduct, 2) - quantity, rowProduct, 2);
+                        jBtnTaoDon.setEnabled(true);
+                        jBtnXoa.setEnabled(false);
                         return;
                     }
                 }
+                
                 Vector row = new Vector();
-                row.add(tbModelProduct.getValueAt(rowProduct, 0));
+                row.add(tbModelSanPham.getValueAt(rowProduct, 0));
                 row.add(jTxtQuantity.getText());
-                tbModelOrder.addRow(row);
-                tbModelProduct.setValueAt((Integer) tbModelProduct.getValueAt(rowProduct, 2) - quantity, rowProduct, 2);
-                jBtnCreate.setEnabled(true);
-                jBtnDel.setEnabled(false);
+                tbModelDon.addRow(row);
+                tbModelSanPham.setValueAt((Integer) tbModelSanPham.getValueAt(rowProduct, 2) - quantity, rowProduct, 2);
+                jBtnTaoDon.setEnabled(true);
+                jBtnXoa.setEnabled(false);
             } catch (NumberFormatException e)
             {
-                JOptionPane.showMessageDialog(this, "Hãy nhập kiểu số vào \"Số lượng\"!");
+                JOptionPane.showMessageDialog(this, "Kiểu dữ liệu không hợp lệ!!!");
             }
         }
-    }//GEN-LAST:event_jBtnToOrderActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
-    {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex)
-        {
-            java.util.logging.Logger.getLogger(TaoDonForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex)
-        {
-            java.util.logging.Logger.getLogger(TaoDonForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex)
-        {
-            java.util.logging.Logger.getLogger(TaoDonForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(TaoDonForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                new TaoDonForm1().setVisible(true);
-            }
-        });
-    }
+    }//GEN-LAST:event_jBtnOKActionPerformed
 
     public JPanel getjPanel1()
     {
@@ -503,9 +443,9 @@ public class TaoDonForm1 extends javax.swing.JFrame
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBtnCreate;
-    private javax.swing.JButton jBtnDel;
-    private javax.swing.JButton jBtnToOrder;
+    private javax.swing.JButton jBtnOK;
+    private javax.swing.JButton jBtnTaoDon;
+    private javax.swing.JButton jBtnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -513,8 +453,8 @@ public class TaoDonForm1 extends javax.swing.JFrame
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableOrder;
-    private javax.swing.JTable jTableProduct;
+    private javax.swing.JTable jTableDon;
+    private javax.swing.JTable jTableSanPham;
     private javax.swing.JTextField jTxtQuantity;
     // End of variables declaration//GEN-END:variables
 }

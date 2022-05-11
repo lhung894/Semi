@@ -1,24 +1,14 @@
 package BUS;
-//
-//import BUS.NhanVienBUS;
-//import BUS.PhongBanBUS;
-//import DTO.ChiTietNhanVienDTO;
-//import DTO.NhanVienDTO;
-//import DTO.PhongBanDTO;
 
 import DTO.BaoCaoDTO;
 import GUI.DashBoard1;
-import abbot.Log;
 import java.awt.Color;
 import java.awt.FileDialog;
-import java.awt.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -30,15 +20,7 @@ import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
-//import org.apache.poi.xssf.usermodel.XSSFCell;
-//import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-//import org.apache.poi.xssf.usermodel.XSSFSheet;
-//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-//import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -47,10 +29,14 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 
+/**
+ *
+ * @author Linh
+ */
 public class XuatExcel
 {
 
-    FileDialog fd = new FileDialog(new JFrame(), "Xuất excel", FileDialog.SAVE);
+    FileDialog fd = new FileDialog(new JFrame(), "Xuất  File excel", FileDialog.SAVE);
 
     private String getFile()
     {
@@ -71,14 +57,7 @@ public class XuatExcel
         HSSFColor hssfColor = null;
         try
         {
-
             hssfColor = palette.findSimilarColor(color.getRed(), color.getGreen(), color.getBlue());
-//            if (hssfColor == null)
-//            {
-//                System.out.println("Tao m?i mã màu!!");
-//                palette.set(HSSFColor.HSSFColorPredefined.AUTOMATIC.getIndex(), color.getRed(), color.getGreen(), color.getBlue());
-//                hssfColor = palette.getColor(HSSFColor.HSSFColorPredefined.AUTOMATIC.getIndex());
-//            }
             System.out.println("mã màu là: " + hssfColor.getIndex());
         } catch (Exception e)
         {
@@ -90,7 +69,7 @@ public class XuatExcel
 
     // Xuất file Excel 
     @SuppressWarnings("empty-statement")
-    public void xuatFileExcelDonHang(ArrayList<BaoCaoDTO> baoCaoDTOs)
+    public void xuatFileExcelDonHang(ArrayList<BaoCaoDTO> baoCaoList)
     {
         fd.setTitle("Xuất đơn hàng ra excel");
         String url = getFile();
@@ -216,7 +195,6 @@ public class XuatExcel
             styleDatarow.setBorderLeft(BorderStyle.THIN);
             styleDatarow.setAlignment(HorizontalAlignment.CENTER);
             styleDatarow.setVerticalAlignment(VerticalAlignment.CENTER);
-//            style.setFont(fontRow);
 
             
             HSSFCellStyle style2 = workbook.createCellStyle(); 
@@ -280,11 +258,9 @@ public class XuatExcel
                 }
             }
 
-            // truyen dl cho row
-            // truyen dl cho row
             int rowPrint = 7, beginOrder = 7, endOrder = 7, beginProduct = 7, endProduct = 7, count = 0;
             String orderId = "", productId = "";
-            for (BaoCaoDTO k : baoCaoDTOs)//row
+            for (BaoCaoDTO k : baoCaoList)//row
             {
                 Row rowData = sheet.createRow(rowPrint);
                 rowData.setHeight((short) 400);
@@ -410,7 +386,7 @@ public class XuatExcel
                         }
                     }
                 }
-                if (rowPrint - 6 == baoCaoDTOs.size())
+                if (rowPrint - 6 == baoCaoList.size())
                 {
                     if (endOrder > beginOrder)
                     {
@@ -459,13 +435,6 @@ public class XuatExcel
                 Logger.getLogger(XuatExcel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
-    public static void main(String[] args)
-    {
-        XuatExcel xuatExcel = new XuatExcel();
-        ArrayList<BaoCaoDTO> baoCaoDTOs = new ArrayList<>();
-        xuatExcel.xuatFileExcelDonHang(baoCaoDTOs);
     }
 
 }

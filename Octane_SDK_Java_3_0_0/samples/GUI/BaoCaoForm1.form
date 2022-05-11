@@ -219,7 +219,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTableOrder">
+            <Component class="javax.swing.JTable" name="jTableDon">
               <Properties>
                 <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -233,12 +233,12 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableOrderMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableDonMouseClicked"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector tableCol = new Vector();&#xa;tableCol.add(&quot;ID &#x110;&#x1a1;n&quot;);&#xa;tableCol.add(&quot;Ng&#xe0;y t&#x1ea1;o&quot;);&#xa;tableCol.add(&quot;Tr&#x1ea1;ng Th&#xe1;i&quot;);&#xa;&#xa;tbModelOrder = new DefaultTableModel (tableCol,0){&#xa;    @Override&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return false;&#xa;    }&#xa;};&#xa;jTableOrder.setModel (tbModelOrder);&#xa;jTableOrder.setShowGrid(true);&#xa;        jTableOrder.setFocusable(false);&#xa;        jTableOrder.setIntercellSpacing(new Dimension(0,0));     &#xa;        jTableOrder.setRowHeight(25);  &#xa;        jTableOrder.getTableHeader().setOpaque(false);&#xa;        jTableOrder.setFillsViewportHeight(true);&#xa;//        jTableOrder.getTableHeader().setBackground(new Color(145,209,242));&#xa;//        jTableOrder.getTableHeader().setForeground(new Color(51, 51, 51));&#xa;        jTableOrder.getTableHeader().setFont (new Font(&quot;Dialog&quot;, Font.BOLD, 13));&#xa;//        jTableOrder.setSelectionBackground(new Color(76,121,255));"/>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableOrder.getColumn (tableCol.elementAt (0)).setPreferredWidth (150);&#xa;jTableOrder.getColumn (tableCol.elementAt (1)).setPreferredWidth (150);&#xa;jTableOrder.getColumn (tableCol.elementAt (2)).setPreferredWidth (150);&#xa;jTableOrder.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector tableCol = new Vector();&#xa;tableCol.add(&quot;ID &#x110;&#x1a1;n&quot;);&#xa;tableCol.add(&quot;Ng&#xe0;y t&#x1ea1;o&quot;);&#xa;tableCol.add(&quot;Tr&#x1ea1;ng Th&#xe1;i&quot;);&#xa;&#xa;tbModelDon = new DefaultTableModel (tableCol,0){&#xa;    @Override&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return false;&#xa;    }&#xa;};&#xa;jTableDon.setModel (tbModelDon);&#xa;jTableDon.setShowGrid(true);&#xa;        jTableDon.setFocusable(false);&#xa;        jTableDon.setIntercellSpacing(new Dimension(0,0));     &#xa;        jTableDon.setRowHeight(25);  &#xa;        jTableDon.getTableHeader().setOpaque(false);&#xa;        jTableDon.setFillsViewportHeight(true);&#xa;//        jTableDon.getTableHeader().setBackground(new Color(145,209,242));&#xa;//        jTableDon.getTableHeader().setForeground(new Color(51, 51, 51));&#xa;        jTableDon.getTableHeader().setFont (new Font(&quot;Dialog&quot;, Font.BOLD, 13));&#xa;//        jTableDon.setSelectionBackground(new Color(76,121,255));"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableDon.getColumn (tableCol.elementAt (0)).setPreferredWidth (150);&#xa;jTableDon.getColumn (tableCol.elementAt (1)).setPreferredWidth (150);&#xa;jTableDon.getColumn (tableCol.elementAt (2)).setPreferredWidth (150);&#xa;jTableDon.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);"/>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="PhongThiForm_jTablePhongThi"/>
               </AuxValues>
             </Component>
@@ -256,7 +256,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTableDetail">
+            <Component class="javax.swing.JTable" name="jTableChiTietDon">
               <Properties>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
@@ -269,12 +269,12 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableDetailMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableChiTietDonMouseClicked"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector tableColDetail = new Vector();&#xa;tableColDetail.add(&quot;Tr&#x1ea1;ng Th&#xe1;i&quot;);&#xa;tableColDetail.add(&quot;ID CT &#x110;&#x1a1;n&quot;);&#xa;tableColDetail.add(&quot;ID S&#x1ea3;n Ph&#x1ea9;m&quot;);&#xa;tableColDetail.add(&quot;T&#xea;n S&#x1ea3;n Ph&#x1ea9;m&quot;);&#xa;tableColDetail.add(&quot;S&#x1ed1; L&#x1b0;&#x1ee3;ng&quot;);&#xa;     &#xa;&#xa;tbModelDetail = new DefaultTableModel (tableColDetail,0){&#xa;    @Override&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return false;&#xa;    }&#xa;};&#xa;jTableDetail.setModel (tbModelDetail);&#xa;jTableDetail.setShowGrid(true);&#xa;        jTableDetail.setFocusable(false);&#xa;        jTableDetail.setIntercellSpacing(new Dimension(0,0));     &#xa;        jTableDetail.setRowHeight(25);  &#xa;        jTableDetail.getTableHeader().setOpaque(false);&#xa;        jTableDetail.setFillsViewportHeight(true);&#xa;//        jTableOrder.getTableHeader().setBackground(new Color(145,209,242));&#xa;//        jTableOrder.getTableHeader().setForeground(new Color(51, 51, 51));&#xa;        jTableDetail.getTableHeader().setFont (new Font(&quot;Dialog&quot;, Font.BOLD, 13));&#xa;//        jTableOrder.setSelectionBackground(new Color(76,121,255));"/>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableDetail.getColumn (tableColDetail.elementAt (0)).setPreferredWidth (110);&#xa;jTableDetail.getColumn (tableColDetail.elementAt (1)).setPreferredWidth (110);&#xa;jTableDetail.getColumn (tableColDetail.elementAt (2)).setPreferredWidth (110);&#xa;jTableDetail.getColumn (tableColDetail.elementAt (3)).setPreferredWidth (150);&#xa;jTableDetail.getColumn (tableColDetail.elementAt (4)).setPreferredWidth (110);&#xa;jTableDetail.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector tableColDetail = new Vector();&#xa;tableColDetail.add(&quot;Tr&#x1ea1;ng Th&#xe1;i&quot;);&#xa;tableColDetail.add(&quot;ID CT &#x110;&#x1a1;n&quot;);&#xa;tableColDetail.add(&quot;ID S&#x1ea3;n Ph&#x1ea9;m&quot;);&#xa;tableColDetail.add(&quot;T&#xea;n S&#x1ea3;n Ph&#x1ea9;m&quot;);&#xa;tableColDetail.add(&quot;S&#x1ed1; L&#x1b0;&#x1ee3;ng&quot;);&#xa;     &#xa;&#xa;tbModelChiTietDon = new DefaultTableModel (tableColDetail,0){&#xa;    @Override&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return false;&#xa;    }&#xa;};&#xa;jTableChiTietDon.setModel (tbModelChiTietDon);&#xa;jTableChiTietDon.setShowGrid(true);&#xa;        jTableChiTietDon.setFocusable(false);&#xa;        jTableChiTietDon.setIntercellSpacing(new Dimension(0,0));     &#xa;        jTableChiTietDon.setRowHeight(25);  &#xa;        jTableChiTietDon.getTableHeader().setOpaque(false);&#xa;        jTableChiTietDon.setFillsViewportHeight(true);&#xa;//        jTableDon.getTableHeader().setBackground(new Color(145,209,242));&#xa;//        jTableDon.getTableHeader().setForeground(new Color(51, 51, 51));&#xa;        jTableChiTietDon.getTableHeader().setFont (new Font(&quot;Dialog&quot;, Font.BOLD, 13));&#xa;//        jTableDon.setSelectionBackground(new Color(76,121,255));"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTableChiTietDon.getColumn (tableColDetail.elementAt (0)).setPreferredWidth (110);&#xa;jTableChiTietDon.getColumn (tableColDetail.elementAt (1)).setPreferredWidth (110);&#xa;jTableChiTietDon.getColumn (tableColDetail.elementAt (2)).setPreferredWidth (110);&#xa;jTableChiTietDon.getColumn (tableColDetail.elementAt (3)).setPreferredWidth (150);&#xa;jTableChiTietDon.getColumn (tableColDetail.elementAt (4)).setPreferredWidth (110);&#xa;jTableChiTietDon.setAutoResizeMode (javax.swing.JTable.AUTO_RESIZE_OFF);"/>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="PhongThiForm_jTablePhongThi"/>
               </AuxValues>
             </Component>

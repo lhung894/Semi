@@ -8,108 +8,127 @@ import java.sql.SQLException;
 
 /**
  *
- * @author User
+ * @author Linh
  */
-public class LastIdDAO {
+public class LastIdDAO
+{
 
     private String productId;
     private String orderId;
     private String orderDetailId;
     Connect conn;
 
-    public LastIdDAO() {
+    public LastIdDAO()
+    {
         getLastId();
         System.out.println("LastId: " + this.toString());
     }
 
-    public LastIdDAO(String productId, String orderId, String orderDetailId) {
+    public LastIdDAO(String productId, String orderId, String orderDetailId)
+    {
         this.productId = productId;
         this.orderId = orderId;
         this.orderDetailId = orderDetailId;
     }
 
-    public void getLastId() {
+    public void getLastId()
+    {
         conn = new Connect();
         conn.getConnection();
         String query = "select * from LastId";
-        try {
+        try
+        {
             conn.executeQuery(query);
-            while (conn.rs.next()) {
+            while (conn.rs.next())
+            {
                 setProductId(conn.rs.getString(1));
                 setOrderId(conn.rs.getString(2));
                 setOrderDetailId(conn.rs.getString(3));
             }
-        } catch (SQLException e) {
-            System.out.println(e);
-            System.out.println("DuLieuLast.executeQuery error.");
+        } catch (SQLException e)
+        {
+            System.out.println("L?i LastIdDAO " +e.getMessage());
         }
-        try {
+        try
+        {
             conn.getConn().close();
-        } catch (SQLException e) {
-            System.out.println("DuLieuLast.close error.");
+        } catch (SQLException e)
+        {
+            System.out.println("L?i LastIdDAO close " +e.getMessage());
         }
     }
 
-    public boolean updateOrderId(String newOrderId) {
+    public boolean updateOrderId(String newOrderId)
+    {
         conn = new Connect();
         conn.getConnection();
         String query = "UPDATE LastId SET"
                 + " order_id='" + newOrderId + "'"
                 + " WHERE order_id='" + getOrderId() + "'";
-        if (conn.executeUpdate(query)) {
-            System.out.println("Update last OrderId success.");
+        if (conn.executeUpdate(query))
+        {
+            System.out.println("Câp nhât LastId_Order ok!!!");
             setOrderId(newOrderId);
             conn.close();
             return true;
         }
-        System.out.println("Update last OrderId fail.");
+        System.out.println("Câp nhât LastId_Order thât bai!!!");
         conn.close();
         return false;
     }
-    
-    public boolean updateOrderDetailId(String newOrderDetailId) {
+
+    public boolean updateOrderDetailId(String newOrderDetailId)
+    {
         conn = new Connect();
         conn.getConnection();
         String query = "UPDATE LastId SET"
                 + " order_detail_id='" + newOrderDetailId + "'"
                 + " WHERE order_detail_id='" + getOrderDetailId() + "'";
-        if (conn.executeUpdate(query)) {
-            System.out.println("Update last OrderDetailId success.");
+        if (conn.executeUpdate(query))
+        {
+            System.out.println("Câp nhât LastId_OrderDetail ok!!!");
             setOrderDetailId(newOrderDetailId);
             conn.close();
             return true;
         }
-        System.out.println("Update last OrderDetailId fail.");
+        System.out.println("Câp nhât LastId_OrderDetail thât bai!!!");
         conn.close();
         return false;
     }
 
-    public String getProductId() {
+    public String getProductId()
+    {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(String productId)
+    {
         this.productId = productId;
     }
 
-    public String getOrderId() {
+    public String getOrderId()
+    {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(String orderId)
+    {
         this.orderId = orderId;
     }
 
-    public String getOrderDetailId() {
+    public String getOrderDetailId()
+    {
         return orderDetailId;
     }
 
-    public void setOrderDetailId(String orderDetailId) {
+    public void setOrderDetailId(String orderDetailId)
+    {
         this.orderDetailId = orderDetailId;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "LastIdDAO{" + "productId=" + productId + ", orderId=" + orderId + ", orderDetailId=" + orderDetailId + "}\n";
     }
 }

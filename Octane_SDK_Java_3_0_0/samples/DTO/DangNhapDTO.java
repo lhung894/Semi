@@ -6,7 +6,7 @@ package DTO;
 
 /**
  *
- * @author Hyung
+ * @author Linh
  */
 public class DangNhapDTO
 {

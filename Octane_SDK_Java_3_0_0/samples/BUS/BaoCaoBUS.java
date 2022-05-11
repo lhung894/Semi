@@ -6,43 +6,30 @@ package BUS;
 
 import DAO.BaoCaoDAO;
 import DTO.BaoCaoDTO;
-import DTO.OrderDTO;
-import DTO.OrderDetailDTO;
-import DTO.ProductDTO;
-import DTO.TagDTO;
+import DTO.DonHangDTO;
+import DTO.ChiTietDonHangDTO;
+import DTO.SanPhamDTO;
+import DTO.RFIDTagDTO;
 import java.util.ArrayList;
 
 /**
  *
- * @author Admin
+ * @author Linh
  */
-public class BaoCaoBUS {
-    BaoCaoDAO baoCaoDAO = new BaoCaoDAO();
+public class BaoCaoBUS
+{
 
-    public ArrayList<BaoCaoDTO> initBaoCao(ArrayList<OrderDTO> orders) {
+    private BaoCaoDAO baoCaoDAO;
+
+    public ArrayList<BaoCaoDTO> createBaoCao(ArrayList<DonHangDTO> donList)
+    {
+        baoCaoDAO = new BaoCaoDAO();
         ArrayList<BaoCaoDTO> baoCaoDTOs = new ArrayList<>();
-        for (OrderDTO order : orders) {
-            baoCaoDTOs.addAll(baoCaoDTOs.size(), baoCaoDAO.getBaoCaosByOrderId(order.getOrderId()));
+        for (DonHangDTO don : donList)
+        {
+            baoCaoDTOs.addAll(baoCaoDTOs.size(), baoCaoDAO.getBaoCaosByOrderId(don.getOrderId()));
         }
-        System.out.println("baoCaos: " + baoCaoDTOs);
-//        BaoCaoDTO baoCao;
-//        for (OrderDTO order : orders) {
-//
-//            for (OrderDetailDTO orderDetail : details) {
-//                if (orderDetail.getOrderId().equals(order.getOrderId())) {
-//                    baoCao = new BaoCaoDTO();
-//                    baoCao.setOrder_id(order.getOrderId());
-//                    baoCao.setOrder_date(order.getOrderDate());
-//                    baoCao.setStatus(order.getStatus());
-//                    baoCao.setProduct_id(orderDetail.getProductId());
-//                    baoCao.setOrder_quantity(orderDetail.getOrderQuantity());
-//                    for (ProductDTO product : products) {
-//                        
-//                    }
-//                }
-//            }
-//        }
-
+        System.out.println("Danh sách báo cáo: " + baoCaoDTOs);
         return baoCaoDTOs;
     }
 }

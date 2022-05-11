@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author DELL
+ * @author Linh
  */
 public class WorkWithFile
 {

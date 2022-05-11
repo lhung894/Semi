@@ -1,32 +1,31 @@
 package BUS;
 
 import DAO.LastIdDAO;
-import DTO.OrderDetailDTO;
+import DTO.ChiTietDonHangDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
+/**
+ *
+ * @author Linh
+ */
 public class Utils
 {
 
-    public LastIdDAO maDLCuoi;
+    public LastIdDAO lastIdDAO;
 
     public Utils()
     {
-//        maDLCuoi = new LastIdDAO();
     }
 
-    ////////////////Tạo order ID
-    public String initOrderId()
+    public String createOrderId()
     {
-        maDLCuoi = new LastIdDAO();
-        String temp = maDLCuoi.getOrderId();
-//        System.out.println("temp order: " + temp);
+        lastIdDAO = new LastIdDAO();
+        String temp = lastIdDAO.getOrderId();
         int ma = Integer.parseInt(temp);
         ma++;
         String init = "ORDER_";
@@ -34,22 +33,22 @@ public class Utils
         return init;
     }
 
-    ////////////////Tạo order detail ID
-    public void initOrderDetailId(ArrayList<OrderDetailDTO> orderDetailDTOs)
+    public void createOrderDetailId(ArrayList<ChiTietDonHangDTO> chiTietDonList)
     {
-        maDLCuoi = new LastIdDAO();
-        String temp = maDLCuoi.getOrderDetailId();
+        lastIdDAO = new LastIdDAO();
+        String temp = lastIdDAO.getOrderDetailId();
         int ma = Integer.parseInt(temp);
         String init = "ORDETAIL_";
-        for (OrderDetailDTO ord : orderDetailDTOs) {
+        for (ChiTietDonHangDTO chiTietDon : chiTietDonList)
+        {
             ma++;
-            ord.setOrderDetailId(init + String.valueOf(ma));
+            chiTietDon.setOrderDetailId(init + String.valueOf(ma));
         }
 //        System.out.println("Ult OrderDetails: " + orderDetailDTOs);
     }
 
     ////////////////Lấy ngày hiện tại
-    public String initDateNow()
+    public String createDateNow()
     {
         final Date currentTime = new Date();
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -72,7 +71,6 @@ public class Utils
         }
     }
 
-    ////////////////Lấy ngày đầu tiên của tháng kế tiếp
     public String firstDayOfnextMonth(String ngay)
     {
         String thanglamviec = getMonth(ngay);
@@ -99,7 +97,7 @@ public class Utils
     public int totalDays(String thoigian)
     {
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String hientai = initDateNow();
+        String hientai = createDateNow();
         System.out.println("thoigian: " + thoigian + "\nhientai: " + hientai);
         int total = -1;
         try
@@ -261,47 +259,4 @@ public class Utils
         }
     }
 
-}
-
-class main
-{
-
-    public static void main(String[] args) throws ParseException
-    {
-        Utils ult = new Utils();
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-//        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-//        Date tgBD = simpleDateFormat.parse("12/17/2021");
-//        Date tgKT = simpleDateFormat1.parse("2021-12-14");
-//        if (tgBD.before(tgKT))
-//        {
-//            System.out.println("dsds");
-//        } else
-//        {
-//            System.out.println("No");
-//        }
-//        System.out.println(ut.totalDays("2020-06-02"));
-//        DiaDiemBUS diaDiemBUS = new DiaDiemBUS();
-//        String maDD = diaDiemBUS.CapPhat(new LastIdDAO().getMaDiaDiemLast());
-//        diaDiemBUS.themDiaDiem(maDD, "dsfsdgfds");
-        //diaDiemBUS.xoaDiaDiem("DD000002");
-//        String ngString = "1988-12-17";
-//        int hientai = Calendar.getInstance().get(Calendar.YEAR);
-//        int year = Integer.parseInt(ngString.substring(0, 4));
-//        int namsinh = hientai - year;
-//        System.out.println(namsinh);
-//        String aString = "056200008901";
-//        String bString = "^(0\\d{11})$";
-//        boolean flag4 = Pattern.matches(bString, aString);
-//        if (!flag4)
-//        {
-//            System.out.println("Email không hợp lệ!\n");
-//
-//        } else
-//        {
-//            System.out.println("hop le");
-//        }
-        
-        System.out.println("now: " + ult.initDateNow());
-    }
 }

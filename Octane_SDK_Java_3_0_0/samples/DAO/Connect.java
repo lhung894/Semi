@@ -10,72 +10,91 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 /**
  *
- * @author minhk
+ * @author Linh
  */
-public class Connect {
-    private static  String dbURL = "jdbc:sqlserver://DESKTOP-QDVEDF4;databaseName=PRODUCT;user=sa;password=20112000;";
-    // Linh: jdbc:sqlserver://LINHLV:1433;databaseName=THINGOAINGU;user=linh;password=12345678; DESKTOP-QDVEDF4
-    // NKiệt: jdbc:sqlserver://DESKTOP-7P1UPJS:1433;databaseName=THINGOAINGU;user=sa;password=123456789; DESKTOP-JS828RS\SQLEXPRESS
+public class Connect
+{
+
+    private static String dbURL = "jdbc:sqlserver://DESKTOP-QDVEDF4;databaseName=PRODUCT;user=sa;password=20112000;";
+    // Linh: jdbc:sqlserver://LINHNGH:1433;databaseName=PRODUCT;user=linh;password=12345678;
     //Hung: DESKTOP-QDVEDF4
     private Connection conn;
     Statement st;
     ResultSet rs;
-    
-    public Connect() {
+
+    public Connect()
+    {
     }
-    
-    public void getConnection() {
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
-        } catch (ClassNotFoundException e) {
+
+    public void getConnection()
+    {
+        try
+        {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e)
+        {
             System.out.println(e);
         }
-        try{
+        try
+        {
             conn = DriverManager.getConnection(dbURL);
             System.out.println("connect success");
-        }catch (SQLException e){
+        } catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
-    
-    public boolean executeUpdate(String query) {
-        try {
+
+    public boolean executeUpdate(String query)
+    {
+        try
+        {
             conn.createStatement();
             st = conn.createStatement();
             st.executeUpdate(query);
             return true;
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             System.out.println(e);
             return false;
         }
     }
-    
-    public void close(){
-        try{
+
+    public void close()
+    {
+        try
+        {
             conn.close();
-        }catch (SQLException e){
+        } catch (SQLException e)
+        {
             System.out.println("Close error!");
         }
     }
 
-    public Connection getConn() {
+    public Connection getConn()
+    {
         return conn;
     }
 
-    public void setConn(Connection conn) {
+    public void setConn(Connection conn)
+    {
         this.conn = conn;
     }
 
-    public ResultSet executeQuery(String query) {
-        try {
+    public ResultSet executeQuery(String query)
+    {
+        try
+        {
             st = conn.createStatement();
             rs = st.executeQuery(query);
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             System.out.println(e);
         }
         return rs;
     }
-   
+
 }

@@ -513,7 +513,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/img/icons8-tag-window-32.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="NH&#x1eac;P TAG"/>
+                    <Property name="text" type="java.lang.String" value="G&#x1eae;N TAG"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                         <MatteColorBorder bottom="1" left="0" right="0" top="0">
@@ -717,9 +717,9 @@
                       <Component id="jPanelCaThi" min="-2" pref="992" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jInput" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jOrder" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCreateOrder" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jGanTag" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jQuetDon" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTaoDon" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jBaoCao" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jPanelTrinhDo" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -744,9 +744,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jInput" min="-2" max="-2" attributes="0"/>
-                          <Component id="jOrder" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCreateOrder" min="-2" max="-2" attributes="0"/>
+                          <Component id="jGanTag" min="-2" max="-2" attributes="0"/>
+                          <Component id="jQuetDon" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTaoDon" min="-2" max="-2" attributes="0"/>
                           <Component id="jBaoCao" min="-2" max="-2" attributes="0"/>
                           <Component id="jPanelTrinhDo" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -770,26 +770,26 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="jCreateOrder">
+            <Container class="javax.swing.JPanel" name="jTaoDon">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jCreateOrder.add(createOrder.getjPanel1());"/>
-                <AuxValue name="JavaCodeGenerator_LayoutCodePre" type="java.lang.String" value="jCreateOrder.setVisible (false);"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTaoDon.add(taoDonForm.getjPanel1());"/>
+                <AuxValue name="JavaCodeGenerator_LayoutCodePre" type="java.lang.String" value="jTaoDon.setVisible (false);"/>
               </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
             </Container>
-            <Container class="javax.swing.JPanel" name="jInput">
+            <Container class="javax.swing.JPanel" name="jGanTag">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//jPanel10.add(pb);&#xa;jInput.add(inputTag.getjPanel1());"/>
-                <AuxValue name="JavaCodeGenerator_LayoutCodePre" type="java.lang.String" value="jInput.setVisible (false);"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//jPanel10.add(pb);&#xa;jGanTag.add(ganTagForm.getjPanel1());"/>
+                <AuxValue name="JavaCodeGenerator_LayoutCodePre" type="java.lang.String" value="jGanTag.setVisible (false);"/>
               </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
             </Container>
-            <Container class="javax.swing.JPanel" name="jOrder">
+            <Container class="javax.swing.JPanel" name="jQuetDon">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//jPanel7.add(da);&#xa;jOrder.add(listOrder.getjPanel1());"/>
-                <AuxValue name="JavaCodeGenerator_LayoutCodePre" type="java.lang.String" value="jOrder.setVisible (false);"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//jPanel7.add(da);&#xa;jQuetDon.add(quetDonForm.getjPanel1());"/>
+                <AuxValue name="JavaCodeGenerator_LayoutCodePre" type="java.lang.String" value="jQuetDon.setVisible (false);"/>
               </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
