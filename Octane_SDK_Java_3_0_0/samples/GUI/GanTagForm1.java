@@ -328,6 +328,7 @@ public class GanTagForm1 extends javax.swing.JFrame
             selectedTag = true;
             rowTag = row;
             idTag = (String) jTableTag.getValueAt(rowTag, 0);
+            System.out.println(idTag);
         }
 
         if (selectedTag && selectedProduct && idTag != "" && idProduct != "")
