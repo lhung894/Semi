@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Hyung
+ * @author User
  */
 public class NhapDlForm extends javax.swing.JFrame {
 

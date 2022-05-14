@@ -47,6 +47,36 @@ public class UserDAO {
         }
         return userDTOs;
     }
+    
+    public ArrayList<UserDTO> getUser(String userName, String passWord) {
+        ArrayList<UserDTO> userDTOs = new ArrayList<UserDTO>();
+        conn = new Connect();
+        conn.getConnection();
+        String query = "select * from User_App where username='" + userName + "' and password='" + passWord + "';";
+        try {
+            conn.executeQuery(query);
+            while (conn.rs.next()) {
+                UserDTO dto = new UserDTO();
+                dto.setUserId(conn.rs.getString(1));
+                dto.setUserName(conn.rs.getString(2));
+                dto.setPassWord(conn.rs.getString(3));
+                dto.setFullName(conn.rs.getString(4));
+                dto.setPhoneNum(conn.rs.getString(5));
+                dto.setMail(conn.rs.getString(6));
+                dto.setRole(conn.rs.getInt(7));
+                userDTOs.add(dto);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            System.out.println("UserDAO.getUser.executeQuery error.");
+        }
+        try {
+            conn.getConn().close();
+        } catch (SQLException e) {
+            System.out.println("UserDAO.getUser.close error.");
+        }
+        return userDTOs;
+    }
 
     public boolean insertUser(UserDTO userDTO) {
         conn = new Connect();

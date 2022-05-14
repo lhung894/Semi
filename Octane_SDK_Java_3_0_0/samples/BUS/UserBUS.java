@@ -26,12 +26,16 @@ public class UserBUS {
 
     public UserDTO checkLogin(String userName, String passWord) {
         String passHash = MD5Hash(passWord);
-        ArrayList<UserDTO> list = userDAO.getList();
-        for (UserDTO u : list) {
-            if (u.getUserName().equals(userName) && u.getPassWord().equals(passHash)) {
-                return u;
-            }
+        ArrayList<UserDTO> user = userDAO.getUser(userName, passHash);
+//        System.out.println("user: " + user);
+        if (!user.isEmpty()) {
+            return user.get(0);
         }
+//        for (UserDTO u : list) {
+//            if (u.getUserName().equals(userName) && u.getPassWord().equals(passHash)) {
+//                return u;
+//            }
+//        }
         return null;
     }
 
